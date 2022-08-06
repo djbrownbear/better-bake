@@ -15,10 +15,10 @@ export function getInitialData () {
   }))
 }
 
-export function saveQuestion (info) {
+export function savePoll (info) {
   return _saveQuestion(info);
 }
 
-export function saveQuestionAnswer (info) {
+export function savePollAnswer (info) {
   return _saveQuestionAnswer(info);
 }
