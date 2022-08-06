@@ -18,9 +18,36 @@ export function addPoll(poll) {
   };
 }
 
+export function handleAddPoll(optionOneText, optionTwoText) {
+  return (dispatch, getState) => {
+    const { authedUser } = getState();
+
+    return savePoll({
+      optionOneText, 
+      optionTwoText, 
+      author: authedUser,
+    })
+    .then((poll) => dispatch(addPoll(poll)))  
+  };
+}
+
+
 export function addAnswer(poll) {
   return {
     type: ADD_ANSWER,
     poll,
+  };
+}
+
+export function handleAddAnswer(answer) {
+  return (dispatch, getState) => {
+    const { authedUser } = getState();
+
+    return savePollAnswer({
+      authedUser,
+      qid: authedUser.qid,
+      answer,      
+    })
+    .then((pollAnswer) => dispatch(addAnswer(pollAnswer)))
   };
 }
