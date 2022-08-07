@@ -19,11 +19,11 @@ const LoginPage = (props) => {
       <form className="login-form" onSubmit={handleSubmit}>
         <div className="login-field">
           <label hmtlFor="username">Username:</label><br />
-          <input type="text" id="username" name="username" placeholder="enter username" ref={usernameRef} />
+          <input type="text" id="username" name="username" placeholder="Enter Username" ref={usernameRef} />
         </div>
         <div className="login-field">
           <label htmlFor="pwd">Password:</label><br />
-          <input type="password" id="pwd" name="pwd" placeholder="enter password" ref={passwordRef} />
+          <input type="password" id="pwd" name="pwd" placeholder="Enter Password" ref={passwordRef} />
         </div>
         <div className="login-field">
           <button className="btn" type="submit">Submit</button>
