@@ -1,10 +1,15 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
-import { store } from './app/store';
+import { createStore } from "redux";
+// import { store } from './app/store';
 import App from './components/App';
 import reportWebVitals from './reportWebVitals';
 import './assets/css/index.css';
+import reducer from './reducers';
+import middleware from './middleware';
+
+const store = createStore(reducer, middleware);
 
 const container = document.getElementById('root');
 const root = createRoot(container);
