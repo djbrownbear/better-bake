@@ -1,5 +1,4 @@
 import { connect } from "react-redux";
-import { format}
 
 const Poll = (props) => {
   return (
@@ -15,9 +14,9 @@ const mapStateToProps = ({ authedUser, users, polls }, {id}) => {
 
   return {
     authedUser,
-    poll: 
+    poll, 
   }
 
 }
 
-export default Poll;
+export default connect(mapStateToProps)(Poll);
