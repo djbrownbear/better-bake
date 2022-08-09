@@ -4,29 +4,72 @@ import { useState, useRef } from "react";
 // import { useNavigate } from "react-router-dom";
 
 const LoginPage = (props) => {
-  const usernameRef = useRef();
-  const passwordRef = useRef();
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState(false);
+  let usernameRef = useRef();
+  let passwordRef = useRef();
+
+  const handleChange = (e) => {
+    if (e.target.name === "pwd") {
+      let passwordRef = e.target.value;
+      return passwordRef;
+    } else if (e.target.name ==="username") {
+      let usernameRef = e.target.value;
+      return usernameRef;
+    } else {
+      return;
+    }
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // TODO: build out handling
+    if (!usernameRef || !passwordRef ) {
+      setError(true);
+      setSuccess(false);
+      return;
     }
+
+    setSuccess(true);
+    setError(false);
+  }
 
   return (
     <div className="login">
-      <h1>Login Page</h1>
+      {success &&
+        <h1 data-testid="success-header">Form Submitted!</h1>
+      }
+      {error &&
+          <h1 data-testid="error-header">Error: Please ensure all fields are filled out.</h1>
+      }
       <form className="login-form" onSubmit={handleSubmit}>
+        <h1>Login Page</h1>
         <div className="login-field">
           <label hmtlFor="username">Username:</label><br />
-          <input type="text" id="username" name="username" placeholder="Enter Username" ref={usernameRef} />
+          <input 
+            data-testid="username-input"
+            type="text" 
+            id="username" 
+            name="username" 
+            placeholder="Enter Username" 
+            ref={usernameRef} 
+            onChange={handleChange}
+          />
         </div>
         <div className="login-field">
           <label htmlFor="pwd">Password:</label><br />
-          <input type="password" id="pwd" name="pwd" placeholder="Enter Password" ref={passwordRef} />
+          <input 
+            data-testid="password-input"
+            type="password" 
+            id="pwd" 
+            name="pwd" 
+            placeholder="Enter Password" 
+            ref={passwordRef} 
+            onChange={handleChange}
+          />
         </div>
         <div className="login-field">
-          <button className="btn" type="submit">Submit</button>
+          <button data-testid="submit-button" className="btn" type="submit">Submit</button>
         </div>
       </form>
     </div>

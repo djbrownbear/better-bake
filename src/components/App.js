@@ -1,6 +1,7 @@
 import React from 'react';
 import '../assets/css/App.css';
 import LoginPage from './LoginPage';
+import Dashboard from './Dashboard';
 import { useEffect } from "react";
 import { handleInitialData } from '../actions/shared';
 import { connect } from 'react-redux';
@@ -13,7 +14,7 @@ const App = (props) => {
 
   return (
     <div className="App">
-      <LoginPage />
+      { props.loading === true ? null : <LoginPage /> }
     </div>
   );
 }
