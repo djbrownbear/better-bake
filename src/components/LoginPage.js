@@ -10,6 +10,7 @@ const LoginPage = (props) => {
   let passwordRef = useRef();
 
   const handleChange = (e) => {
+    // console.log(e.target.value);
     if (e.target.name === "pwd") {
       let passwordRef = e.target.value;
       return passwordRef;
@@ -23,8 +24,7 @@ const LoginPage = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    if (!usernameRef || !passwordRef ) {
+    if ( !usernameRef.current.value || !passwordRef.current.value) {
       setError(true);
       setSuccess(false);
       return;
