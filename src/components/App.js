@@ -7,6 +7,7 @@ import PollPage from './PollPage';
 import { useEffect } from "react";
 import { handleInitialData } from '../actions/shared';
 import { connect } from 'react-redux';
+import LoadingBar from 'react-redux-loading-bar';
 
 const App = (props) => {
 
@@ -16,7 +17,8 @@ const App = (props) => {
 
   return (
     <div className="App">
-      { props.loading === true ? null : <Dashboard/> }
+      <LoadingBar />
+      { props.loading === true ? null : <Dashboard /> }
     </div>
   );
 }
