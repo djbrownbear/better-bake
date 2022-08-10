@@ -8,6 +8,9 @@ export function formatPoll (poll, author, authedUser) {
   const { id, optionOne, optionTwo, timestamp} = poll
   const { name, avatarURL } = author
   
+  const optionOneVotes = optionOne.votes
+  const optionTwoVotes = optionTwo.votes
+
   return {
     name,
     id,
@@ -15,7 +18,8 @@ export function formatPoll (poll, author, authedUser) {
     avatar: avatarURL,
     optionOne,
     optionTwo,
-    // votes: votes.length,
+    optionOneVotes,
+    optionTwoVotes,
     // hasVoted: votes.length,
   };
 }

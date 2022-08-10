@@ -23,17 +23,15 @@ const Poll = (props) => {
   } = props.poll
 
   return (
-    <div className="poll-wrapper">
-      <div className="polls">
-        <p>{ name }</p>
-        <span>{ formatDate(timestamp) }</span>
-        <button
-          className="show-poll" 
-          onClick={(e) => toPoll(e, id) }
-        >
-          Show
-        </button>
-      </div>
+    <div className="polls">
+      <p>{ name }</p>
+      <span>{ formatDate(timestamp) }</span>
+      <button
+        className="show-poll" 
+        onClick={(e) => toPoll(e, id) }
+      >
+        Show
+      </button>
     </div>
   )
 };

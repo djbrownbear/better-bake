@@ -36,19 +36,22 @@ li {
   padding: 20px 0 ;
 }
 
-.poll-wrapper {
+/* .poll-wrapper {
   display: flex;
   margin: auto;
   padding: 0;
-  border: 2px solid #fff;
   justify-content: center;
   align-items: center;
   height: 100%;
-}
+} */
 
 .polls-flex {
+  margin: 0;
+  padding: 10px;
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
 }
 
 .poll-item {
@@ -64,6 +67,7 @@ li {
   justify-content: center;
   align-items: center;
   width: 100%;
+  border: 2px solid #fff;
 }
 
 .show-poll {

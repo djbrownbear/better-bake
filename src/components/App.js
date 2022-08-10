@@ -16,7 +16,7 @@ const App = (props) => {
 
   return (
     <div className="App">
-      { props.loading === true ? null : <Dashboard /> }
+      { props.loading === true ? null : <Dashboard/> }
     </div>
   );
 }

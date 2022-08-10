@@ -17,8 +17,14 @@ const PollPage = (props) => {
     timestamp,
   } = props.poll
 
+  const optionOneVotes = optionOne.votes;
+  const optionOneText = optionOne.text;
+
+  const optionTwoVotes = optionTwo.votes;
+  const optionTwoText = optionTwo.text;
+
   return (
-    <div className="poll-wrapper">
+    <div>
       <div className="poll-header">
         <img src={avatar} alt={`Avatar of ${name}`} className="avatar" />
         <h2>Would you rather...</h2>
@@ -26,12 +32,12 @@ const PollPage = (props) => {
       </div>
       <div className="poll-info">
         <div className="poll-option">
-            <p>{optionOne.text}</p>
-            <span>{optionOne.votes.length}</span>
+            <p>{optionOneText}</p>
+            <span>{optionOneVotes.length}</span>
         </div>
         <div className="poll-option">
-            <p>{optionTwo.text}</p>
-            <span>{optionOne.votes.length}</span>
+            <p>{optionTwoText}</p>
+            <span>{optionTwoVotes.length}</span>
         </div>
       </div>
     </div>
