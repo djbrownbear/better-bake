@@ -12,10 +12,10 @@ const LoginPage = (props) => {
   const handleChange = (e) => {
     // console.log(e.target.value);
     if (e.target.name === "pwd") {
-      let passwordRef = e.target.value;
+      passwordRef.current = e.target.value;
       return passwordRef;
     } else if (e.target.name ==="username") {
-      let usernameRef = e.target.value;
+      usernameRef.current = e.target.value;
       return usernameRef;
     } else {
       return;
