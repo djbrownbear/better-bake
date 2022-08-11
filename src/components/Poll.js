@@ -27,7 +27,7 @@ const Poll = (props) => {
       <p>{ name }</p>
       <span>{ formatDate(timestamp) }</span>
       <button
-        className="show-poll" 
+        className="btn-show-poll" 
         onClick={(e) => toPoll(e, id) }
       >
         Show

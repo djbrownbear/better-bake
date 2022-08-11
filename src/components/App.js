@@ -18,7 +18,7 @@ const App = (props) => {
   return (
     <div className="App">
       <LoadingBar />
-      { props.loading === true ? null : <Dashboard /> }
+      { props.loading === true ? null : <PollPage id="xj352vofupe1dqz9emx13r" /> }
     </div>
   );
 }

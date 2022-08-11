@@ -70,7 +70,7 @@ li {
   border: 2px solid #fff;
 }
 
-.show-poll {
+.btn-show-poll {
   margin: 8px 0;
   padding: 2px;
 }
@@ -93,4 +93,10 @@ li {
   flex: 1 1 auto;
   border: 1px solid #fff;
   border-radius: 8px;
+}
+
+.poll-details {
+  display: inline-flex;
+  width: 100%;
+  justify-content: center;
 }

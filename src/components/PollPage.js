@@ -1,7 +1,21 @@
 import { connect } from "react-redux";
-import { formatPoll, formatDate } from "../utils/helpers";
+import { handleAddAnswer } from "../actions/polls";
+import { formatPoll, formatDate, formatPercent } from "../utils/helpers";
 
 const PollPage = (props) => {
+
+  const handleVote = (e) => {
+    e.preventDefault();
+
+    const { dispatch, poll, authedUser } = props;
+
+    dispatch(handleAddAnswer({
+      qid: poll.id,
+      answer: e.target.id,
+      authedUser,
+     })
+    );
+  }
 
   console.log(props)
 
@@ -23,6 +37,24 @@ const PollPage = (props) => {
   const optionTwoVotes = optionTwo.votes;
   const optionTwoText = optionTwo.text;
 
+  const allVotesCount = optionOneVotes.length + optionTwoVotes.length;
+  const allVotes = optionOneVotes.concat(optionTwoVotes);
+  const hasVoted = allVotes.includes(props.authedUser);
+  console.log(`Vote count is: ${allVotesCount}, Votes are: ${allVotes}, Did You Vote: ${hasVoted}`);
+
+  function getVotePercentage(val) {
+    let result;
+    if (val === "optionOne") {
+      result = (optionOneVotes.length / allVotesCount);
+      return formatPercent(result);
+    } else if  (val ==="optionTwo") {
+      result = (optionTwoVotes.length / allVotesCount)
+      return formatPercent(result);
+    } else {
+      return;
+    }
+  };
+
   return (
     <div>
       <div className="poll-header">
@@ -33,11 +65,31 @@ const PollPage = (props) => {
       <div className="poll-info">
         <div className="poll-option">
             <p>{optionOneText}</p>
-            <span>{optionOneVotes.length}</span>
+            <button
+              id="optionOne"
+              className="btn-vote" 
+              onClick={(e) => handleVote(e)}
+              type="button"
+              disabled={hasVoted ? true : false }
+            >
+              Vote
+            </button>
+            <span className="poll-details">{optionOneVotes.length}</span>
+            <span className="poll-details">{getVotePercentage("optionOne")}</span>
         </div>
         <div className="poll-option">
             <p>{optionTwoText}</p>
-            <span>{optionTwoVotes.length}</span>
+            <button
+              id="optionTwo"
+              className="btn-vote" 
+              onClick={(e) => handleVote(e)}
+              type="button"
+              disabled={hasVoted ? true : false }
+            >
+              Vote
+            </button>
+            <span className="poll-details">{optionTwoVotes.length}</span>
+            <span className="poll-details">{getVotePercentage("optionTwo")}</span>
         </div>
       </div>
     </div>

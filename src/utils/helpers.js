@@ -8,8 +8,10 @@ export function formatPoll (poll, author, authedUser) {
   const { id, optionOne, optionTwo, timestamp} = poll
   const { name, avatarURL } = author
   
-  const optionOneVotes = optionOne.votes
-  const optionTwoVotes = optionTwo.votes
+  // const optionOneVotes = optionOne.votes
+  // const optionTwoVotes = optionTwo.votes
+  // const optionOneText = optionOne.text
+  // const optionTwoText = optionTwo.text
 
   return {
     name,
@@ -18,8 +20,15 @@ export function formatPoll (poll, author, authedUser) {
     avatar: avatarURL,
     optionOne,
     optionTwo,
-    optionOneVotes,
-    optionTwoVotes,
+    authedUser,
+    // optionOneVotes,
+    // optionTwoVotes,
+    // optionOneText,
+    // optionTwoText,
     // hasVoted: votes.length,
   };
 }
+
+export function formatPercent(val) {
+    return val.toLocaleString(undefined,{style: 'percent', minimumFractionDigits:2});
+  };
