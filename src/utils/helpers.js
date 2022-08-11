@@ -30,5 +30,7 @@ export function formatPoll (poll, author, authedUser) {
 }
 
 export function formatPercent(val) {
+  // source: https://stackoverflow.com/questions/45163256/how-to-format-numbers-as-percentage-values-in-javascript
+  // author: wrlee
     return val.toLocaleString(undefined,{style: 'percent', minimumFractionDigits:2});
   };
