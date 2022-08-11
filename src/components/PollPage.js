@@ -1,6 +1,7 @@
 import { connect } from "react-redux";
 import { handleAddAnswer } from "../actions/polls";
 import { formatPoll, formatDate, formatPercent } from "../utils/helpers";
+import PollHeader from "./PollHeader";
 
 const PollPage = (props) => {
 
@@ -29,6 +30,7 @@ const PollPage = (props) => {
     optionOne,
     optionTwo,
     timestamp,
+    authedUser,
   } = props.poll
 
   const optionOneVotes = optionOne.votes;
@@ -39,7 +41,10 @@ const PollPage = (props) => {
 
   const allVotesCount = optionOneVotes.length + optionTwoVotes.length;
   const allVotes = optionOneVotes.concat(optionTwoVotes);
+  const hasVotedOptionOne = optionOneVotes.includes(authedUser);
+  const hasVotedOptionTwo = optionTwoVotes.includes(authedUser);
   const hasVoted = allVotes.includes(props.authedUser);
+
   console.log(`Vote count is: ${allVotesCount}, Votes are: ${allVotes}, Did You Vote: ${hasVoted}`);
 
   function getVotePercentage(val) {
@@ -57,13 +62,13 @@ const PollPage = (props) => {
 
   return (
     <div>
-      <div className="poll-header">
-        <img src={avatar} alt={`Avatar of ${name}`} className="avatar" />
-        <h2>Would you rather...</h2>
-        <span>{ formatDate(timestamp) }</span>
-      </div>
+      <PollHeader 
+        avatar={avatar}
+        name={name}
+        timestamp={timestamp}
+      />
       <div className="poll-info">
-        <div className="poll-option">
+        <div className={"poll-option " + (hasVotedOptionOne ? "vote-choice": "")}>
             <p>{optionOneText}</p>
             <button
               id="optionOne"
@@ -74,10 +79,14 @@ const PollPage = (props) => {
             >
               Vote
             </button>
-            <span className="poll-details">{optionOneVotes.length}</span>
-            <span className="poll-details">{getVotePercentage("optionOne")}</span>
+            { hasVoted &&
+              <p className="poll-details">
+                <span>{`${optionOneVotes.length} out of ${allVotesCount} votes`}</span>
+                <span>{getVotePercentage("optionOne")}</span>
+              </p>
+            }
         </div>
-        <div className="poll-option">
+        <div className={"poll-option " + (hasVotedOptionTwo ? "vote-choice": "")}>
             <p>{optionTwoText}</p>
             <button
               id="optionTwo"
@@ -88,8 +97,12 @@ const PollPage = (props) => {
             >
               Vote
             </button>
-            <span className="poll-details">{optionTwoVotes.length}</span>
-            <span className="poll-details">{getVotePercentage("optionTwo")}</span>
+            { hasVoted &&
+              <p className="poll-details">
+                <span>{`${optionTwoVotes.length} out of ${allVotesCount} votes`}</span>
+                <span>{getVotePercentage("optionTwo")}</span>
+              </p>
+            }
         </div>
       </div>
     </div>
