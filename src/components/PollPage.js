@@ -30,7 +30,7 @@ const PollPage = (props) => {
     );
   }
 
-  console.log(props)
+  console.log("PollPage: ",props)
 
   if (props.poll === null) {
     return <p>This poll does not exist</p>;
@@ -125,7 +125,8 @@ const PollPage = (props) => {
   )
 };
 
-const mapStateToProps = ({ authedUser, users, polls }, {id}) => {
+const mapStateToProps = ({ authedUser, users, polls }, props) => {
+  const { id } = props.router.params;
   const poll = polls[id];
 
   return {

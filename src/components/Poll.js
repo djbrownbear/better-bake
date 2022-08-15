@@ -14,13 +14,13 @@ const withRouter = (Component) => {
 };
 
 const Poll = (props) => {
-
-  console.log(props)
+  const navigate = useNavigate();
+  console.log("Poll: ", props)
 
   const toPoll = (e, id) => {
     e.preventDefault();
     console.log("Poll is: ", id)
-    // TODO: add navigation to poll
+    navigate(`/poll/${id}`)
   }
 
   if (props.poll === null) {
