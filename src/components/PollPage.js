@@ -2,6 +2,18 @@ import { connect } from "react-redux";
 import { handleAddAnswer } from "../actions/polls";
 import { formatPoll, formatPercent } from "../utils/helpers";
 import PollHeader from "./PollHeader";
+import { useLocation, useNavigate, useParams, Link } from "react-router-dom";
+
+const withRouter = (Component) => {
+  const ComponentWithRouterProp = (props) => {
+    let location = useLocation();
+    let navigate = useNavigate();
+    let params = useParams();
+    return <Component {...props} router={{ location, navigate, params }} />;
+  };
+
+  return ComponentWithRouterProp;
+};
 
 const PollPage = (props) => {
 
@@ -32,6 +44,7 @@ const PollPage = (props) => {
     timestamp,
     authedUser,
     hasVoted,
+    id
   } = props.poll
 
   const optionOneVotes = optionOne.votes;
@@ -62,51 +75,53 @@ const PollPage = (props) => {
   };
 
   return (
-    <div>
-      <PollHeader 
-        avatar={avatar}
-        name={name}
-        timestamp={timestamp}
-      />
-      <div className="poll-info">
-        <div className={"poll-option " + (hasVotedOptionOne ? "vote-choice": "")}>
-            <p>{optionOneText}</p>
-            <button
-              id="optionOne"
-              className="btn-vote" 
-              onClick={(e) => handleVote(e)}
-              type="button"
-              disabled={hasVoted ? true : false }
-            >
-              Vote
-            </button>
-            { hasVoted &&
-              <p className="poll-details">
-                <span>{`${optionOneVotes.length} out of ${allVotesCount} votes`}</span>
-                <span>{getVotePercentage("optionOne")}</span>
-              </p>
-            }
-        </div>
-        <div className={"poll-option " + (hasVotedOptionTwo ? "vote-choice": "")}>
-            <p>{optionTwoText}</p>
-            <button
-              id="optionTwo"
-              className="btn-vote" 
-              onClick={(e) => handleVote(e)}
-              type="button"
-              disabled={hasVoted ? true : false }
-            >
-              Vote
-            </button>
-            { hasVoted &&
-              <p className="poll-details">
-                <span>{`${optionTwoVotes.length} out of ${allVotesCount} votes`}</span>
-                <span>{getVotePercentage("optionTwo")}</span>
-              </p>
-            }
+    <Link to={`/poll/${id}`} className="poll">
+      <div>
+        <PollHeader 
+          avatar={avatar}
+          name={name}
+          timestamp={timestamp}
+        />
+        <div className="poll-info">
+          <div className={"poll-option " + (hasVotedOptionOne ? "vote-choice": "")}>
+              <p>{optionOneText}</p>
+              <button
+                id="optionOne"
+                className="btn-vote" 
+                onClick={(e) => handleVote(e)}
+                type="button"
+                disabled={hasVoted ? true : false }
+              >
+                Vote
+              </button>
+              { hasVoted &&
+                <p className="poll-details">
+                  <span>{`${optionOneVotes.length} out of ${allVotesCount} votes`}</span>
+                  <span>{getVotePercentage("optionOne")}</span>
+                </p>
+              }
+          </div>
+          <div className={"poll-option " + (hasVotedOptionTwo ? "vote-choice": "")}>
+              <p>{optionTwoText}</p>
+              <button
+                id="optionTwo"
+                className="btn-vote" 
+                onClick={(e) => handleVote(e)}
+                type="button"
+                disabled={hasVoted ? true : false }
+              >
+                Vote
+              </button>
+              { hasVoted &&
+                <p className="poll-details">
+                  <span>{`${optionTwoVotes.length} out of ${allVotesCount} votes`}</span>
+                  <span>{getVotePercentage("optionTwo")}</span>
+                </p>
+              }
+          </div>
         </div>
       </div>
-    </div>
+    </Link>
   )
 };
 
@@ -121,4 +136,4 @@ const mapStateToProps = ({ authedUser, users, polls }, {id}) => {
   };
 };
 
-export default connect(mapStateToProps)(PollPage);
+export default withRouter(connect(mapStateToProps)(PollPage));

@@ -18,8 +18,30 @@ code {
     monospace;
 }
 
+a {
+  text-decoration: none;
+  color: #dcdcdc;
+}
+
 li {
-  list-style: none;
+  list-style-type: none;
+  padding: 10px;
+  text-decoration: none;
+}
+
+ul {
+  padding-left: 0;
+}
+
+.nav ul {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  text-decoration: none;
+}
+
+.nav li:first-child {
+  padding-left: 0;
 }
 
 .login-form {
