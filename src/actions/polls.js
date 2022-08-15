@@ -27,13 +27,13 @@ export function handleAddPoll(optionOneText, optionTwoText) {
       optionOneText, 
       optionTwoText, 
       author: authedUser,
-    })
-    .then((poll) => {
+    }).then((poll) => {
       dispatch(addPoll(poll))
       dispatch(addPollToUser(poll))
-    });  
-  };
-}
+    });
+  };  
+};
+
 
 
 export function addAnswer({qid, answer, authedUser}) {
@@ -47,7 +47,6 @@ export function addAnswer({qid, answer, authedUser}) {
 
 export function handleAddAnswer({ qid, answer, authedUser }) {
   return (dispatch) => {
-    // const { authedUser } = getState();
 
     return savePollAnswer({
       qid,

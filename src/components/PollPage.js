@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import { handleAddAnswer } from "../actions/polls";
-import { formatPoll, formatDate, formatPercent } from "../utils/helpers";
+import { formatPoll, formatPercent } from "../utils/helpers";
 import PollHeader from "./PollHeader";
 
 const PollPage = (props) => {
@@ -31,6 +31,7 @@ const PollPage = (props) => {
     optionTwo,
     timestamp,
     authedUser,
+    hasVoted,
   } = props.poll
 
   const optionOneVotes = optionOne.votes;
@@ -43,7 +44,7 @@ const PollPage = (props) => {
   const allVotes = optionOneVotes.concat(optionTwoVotes);
   const hasVotedOptionOne = optionOneVotes.includes(authedUser);
   const hasVotedOptionTwo = optionTwoVotes.includes(authedUser);
-  const hasVoted = allVotes.includes(props.authedUser);
+  // const hasVoted = allVotes.includes(props.authedUser);
 
   console.log(`Vote count is: ${allVotesCount}, Votes are: ${allVotes}, Did You Vote: ${hasVoted}`);
 

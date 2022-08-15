@@ -21,9 +21,9 @@ export default function users(state = {}, action) {
     case ADD_POLL_USER:
       return {
         ...state,
-        [action.poll.author] : {
-          ...state[action.poll.author],
-          questions: state[action.poll.author].questions.concat(action.poll.qid)
+        [action.author] : {
+          ...state[action.author],
+          questions: state[action.author].questions.concat(action.qid)
           }
       };
     default:

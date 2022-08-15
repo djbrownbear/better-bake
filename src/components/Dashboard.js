@@ -1,18 +1,39 @@
 import { connect } from "react-redux";
 import Poll from "./Poll";
 
-const Dashboard = (props) => {
-  console.log(props);
+const Dashboard = ({ authedUser, polls }) => {
+  
+  const answered = (poll) => (poll.optionOne.votes.includes(authedUser) || poll.optionTwo.votes.includes(authedUser)) ;
+  const unanswered = (poll) => (!poll.optionOne.votes.includes(authedUser) && !poll.optionTwo.votes.includes(authedUser)) ;
+
+  console.log(polls.map(poll => poll.id))
 
   return (
   <div>
     <h1>Dashboard</h1>
-    <div>
+    <div className="polls-wrapper">
+      <h2>Unanswered Polls</h2>
       <ul className="polls-flex">
-        {props.pollIds.map((id) => (
-          <li key={id} className="poll-item">
-            <Poll id={id} />
-          </li>
+        {polls
+          .filter(unanswered)
+          .map(
+            (poll) => (
+            <li key={poll.id} className="poll-item">
+              <Poll id={poll.id} />
+            </li>
+        ))}
+      </ul>
+    </div>
+    <div className="polls-wrapper">
+      <h2>Answered Polls</h2>
+      <ul className="polls-flex">
+        {polls
+          .filter(answered)
+          .map(
+            (poll) => (
+            <li key={poll.id} className="poll-item">
+              <Poll id={poll.id} />
+            </li>
         ))}
       </ul>
     </div>
@@ -20,9 +41,12 @@ const Dashboard = (props) => {
   );
 };
 
-const mapStateToProps = ({ polls }) => (
+const mapStateToProps = ({ authedUser, polls }) => (
   {
-    pollIds: Object.keys(polls)
+    authedUser,
+    polls: Object.values(polls).sort(
+      (a, b) => b.timestamp - a.timestamp
+    ),
   }
 );
 

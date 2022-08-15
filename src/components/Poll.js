@@ -20,6 +20,7 @@ const Poll = (props) => {
     id,
     name,
     timestamp,
+    hasVoted,
   } = props.poll
 
   return (
