@@ -3,7 +3,6 @@ import { useState } from "react";
 import { handleAddPoll } from "../actions/polls";
 import { useNavigate } from "react-router-dom";
 import PollHeader from "./PollHeader";
-import { formatDate } from "../utils/helpers";
 
 const NewPoll = ({ dispatch, id, avatar, name }) => {
   const navigate = useNavigate();
@@ -34,7 +33,7 @@ const NewPoll = ({ dispatch, id, avatar, name }) => {
   };
 
   return (
-    <div>
+    <div className="new-poll-wrapper">
       <form onSubmit={handleSubmit}>
         <h1>New Poll</h1>
         <PollHeader 
@@ -42,13 +41,18 @@ const NewPoll = ({ dispatch, id, avatar, name }) => {
           name={name}
           timestamp={new Date()}
         />
-        <label htmlFor="optionOneNew"></label>
-        <input type="text" id="optionOneNew" name="optionOneNew" placeholder="Enter Option 1" onChange={handleChange}></input>
-        
-        <label htmlFor="optionTwoNew"></label>
-        <input type="text" id="optionTwoNew" name="optionTwoNew" placeholder="Enter Option 2" onChange={handleChange}></input>
-        
-        <button className="btn btn-submit" type="submit">
+      
+        <div className="new-poll-option">
+          <label htmlFor="optionOneNew">Option One</label>
+          <input type="text" id="optionOneNew" name="optionOneNew" placeholder="Enter Option 1" onChange={handleChange}></input>
+        </div>
+
+        <div className="new-poll-option">
+          <label htmlFor="optionTwoNew">Option Two</label>
+          <input type="text" id="optionTwoNew" name="optionTwoNew" placeholder="Enter Option 2" onChange={handleChange}></input>
+        </div>
+
+        <button className="btn btn-submit" type="submit" disabled={(optionOneNew === "" || optionTwoNew === "")}>
           Submit
         </button>
       </form>

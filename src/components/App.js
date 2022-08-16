@@ -27,6 +27,7 @@ const App = (props) => {
         { props.loading === true ? null : (
           <Routes>
             <Route path="/" element={<Dashboard />} />
+            <Route path="/login" element={<LoginPage />} />
             <Route path="/add" element={<NewPoll />} />
             <Route path="/leaderboard" element={<Leaderboard />} />
             <Route path="/questions/:id" element={<PollPage />} />   

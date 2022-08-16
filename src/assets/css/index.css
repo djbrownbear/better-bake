@@ -3,6 +3,12 @@
  --fw-bold: 600;
 }
 
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
 html {
   background: rgba(0, 0, 0 , .8);
   color: rgb(255, 255, 255);
@@ -61,6 +67,7 @@ ul {
 .login-field {
   margin: 0;
   padding: 20px 0 ;
+  width: 80%;
 }
 
 .polls-wrapper {
@@ -175,4 +182,43 @@ ul {
 
 .avatar-wrapper span {
   padding: 0 6px;
+}
+
+.new-poll-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: auto;
+  padding: 4px;
+  width: 100%;
+}
+
+input[type="text"],input[type="password"] {
+  padding: 10px;
+  width: 80%;
+  margin: 10px 0;
+  border-bottom: 2px solid rgb(115, 0, 255);
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: inherit;
+}
+
+.btn {
+  margin-top: 10px;
+  padding: 10px;
+  border: none;
+  background-color:rgb(255, 255, 255, .8);
+  color:rgb(0, 0, 0);
+  font-weight: 600;
+  border-radius: 8px;
+  width: 80%;
+  transform: all 0.5s ease;
+}
+
+.btn:disabled {
+  background-color: rgb(255, 255, 255, 0.1);
+}
+
+.btn:hover:not(:disabled) {
+  filter: invert(1);
 }

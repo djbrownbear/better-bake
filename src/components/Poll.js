@@ -27,7 +27,6 @@ const Poll = (props) => {
   }
 
   const {
-    avatar,
     id,
     name,
     timestamp,
