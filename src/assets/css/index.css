@@ -1,3 +1,8 @@
+:root {
+ --text-shadow: 0.5px 0.5px rgba(31, 31, 31, 0.8);
+ --fw-bold: 600;
+}
+
 html {
   background: rgba(0, 0, 0 , .8);
   color: rgb(255, 255, 255);
@@ -143,4 +148,22 @@ ul {
 
 .poll-details > * {
   width: 100%;
+}
+
+.poll-details.winning {
+  color: rgb(44, 255, 44);
+  text-shadow: var(--text-shadow);
+  font-weight: var(--fw-bold);
+}
+
+.poll-details.losing {
+  color: #ff3d3d;
+  text-shadow: var(--text-shadow);
+  font-weight: var(--fw-bold);
+}
+
+.poll-details.tie {
+  color: #da692c;
+  text-shadow: var(--text-shadow);
+  font-weight: var(--fw-bold);
 }

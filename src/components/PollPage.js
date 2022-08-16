@@ -57,6 +57,7 @@ const PollPage = (props) => {
   const hasVotedOptionTwo = optionTwoVotes.includes(authedUser);
 
   console.log(`Vote count is: ${allVotesCount}, Votes are: ${allVotes}, Did You Vote: ${hasVoted}`);
+ 
 
   function getVotePercentage(val) {
     let result;
@@ -71,6 +72,19 @@ const PollPage = (props) => {
     }
   };
 
+  const winLose = (a, b) => {    
+    switch(typeof a === 'number') {
+      case (a === b):
+        return "tie";
+      case (a > b):
+        return "winning";
+      case (a < b):
+        return "losing";
+      default:
+        return "";
+    };
+  };
+ console.log((winLose(optionOneVotes.length, optionOneVotes.length)));
   return (
     <Link to={`/poll/${id}`} className="poll">
       <div>
@@ -92,7 +106,7 @@ const PollPage = (props) => {
                 Vote
               </button>
               { hasVoted &&
-                <p className="poll-details">
+                <p className={"poll-details " + (winLose(optionOneVotes.length, optionTwoVotes.length))}>
                   <span>{`${optionOneVotes.length} out of ${allVotesCount} votes`}</span>
                   <span>{getVotePercentage("optionOne")}</span>
                 </p>
@@ -110,7 +124,7 @@ const PollPage = (props) => {
                 Vote
               </button>
               { hasVoted &&
-                <p className="poll-details">
+                <p className={"poll-details " + (winLose(optionTwoVotes.length, optionOneVotes.length))}>
                   <span>{`${optionTwoVotes.length} out of ${allVotesCount} votes`}</span>
                   <span>{getVotePercentage("optionTwo")}</span>
                 </p>
