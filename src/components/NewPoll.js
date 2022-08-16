@@ -2,8 +2,10 @@ import { connect } from "react-redux";
 import { useState } from "react";
 import { handleAddPoll } from "../actions/polls";
 import { useNavigate } from "react-router-dom";
+import PollHeader from "./PollHeader";
+import { formatDate } from "../utils/helpers";
 
-const NewPoll = ({ dispatch, id }) => {
+const NewPoll = ({ dispatch, id, avatar, name }) => {
   const navigate = useNavigate();
   const [optionOneNew, setOptionOneNew] = useState(""); 
   const [optionTwoNew, setOptionTwoNew] = useState(""); 
@@ -35,6 +37,11 @@ const NewPoll = ({ dispatch, id }) => {
     <div>
       <form onSubmit={handleSubmit}>
         <h1>New Poll</h1>
+        <PollHeader 
+          avatar={avatar}
+          name={name}
+          timestamp={new Date()}
+        />
         <label htmlFor="optionOneNew"></label>
         <input type="text" id="optionOneNew" name="optionOneNew" placeholder="Enter Option 1" onChange={handleChange}></input>
         
@@ -49,4 +56,17 @@ const NewPoll = ({ dispatch, id }) => {
   );
 }
 
-export default connect()(NewPoll);
+const mapStateToProps = ({ dispatch, authedUser, users }) => {
+  const user = users[authedUser];
+  const name = user.name;
+  const avatar = user[users.avatarURL];
+
+  return{
+    dispatch,
+    authedUser,
+    name,
+    avatar,
+  };
+}
+
+export default connect(mapStateToProps)(NewPoll);

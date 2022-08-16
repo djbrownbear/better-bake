@@ -167,3 +167,12 @@ ul {
   text-shadow: var(--text-shadow);
   font-weight: var(--fw-bold);
 }
+
+.avatar-wrapper {
+  display: inline-flex;
+  align-items: center;
+}
+
+.avatar-wrapper span {
+  padding: 0 6px;
+}
