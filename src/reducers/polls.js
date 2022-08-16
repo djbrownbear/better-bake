@@ -14,7 +14,7 @@ export default function polls(state = {}, action) {
         [poll.id]: poll,
       };
     case ADD_ANSWER: {
-      const { qid, answer, author } = action;
+      const { qid, answer, authedUser } = action;
 
       return {
         ...state,
@@ -22,7 +22,7 @@ export default function polls(state = {}, action) {
           ...state[qid],
           [answer]: {
           ...state[qid][answer],
-          votes: state[qid][answer].votes.concat([author]),
+          votes: state[qid][answer].votes.concat([authedUser]),
           },
         },
       };

@@ -15,11 +15,10 @@ const withRouter = (Component) => {
 
 const Poll = (props) => {
   const navigate = useNavigate();
-  console.log("Poll: ", props)
 
   const toPoll = (e, id) => {
     e.preventDefault();
-    console.log("Poll is: ", id)
+
     navigate(`/poll/${id}`)
   }
 
@@ -32,7 +31,6 @@ const Poll = (props) => {
     id,
     name,
     timestamp,
-    hasVoted,
   } = props.poll
 
   return (

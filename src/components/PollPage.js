@@ -25,12 +25,10 @@ const PollPage = (props) => {
     dispatch(handleAddAnswer({
       qid: poll.id,
       answer: e.target.id,
-      authedUser,
+      authedUser: authedUser,
      })
     );
   }
-
-  console.log("PollPage: ",props)
 
   if (props.poll === null) {
     return <p>This poll does not exist</p>;
@@ -57,7 +55,6 @@ const PollPage = (props) => {
   const allVotes = optionOneVotes.concat(optionTwoVotes);
   const hasVotedOptionOne = optionOneVotes.includes(authedUser);
   const hasVotedOptionTwo = optionTwoVotes.includes(authedUser);
-  // const hasVoted = allVotes.includes(props.authedUser);
 
   console.log(`Vote count is: ${allVotesCount}, Votes are: ${allVotes}, Did You Vote: ${hasVoted}`);
 

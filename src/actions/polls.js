@@ -53,7 +53,7 @@ export function handleAddAnswer({ qid, answer, authedUser }) {
       answer,      
       authedUser,
     }).then(() => {
-      dispatch(addAnswer({qid, answer, authedUser}))
+      dispatch(addAnswer({qid, answer, authedUser }))
       dispatch(addAnswerToUser({qid, answer, authedUser}))
     })
     .catch((e) => {
