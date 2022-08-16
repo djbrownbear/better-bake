@@ -19,7 +19,7 @@ const Poll = (props) => {
   const toPoll = (e, id) => {
     e.preventDefault();
 
-    navigate(`/poll/${id}`)
+    navigate(`/questions/${id}`)
   }
 
   if (props.poll === null) {

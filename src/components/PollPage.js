@@ -2,7 +2,7 @@ import { connect } from "react-redux";
 import { handleAddAnswer } from "../actions/polls";
 import { formatPoll, formatPercent } from "../utils/helpers";
 import PollHeader from "./PollHeader";
-import { useLocation, useNavigate, useParams, Link } from "react-router-dom";
+import { useLocation, useNavigate, useParams, Navigate } from "react-router-dom";
 
 const withRouter = (Component) => {
   const ComponentWithRouterProp = (props) => {
@@ -17,6 +17,10 @@ const withRouter = (Component) => {
 
 const PollPage = (props) => {
 
+  if (!props.poll || !props.authedUser) {
+    return <Navigate to="/error"/>;
+  }
+
   const handleVote = (e) => {
     e.preventDefault();
 
@@ -30,10 +34,6 @@ const PollPage = (props) => {
     );
   }
 
-  if (props.poll === null) {
-    return <p>This poll does not exist</p>;
-  }
-
   const {
     avatar,
     name,
@@ -42,7 +42,6 @@ const PollPage = (props) => {
     timestamp,
     authedUser,
     hasVoted,
-    id
   } = props.poll
 
   const optionOneVotes = optionOne.votes;
@@ -84,9 +83,8 @@ const PollPage = (props) => {
         return "";
     };
   };
- console.log((winLose(optionOneVotes.length, optionOneVotes.length)));
+ 
   return (
-    <Link to={`/poll/${id}`} className="poll">
       <div>
         <PollHeader 
           avatar={avatar}
@@ -132,7 +130,6 @@ const PollPage = (props) => {
           </div>
         </div>
       </div>
-    </Link>
   )
 };
 

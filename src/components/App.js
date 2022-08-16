@@ -4,6 +4,7 @@ import LoginPage from './LoginPage';
 import Dashboard from './Dashboard';
 import Leaderboard from './Leaderboard'
 import PollPage from './PollPage';
+import Custom404 from './Custom404';
 import { useEffect, Fragment } from "react";
 import { handleInitialData } from '../actions/shared';
 import { connect } from 'react-redux';
@@ -26,9 +27,10 @@ const App = (props) => {
         { props.loading === true ? null : (
           <Routes>
             <Route path="/" element={<Dashboard />} />
-            <Route path="/new" element={<NewPoll />} />
+            <Route path="/add" element={<NewPoll />} />
             <Route path="/leaderboard" element={<Leaderboard />} />
-            <Route path="/poll/:id" element={<PollPage />} />        
+            <Route path="/questions/:id" element={<PollPage />} />   
+            <Route path="/error" element={<Custom404 />} />        
           </Routes> 
         )}
       </div>
