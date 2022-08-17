@@ -180,6 +180,11 @@ ul {
   align-items: center;
 }
 
+.avatar-wrapper.leaderboard {
+  justify-content: flex-start;
+  width: 100%;
+}
+
 .avatar-wrapper span {
   padding: 0 6px;
 }
@@ -221,4 +226,49 @@ input[type="text"],input[type="password"] {
 
 .btn:hover:not(:disabled) {
   filter: invert(1);
+}
+
+/* table style */
+
+table {
+  table-layout: fixed;
+  margin: auto;
+  width: 80%;
+  border-collapse: collapse;
+  border: 2px solid rgb(255, 255, 255);
+}
+
+thead { 
+  background-color: rgba(255, 255, 255, 0.75);
+  color:rgb(0, 0, 0, .8);
+}
+
+thead th:nth-child(1) {
+  width: 30%;
+}
+
+thead th:nth-child(2) {
+  width: 35%;
+}
+
+thead th:nth-child(3) {
+  width: 35%;
+}
+
+thead, tbody tr {
+  border-bottom: 2px solid #fff;
+}
+
+th,
+td {
+  padding: 10px;
+}
+
+th{
+  font-size: 1.5em;
+}
+
+td {
+  font-size: 1.25em;
+  font-weight: 600;
 }
