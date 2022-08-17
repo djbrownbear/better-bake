@@ -24,7 +24,10 @@ const Leaderboard = ({ usersList }) => {
                       src={user.avatarURL ? user.avatarURL : defaultAvatar }
                       alt={`Avatar of ${user.name}`} 
                     />
-                    <span>{user.id}</span>
+                    <div>
+                      <span>{user.name}</span>
+                      <span className="small-caps">{user.id}</span>
+                    </div>
                   </div>
                 </td>
                 <td>{user.questions.length}</td>

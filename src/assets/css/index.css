@@ -185,8 +185,19 @@ ul {
   width: 100%;
 }
 
+.avatar-wrapper.leaderboard div {
+  display: flex;
+  flex-direction: column;
+}
+
 .avatar-wrapper span {
   padding: 0 6px;
+  text-align: left;
+}
+
+.small-caps {
+  font-size: 0.5em;
+  text-transform: uppercase;
 }
 
 .new-poll-option {
@@ -244,15 +255,15 @@ thead {
 }
 
 thead th:nth-child(1) {
-  width: 30%;
+  width: 40%;
 }
 
 thead th:nth-child(2) {
-  width: 35%;
+  width: 30%;
 }
 
 thead th:nth-child(3) {
-  width: 35%;
+  width: 30%;
 }
 
 thead, tbody tr {
