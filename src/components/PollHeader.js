@@ -1,7 +1,7 @@
+import { connect } from "react-redux";
 import { formatDate } from "../utils/helpers";
 
 const PollHeader = ({ avatar, name, timestamp}) => {
-  // const defaultAvatar = "../assets/images/avatars/icons8-avatar-67.png";
   const defaultAvatar = "https://img.icons8.com/external-others-inmotus-design/67/000000/external-Avatar-round-icons-others-inmotus-design-5.png";
 
   return (
@@ -16,4 +16,4 @@ const PollHeader = ({ avatar, name, timestamp}) => {
   );
 }
 
-export default PollHeader;
+export default connect()(PollHeader);

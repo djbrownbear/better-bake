@@ -63,7 +63,7 @@ const NewPoll = ({ dispatch, id, avatar, name }) => {
 const mapStateToProps = ({ dispatch, authedUser, users }) => {
   const user = users[authedUser];
   const name = user.name;
-  const avatar = user[users.avatarURL];
+  const avatar = user.avatarURL;
 
   return{
     dispatch,
