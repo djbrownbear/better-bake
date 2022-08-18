@@ -5,6 +5,7 @@ import Dashboard from './Dashboard';
 import Leaderboard from './Leaderboard'
 import PollPage from './PollPage';
 import Custom404 from './Custom404';
+import LoginAs from './LoginAs';
 import { useEffect, Fragment } from "react";
 import { handleInitialData } from '../actions/shared';
 import { connect } from 'react-redux';
@@ -13,6 +14,7 @@ import NewPoll from './NewPoll';
 import Nav from './Nav';
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 
+// Source for RequireAuth: https://ui.dev/react-router-protected-routes-authentication
 function RequireAuth({ children, authedUser }) {
   const location = useLocation();
 
@@ -43,6 +45,14 @@ const App = (props) => {
               element={
                 <RequireAuth authedUser={props.authedUser}>
                   <Dashboard />
+                </RequireAuth>
+              }
+            />
+            <Route 
+              path="/auth"
+              element={
+                <RequireAuth authedUser={props.authedUser}>
+                  <LoginAs />
                 </RequireAuth>
               }
             />

@@ -42,7 +42,7 @@ const LoginPage = ({ dispatch, users }) => {
   return (
     <div className="login">
       {success && (
-        <Navigate to={(state?.path || "/")} /> // if successful, take user to homepage or page prior to login
+        <Navigate to={(state?.path || "/auth")} /> // if successful, take user to homepage or page prior to login
         )
       }
       {error &&
