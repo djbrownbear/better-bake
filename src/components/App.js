@@ -31,7 +31,9 @@ const App = (props) => {
     <Fragment>
       <div className="App">
         <LoadingBar />
-        <Nav />
+        {props.authedUser && 
+          <Nav /> 
+        }
         { props.loading === true ? null : (
           <Routes>
             <Route path="/login" element={<LoginPage />} />
