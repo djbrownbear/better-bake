@@ -1,46 +1,55 @@
 import { useState, useRef } from "react";
-// import { connect } from "react-redux";
-// TODO : set up navigation upon successful login
-// import { useNavigate } from "react-router-dom";
+import { connect } from "react-redux";
+import { Navigate, useLocation } from "react-router-dom";
+import { setAuthedUser } from "../actions/authedUser";
 
-const LoginPage = (props) => {
+const LoginPage = ({ dispatch, users }) => {
+  const { state } = useLocation();
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
-  let usernameRef = useRef();
-  let passwordRef = useRef();
+  const [errorUserPwd, setErrorUserPwd] = useState(false);
+  const usernameRef = useRef();
+  const passwordRef = useRef();
 
   const handleChange = (e) => {
-    // console.log(e.target.value);
-    if (e.target.name === "pwd") {
+    if (e.target.id === "pwd") {
       passwordRef.current = e.target.value;
-      return passwordRef;
-    } else if (e.target.name ==="username") {
+    } else if (e.target.id ==="username") {
       usernameRef.current = e.target.value;
-      return usernameRef;
-    } else {
-      return;
     }
   }
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if ( !usernameRef.current.value || !passwordRef.current.value) {
+
+    const user = users[usernameRef.current];
+    if (user && user.password === passwordRef.current ){
+      setSuccess(true);
+      setError(false);
+      dispatch(setAuthedUser(user.id));
+    } else if ( !usernameRef.current || !passwordRef.current) {
       setError(true);
       setSuccess(false);
+      setErrorUserPwd(false);
       return;
+    } else {
+      setErrorUserPwd(true);
+      setError(false);
+      setSuccess(false);
     }
-
-    setSuccess(true);
-    setError(false);
   }
 
   return (
     <div className="login">
-      {success &&
-        <h1 data-testid="success-header">Form Submitted!</h1>
+      {success && (
+        <Navigate to={(state?.path || "/")} /> // if successful, take user to homepage or page prior to login
+        )
       }
       {error &&
           <h1 data-testid="error-header">Error: Please ensure all fields are filled out.</h1>
+      }
+      {errorUserPwd &&
+           <h1 data-testid="errorUserPwd-header">Error: Incorrect username or password. Please try again.</h1>
       }
       <form className="login-form" onSubmit={handleSubmit}>
         <h1>Login Page</h1>
@@ -76,4 +85,10 @@ const LoginPage = (props) => {
   );
 };  
 
-export default LoginPage;
+const mapStateToProps = ({ users }) => {
+  return{
+    users,
+  };
+}
+
+export default connect(mapStateToProps)(LoginPage);

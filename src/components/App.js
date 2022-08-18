@@ -11,7 +11,15 @@ import { connect } from 'react-redux';
 import LoadingBar from 'react-redux-loading-bar';
 import NewPoll from './NewPoll';
 import Nav from './Nav';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
+
+function RequireAuth({ children, authedUser }) {
+  const location = useLocation();
+
+  return authedUser
+    ? ( children )
+    : ( <Navigate to="/login" replace state={{ path: location.pathname }} /> );
+}
 
 const App = (props) => {
 
@@ -26,12 +34,40 @@ const App = (props) => {
         <Nav />
         { props.loading === true ? null : (
           <Routes>
-            <Route path="/" element={<Dashboard />} />
             <Route path="/login" element={<LoginPage />} />
-            <Route path="/add" element={<NewPoll />} />
-            <Route path="/leaderboard" element={<Leaderboard />} />
-            <Route path="/questions/:id" element={<PollPage />} />   
             <Route path="/error" element={<Custom404 />} />        
+            <Route 
+              path="/"
+              element={
+                <RequireAuth authedUser={props.authedUser}>
+                  <Dashboard />
+                </RequireAuth>
+              }
+            />
+            <Route 
+              path="/add" 
+              element={
+                <RequireAuth authedUser={props.authedUser}>
+                  <NewPoll />
+                </RequireAuth>
+              } 
+            />
+            <Route 
+              path="/leaderboard" 
+              element={
+                <RequireAuth authedUser={props.authedUser}>
+                  <Leaderboard />
+                </RequireAuth>
+              } 
+            />
+            <Route 
+              path="/questions/:id" 
+              element={
+                <RequireAuth authedUser={props.authedUser}>
+                  <PollPage />
+                </RequireAuth>
+              } 
+            />   
           </Routes> 
         )}
       </div>
@@ -39,8 +75,9 @@ const App = (props) => {
   );
 }
 
-const mapStateToProps = ({ authedUser }) => ({
-  loading: authedUser === null,
+const mapStateToProps = ({ authedUser, polls }) => ({
+  authedUser,
+  loading: polls === null,
 });
 
 export default connect(mapStateToProps)(App);
