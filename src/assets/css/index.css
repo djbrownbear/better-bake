@@ -276,6 +276,11 @@ input[type="text"],input[type="password"] {
   width: 200px;
 }
 
+.btn-togglePollView {
+  width: 25vw;
+  margin: 0 4px;
+}
+
 /* table style */
 
 table {
