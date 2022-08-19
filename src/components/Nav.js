@@ -31,7 +31,7 @@ const Nav = ({ dispatch, authedUser, user }) => {
         <div className="avatar-wrapper nav-avatar">
           <img src={user.avatarURL} alt={`Avatar of ${user.name}`} className="avatar" />
           <span>{user.id}</span>
-          <button data-testid="logout-button" className="btn" type="button" onClick={handleClick}>Logout</button>
+          <button data-testid="logout-button" className="btn btn-logout" type="button" onClick={handleClick}>Logout</button>
         </div>
       </ul>
     </nav>

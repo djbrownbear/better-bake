@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { connect } from "react-redux";
 import { Navigate, useLocation } from "react-router-dom";
 import { setAuthedUser } from "../actions/authedUser";
@@ -10,6 +10,13 @@ const LoginPage = ({ dispatch, users }) => {
   const [errorUserPwd, setErrorUserPwd] = useState(false);
   const usernameRef = useRef();
   const passwordRef = useRef();
+
+  useEffect(() => {
+    usernameRef.current = null;
+    passwordRef.current = null;
+  },[])
+
+  console.log(`user: ${usernameRef.current}, pw: ${passwordRef.current}`);
 
   const handleChange = (e) => {
     if (e.target.id === "pwd") {
@@ -26,12 +33,12 @@ const LoginPage = ({ dispatch, users }) => {
     if (user && user.password === passwordRef.current ){
       setSuccess(true);
       setError(false);
+      setErrorUserPwd(false);
       dispatch(setAuthedUser(user.id));
     } else if ( !usernameRef.current || !passwordRef.current) {
       setError(true);
       setSuccess(false);
       setErrorUserPwd(false);
-      return;
     } else {
       setErrorUserPwd(true);
       setError(false);
