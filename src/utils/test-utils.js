@@ -3,20 +3,24 @@ import React from 'react'
 import { render } from '@testing-library/react'
 import { configureStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
-// As a basic setup, import your same slice reducers
-// import userReducer from '../features/users/userSlice'
 import { createStore } from "redux";
 import reducer from '../reducers';
 import middleware from '../middleware';
 import { MemoryRouter } from "react-router-dom";
+import { handleInitialData } from '../actions/shared';
+
+function setupStore() {
+ const store = createStore(reducer, middleware);
+ store.dispatch(handleInitialData());
+ return store;
+}
 
 export function renderWithProviders(
   ui,
   {
     preloadedState = {},
     // Automatically create a store instance if no store was passed in
-    // store = configureStore({ reducer: { user: userReducer }, preloadedState }),
-    store = createStore(reducer, middleware),
+    store = setupStore(),
     ...renderOptions
   } = {}
 ) {

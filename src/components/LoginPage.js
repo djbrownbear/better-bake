@@ -8,21 +8,23 @@ const LoginPage = ({ dispatch, users }) => {
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
   const [errorUserPwd, setErrorUserPwd] = useState(false);
+  // const [username, setUsername] = useState("");
+  // const [password, setPassword] = useState("");
   const usernameRef = useRef();
   const passwordRef = useRef();
 
   useEffect(() => {
-    usernameRef.current = null;
-    passwordRef.current = null;
+    usernameRef.current = undefined;
+    passwordRef.current = undefined;
   },[])
-
-  console.log(`user: ${usernameRef.current}, pw: ${passwordRef.current}`);
 
   const handleChange = (e) => {
     if (e.target.id === "pwd") {
       passwordRef.current = e.target.value;
+      // setPassword(e.target.value);
     } else if (e.target.id ==="username") {
       usernameRef.current = e.target.value;
+      // setUsername(e.target.value);
     }
   }
 
@@ -30,6 +32,8 @@ const LoginPage = ({ dispatch, users }) => {
     e.preventDefault();
 
     const user = users[usernameRef.current];
+    console.log(`user: ${usernameRef.current}, pw: ${passwordRef.current}`);
+    console.log(`user is:`, (user ? user : "error"));
     if (user && user.password === passwordRef.current ){
       setSuccess(true);
       setError(false);
@@ -39,8 +43,12 @@ const LoginPage = ({ dispatch, users }) => {
       setError(true);
       setSuccess(false);
       setErrorUserPwd(false);
-    } else {
+    } else if (!user || user.password !== passwordRef.current ){
       setErrorUserPwd(true);
+      setError(false);
+      setSuccess(false);
+    } else {
+      setErrorUserPwd(false);
       setError(false);
       setSuccess(false);
     }
@@ -68,7 +76,7 @@ const LoginPage = ({ dispatch, users }) => {
             id="username" 
             name="username" 
             placeholder="Enter Username" 
-            ref={usernameRef} 
+            ref={usernameRef}
             onChange={handleChange}
           />
         </div>
@@ -80,7 +88,7 @@ const LoginPage = ({ dispatch, users }) => {
             id="pwd" 
             name="pwd" 
             placeholder="Enter Password" 
-            ref={passwordRef} 
+            ref={passwordRef}
             onChange={handleChange}
           />
         </div>
