@@ -41,7 +41,7 @@ To get started developing right away:
     │   │   │   ├── sarah.png    
     │   │   │   ├── tyler.png
     │   │   │   └── zenobia.png    
-    |   │   └── logo.svg    
+    │   │   └── logo.svg    
     └── components
     │   ├── App.js # root of the app.  
     │   ├── Custom404.js # custom error page.
