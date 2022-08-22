@@ -96,7 +96,7 @@ const PollPage = (props) => {
               <p>{optionOneText}</p>
               <button
                 id="optionOne"
-                className="btn-vote" 
+                className="btn btn-vote" 
                 onClick={(e) => handleVote(e)}
                 type="button"
                 disabled={hasVoted ? true : false }
@@ -114,7 +114,7 @@ const PollPage = (props) => {
               <p>{optionTwoText}</p>
               <button
                 id="optionTwo"
-                className="btn-vote" 
+                className="btn btn-vote" 
                 onClick={(e) => handleVote(e)}
                 type="button"
                 disabled={hasVoted ? true : false }

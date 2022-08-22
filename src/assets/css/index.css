@@ -291,6 +291,23 @@ input[type="text"],input[type="password"] {
   color: rgb(255, 255, 255);
 }
 
+.btn-vote {
+  margin-bottom: 10px;
+  width: 25%;
+  padding: 10px 6px;
+  background: rgba(255, 255, 255, .2);
+  color: rgb(255, 255, 255);
+  text-transform: uppercase;
+  border: 1px solid #fff;
+  transition: all 0.7s ease;
+}
+
+.btn-vote:disabled {
+  background:rgba(0, 0, 0, .2);
+  color:rgba(65, 65, 65, 0.8);
+  border: 1px solid rgba(0, 0, 0, .2);
+}
+
 .btn-logout {
   margin: 0;
   padding: 10px 6px;

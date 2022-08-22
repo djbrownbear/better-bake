@@ -36,15 +36,6 @@ const Dashboard = ({ authedUser, polls }) => {
     <h1>Dashboard</h1>
     <div>
       <button
-        id={ans}
-        type="button"
-        className="btn btn-togglePollView"
-        onClick={toggleView}
-        disabled={showAnswered ? true : false}
-      >
-        Answered
-      </button>
-      <button
         id={unans}
         type="button"
         className="btn btn-togglePollView"
@@ -52,6 +43,15 @@ const Dashboard = ({ authedUser, polls }) => {
         disabled={showUnanswered ? true : false}
       >
         Unanswered
+      </button>
+      <button
+        id={ans}
+        type="button"
+        className="btn btn-togglePollView"
+        onClick={toggleView}
+        disabled={showAnswered ? true : false}
+      >
+        Answered
       </button>
     </div>
     {showUnanswered && 
