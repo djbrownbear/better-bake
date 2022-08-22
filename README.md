@@ -41,8 +41,8 @@ To get started developing right away:
     │   │   │   ├── sarah.png    
     │   │   │   ├── tyler.png
     │   │   │   └── zenobia.png    
-    |   │   └── logo.svg    
-    |   └── components
+    │   │   └── logo.svg    
+    └── components
     │   ├── App.js # root of the app.  
     │   ├── Custom404.js # custom error page.
     │   ├── Dashboard.js # display both answered and unanswered polls. redirect to poll details.
@@ -75,7 +75,7 @@ To get started developing right away:
     │   └── test-utils.js # helper to test with store and Provider.
     ├── index.js # This is the root of the app.      
     ├── reportWebVitals.js
-    └── setupTests.js # You should not need to modify this file. It is used for DOM rendering only.
+    └── setupTests.js # do not modify this file
 ```
 
 ## Data
