@@ -291,6 +291,10 @@ input[type="text"],input[type="password"] {
   color: rgb(255, 255, 255);
 }
 
+.btn-show-poll {
+  width: 120px;
+}
+
 .btn-vote {
   margin-bottom: 10px;
   width: 25%;
