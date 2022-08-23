@@ -298,7 +298,7 @@ input[type="text"],input[type="password"] {
 
 .btn-vote {
   margin-bottom: 10px;
-  width: 25%;
+  width: fit-content;
   padding: 10px 6px;
   background: rgba(255, 255, 255, .2);
   color: rgb(255, 255, 255);
@@ -372,4 +372,51 @@ th{
 td {
   font-size: 1.25em;
   font-weight: 600;
+}
+
+@media screen and (max-width: 820px) {
+  .nav ul {
+    flex-direction: column;
+  }
+
+  .avatar-wrapper.nav-avatar {
+    margin: auto;
+  }
+
+  img {
+    height: 30px;
+  }
+
+  .btn-togglePollView {
+    width: 160px;
+    font-size: 0.7em;
+  }
+
+  .poll-header {
+    flex-direction: column;
+    margin: 10px 0;
+  }
+
+  .poll-option {
+    width: 80%;
+    margin: 10px 0;
+  }
+
+  .poll-info {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .poll-item {
+    width: 100%;
+  }
+
+  thead, tbody tr {
+    font-size: 0.5em;
+  }
+
+  .btn-userlist {
+    width: 90vw;
+  }
 }
