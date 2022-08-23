@@ -29,6 +29,11 @@ code {
     monospace;
 }
 
+label {
+  font-size: 1.25em;
+  font-weight: 600;
+}
+
 a {
   text-decoration: none;
   color: #dcdcdc;
@@ -72,9 +77,13 @@ ul {
 }
 
 .login-field {
-  margin: 0;
+  margin: 0 0;
   padding: 20px 0 ;
   width: 80%;
+}
+
+.login-field > .btn {
+  margin: 18px 0;
 }
 
 .polls-wrapper {
@@ -86,15 +95,6 @@ ul {
   border-radius: 8px;
   flex-direction: column;
 }
-
-/* .poll-wrapper {
-  display: flex;
-  margin: auto;
-  padding: 0;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-} */
 
 .polls-flex {
   margin: auto 10px;
@@ -249,6 +249,7 @@ input[type="text"],input[type="password"] {
   border-radius: 8px;
   width: 80%;
   transform: all 0.5s ease;
+  cursor: pointer;
 }
 
 .btn:disabled {

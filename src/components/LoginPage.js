@@ -8,8 +8,6 @@ const LoginPage = ({ dispatch, users }) => {
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
   const [errorUserPwd, setErrorUserPwd] = useState(false);
-  // const [username, setUsername] = useState("");
-  // const [password, setPassword] = useState("");
   const usernameRef = useRef();
   const passwordRef = useRef();
 
@@ -21,10 +19,8 @@ const LoginPage = ({ dispatch, users }) => {
   const handleChange = (e) => {
     if (e.target.id === "pwd") {
       passwordRef.current = e.target.value;
-      // setPassword(e.target.value);
     } else if (e.target.id ==="username") {
       usernameRef.current = e.target.value;
-      // setUsername(e.target.value);
     }
   }
 
@@ -54,6 +50,17 @@ const LoginPage = ({ dispatch, users }) => {
     }
   }
 
+  const handleDemoLogin = (e) => {
+    e.preventDefault();
+
+    // NOT for production use
+    // choose a random user to login as a demo user
+    const demoUser = Object.keys(users)[Math.floor(Math.random() * (Object.keys(users).length))];
+    usernameRef.current = demoUser;
+    passwordRef.current = users[demoUser].password;
+    handleSubmit(e);
+  }
+
   return (
     <div className="login">
       {success && (
@@ -69,7 +76,7 @@ const LoginPage = ({ dispatch, users }) => {
       <form className="login-form" onSubmit={handleSubmit}>
         <h1>Login Page</h1>
         <div className="login-field">
-          <label hmtlFor="username">Username:</label><br />
+          <label hmtlFor="username">Username</label><br />
           <input 
             data-testid="username-input"
             type="text" 
@@ -81,7 +88,7 @@ const LoginPage = ({ dispatch, users }) => {
           />
         </div>
         <div className="login-field">
-          <label htmlFor="pwd">Password:</label><br />
+          <label htmlFor="pwd">Password</label><br />
           <input 
             data-testid="password-input"
             type="password" 
@@ -94,6 +101,7 @@ const LoginPage = ({ dispatch, users }) => {
         </div>
         <div className="login-field">
           <button data-testid="submit-button" className="btn" type="submit">Submit</button>
+          <button data-testid="demo-button" className="btn" type="button" onClick={handleDemoLogin}>Demo</button>
         </div>
       </form>
     </div>
