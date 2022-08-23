@@ -33,7 +33,7 @@ const App = (props) => {
     <Fragment>
       <div className="App">
         <Favicon 
-          url="https://img.icons8.com/external-flat-icons-inmotus-design/67/000000/external-Vote-vote-elections-flat-icons-inmotus-design-3.png" 
+          url="https://img.icons8.com/emoji/48/000000/ballot-box-with-ballot.png" 
         />
         <LoadingBar />
         {props.authedUser && 
