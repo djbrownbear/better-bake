@@ -1,3 +1,7 @@
+# Visit the Live Project
+
+Open [Employee-Polls App](https://aaron.aaronandanita.com/employee-polls) to view in your browser.
+
 # Employee Polls Project
 
 This is the final assessment from Udacity's React & Redux course. It is a "Would You Rather" polling app to vote between two options. Here are a few of the key features:
