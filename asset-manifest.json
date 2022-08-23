@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/employee-polls/static/css/main.d7f6bb39.css",
-    "main.js": "/employee-polls/static/js/main.3e40ef21.js",
+    "main.css": "/employee-polls/static/css/main.e6ab5202.css",
+    "main.js": "/employee-polls/static/js/main.dd69d65b.js",
     "static/js/787.da99fa10.chunk.js": "/employee-polls/static/js/787.da99fa10.chunk.js",
     "index.html": "/employee-polls/index.html",
-    "main.d7f6bb39.css.map": "/employee-polls/static/css/main.d7f6bb39.css.map",
-    "main.3e40ef21.js.map": "/employee-polls/static/js/main.3e40ef21.js.map",
+    "main.e6ab5202.css.map": "/employee-polls/static/css/main.e6ab5202.css.map",
+    "main.dd69d65b.js.map": "/employee-polls/static/js/main.dd69d65b.js.map",
     "787.da99fa10.chunk.js.map": "/employee-polls/static/js/787.da99fa10.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.d7f6bb39.css",
-    "static/js/main.3e40ef21.js"
+    "static/css/main.e6ab5202.css",
+    "static/js/main.dd69d65b.js"
   ]
 }
