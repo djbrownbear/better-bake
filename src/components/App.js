@@ -1,5 +1,4 @@
 import React from 'react';
-import '../assets/css/App.css';
 import LoginPage from './LoginPage';
 import Dashboard from './Dashboard';
 import Leaderboard from './Leaderboard'
@@ -13,6 +12,7 @@ import LoadingBar from 'react-redux-loading-bar';
 import NewPoll from './NewPoll';
 import Nav from './Nav';
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import Favicon from "react-favicon";
 
 // Source for RequireAuth: https://ui.dev/react-router-protected-routes-authentication
 function RequireAuth({ children, authedUser }) {
@@ -32,6 +32,9 @@ const App = (props) => {
   return (
     <Fragment>
       <div className="App">
+        <Favicon 
+          url="https://img.icons8.com/external-flat-icons-inmotus-design/67/000000/external-Vote-vote-elections-flat-icons-inmotus-design-3.png" 
+        />
         <LoadingBar />
         {props.authedUser && 
           <Nav /> 
