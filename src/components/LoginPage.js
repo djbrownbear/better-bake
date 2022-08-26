@@ -28,8 +28,7 @@ const LoginPage = ({ dispatch, users }) => {
     e.preventDefault();
 
     const user = users[usernameRef.current];
-    console.log(`user: ${usernameRef.current}, pw: ${passwordRef.current}`);
-    console.log(`user is:`, (user ? user : "error"));
+
     if (user && user.password === passwordRef.current ){
       setSuccess(true);
       setError(false);
@@ -74,7 +73,8 @@ const LoginPage = ({ dispatch, users }) => {
            <h1 data-testid="errorUserPwd-header">Error: Incorrect username or password. Please try again.</h1>
       }
       <form className="login-form" onSubmit={handleSubmit}>
-        <h1>Login Page</h1>
+        <img className="app-logo" src="https://img.icons8.com/emoji/48/000000/ballot-box-with-ballot.png" alt="Voting Ballot Box" />
+        <h1>Sign in to<br/>Would You Rather</h1>
         <div className="login-field">
           <label hmtlFor="username">Username</label><br />
           <input 

@@ -16,7 +16,6 @@ const Dashboard = ({ authedUser, polls }) => {
   const toggleView = (e) => {
     e.preventDefault();
 
-    console.log(e.target.id);
     switch (e.target.id) {
       case ans:
         setShowAnswered(showAnswered === false ? true : false);
