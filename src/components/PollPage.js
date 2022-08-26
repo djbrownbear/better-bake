@@ -55,7 +55,6 @@ const PollPage = (props) => {
   const hasVotedOptionOne = optionOneVotes.includes(authedUser);
   const hasVotedOptionTwo = optionTwoVotes.includes(authedUser);
 
-  console.log(`Vote count is: ${allVotesCount}, Votes are: ${allVotes}, Did You Vote: ${hasVoted}`);
  
 
   function getVotePercentage(val) {
