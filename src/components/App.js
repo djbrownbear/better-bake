@@ -36,9 +36,7 @@ const App = (props) => {
           url="https://img.icons8.com/emoji/48/000000/ballot-box-with-ballot.png" 
         />
         <LoadingBar />
-        {props.authedUser && 
-          <Nav /> 
-        }
+        <Nav /> 
         { props.loading === true ? null : (
           <Routes>
             <Route path="/login" element={<LoginPage />} />

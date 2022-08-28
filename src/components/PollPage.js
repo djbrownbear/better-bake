@@ -51,7 +51,6 @@ const PollPage = (props) => {
   const optionTwoText = optionTwo.text;
 
   const allVotesCount = optionOneVotes.length + optionTwoVotes.length;
-  const allVotes = optionOneVotes.concat(optionTwoVotes);
   const hasVotedOptionOne = optionOneVotes.includes(authedUser);
   const hasVotedOptionTwo = optionTwoVotes.includes(authedUser);
 

@@ -73,7 +73,6 @@ const LoginPage = ({ dispatch, users }) => {
            <h1 data-testid="errorUserPwd-header">Error: Incorrect username or password. Please try again.</h1>
       }
       <form className="login-form" onSubmit={handleSubmit}>
-        <img className="app-logo" src="https://img.icons8.com/emoji/48/000000/ballot-box-with-ballot.png" alt="Voting Ballot Box" />
         <h1>Sign in to<br/>Would You Rather</h1>
         <div className="login-field">
           <label hmtlFor="username">Username</label><br />
@@ -100,8 +99,8 @@ const LoginPage = ({ dispatch, users }) => {
           />
         </div>
         <div className="login-field">
-          <button data-testid="submit-button" className="btn" type="submit">Submit</button>
-          <button data-testid="demo-button" className="btn" type="button" onClick={handleDemoLogin}>Demo</button>
+          <button data-testid="submit-button" className="btn btn-login" type="submit">Submit</button>
+          <button data-testid="demo-button" className="btn btn-login" type="button" onClick={handleDemoLogin}>Demo</button>
         </div>
       </form>
     </div>
