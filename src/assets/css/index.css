@@ -412,7 +412,7 @@ td {
 
   .nav .desktop-menu-login,
   .nav ul li:not(:first-child), 
-  .nav ul .avatar-wrapper.nav-avatar {
+  .nav .avatar-wrapper.nav-avatar {
     display: none;
   }
   
@@ -446,8 +446,10 @@ td {
     display: inline-flex;
     padding: 10px;
   }
-  .nav.responsive ul .avatar-wrapper.nav-avatar {
+  .nav.responsive .avatar-wrapper.nav-avatar {
     display: inline-flex;
+    width: 100%;
+    align-self: flex-end;
   }
   
   .nav.responsive ul {

@@ -50,11 +50,13 @@ const Nav = ({ dispatch, authedUser, user }) => {
         </ul>
       }
       {authedUser &&
-        <div className="avatar-wrapper nav-avatar">
-          <img src={user.avatarURL} alt={`Avatar of ${user.name}`} className="avatar" />
-          <span>{user.id}</span>
-          <button data-testid="logout-button" className="btn btn-logout" type="button" onClick={handleClick}>Logout</button>
-        </div>
+        <ul className="avatar-wrapper nav-avatar">
+          <li>
+            <img src={user.avatarURL} alt={`Avatar of ${user.name}`} className="avatar" />
+            <span>{user.id}</span>
+            <button data-testid="logout-button" className="btn btn-logout" type="button" onClick={handleClick}>Logout</button>
+          </li>
+        </ul>
       }
     </nav>
   );
