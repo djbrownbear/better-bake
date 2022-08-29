@@ -35,54 +35,58 @@ const App = (props) => {
         <Favicon 
           url="https://img.icons8.com/emoji/48/000000/ballot-box-with-ballot.png" 
         />
-        <LoadingBar />
-        <Nav /> 
-        { props.loading === true ? null : (
-          <Routes>
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/error" element={<Custom404 />} />        
-            <Route 
-              path="/"
-              element={
-                <RequireAuth authedUser={props.authedUser}>
-                  <Dashboard />
-                </RequireAuth>
-              }
-            />
-            <Route 
-              path="/auth"
-              element={
-                <RequireAuth authedUser={props.authedUser}>
-                  <LoginAs />
-                </RequireAuth>
-              }
-            />
-            <Route 
-              path="/add" 
-              element={
-                <RequireAuth authedUser={props.authedUser}>
-                  <NewPoll />
-                </RequireAuth>
-              } 
-            />
-            <Route 
-              path="/leaderboard" 
-              element={
-                <RequireAuth authedUser={props.authedUser}>
-                  <Leaderboard />
-                </RequireAuth>
-              } 
-            />
-            <Route 
-              path="/questions/:id" 
-              element={
-                <RequireAuth authedUser={props.authedUser}>
-                  <PollPage />
-                </RequireAuth>
-              } 
-            />   
-          </Routes> 
-        )}
+        <div className="page-container">
+          <LoadingBar />
+          <Nav /> 
+          <div className="page-wrapper">
+            { props.loading === true ? null : (
+              <Routes>
+                <Route path="/login" element={<LoginPage />} />
+                <Route path="/error" element={<Custom404 />} />        
+                <Route 
+                  path="/"
+                  element={
+                    <RequireAuth authedUser={props.authedUser}>
+                      <Dashboard />
+                    </RequireAuth>
+                  }
+                />
+                <Route 
+                  path="/auth"
+                  element={
+                    <RequireAuth authedUser={props.authedUser}>
+                      <LoginAs />
+                    </RequireAuth>
+                  }
+                />
+                <Route 
+                  path="/add" 
+                  element={
+                    <RequireAuth authedUser={props.authedUser}>
+                      <NewPoll />
+                    </RequireAuth>
+                  } 
+                />
+                <Route 
+                  path="/leaderboard" 
+                  element={
+                    <RequireAuth authedUser={props.authedUser}>
+                      <Leaderboard />
+                    </RequireAuth>
+                  } 
+                />
+                <Route 
+                  path="/questions/:id" 
+                  element={
+                    <RequireAuth authedUser={props.authedUser}>
+                      <PollPage />
+                    </RequireAuth>
+                  } 
+                />   
+              </Routes> 
+            )}
+          </div>
+        </div>
       </div>
     </Fragment>
   );
