@@ -43,13 +43,13 @@ const Nav = ({ dispatch, authedUser, user }) => {
         </div>
         <ul className="desktop-menu-main">
           <li>
-            <Link to="/add">New Poll</Link>
+            <Link to="/add"><span>New Poll</span></Link>
           </li>
           <li>
-            <Link to="/leaderboard">Leaderboard</Link>
+            <Link to="/leaderboard"><span>Leaderboard</span></Link>
           </li>
           <li>
-            <Link to="/auth">Switch User</Link>
+            <Link to="/auth"><span>Switch User</span></Link>
           </li>
         </ul>
         <button className="icon close" type="button" onClick={toggleNav}><i className="fa fa-bars"></i></button>

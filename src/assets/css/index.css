@@ -6,7 +6,7 @@
 *,
 *:before,
 *:after {
-  box-sizing: border-box;
+  box-sizing: inherit;
 }
 
 html {
@@ -340,10 +340,14 @@ input[type="text"],input[type="password"] {
   color: rgb(255, 255, 255);
 }
 
+.btn-togglePollView:hover:not(:disabled) {
+  filter: none;
+}
 .btn-togglePollView:disabled {
   background-color: rgb(255, 255, 255);
   color:rgb(0, 0, 0);
 }
+
 
 .btn-show-poll {
   width: 120px;
@@ -439,6 +443,8 @@ td {
     float: right;
     display: block;
     margin-left: auto;
+    background: transparent;
+    border: none;
   }
 
   .nav.responsive {
@@ -460,6 +466,7 @@ td {
   .nav.responsive .top-bar .icon {
     float: left;
     margin-left: auto;
+    margin-top: 10px;
   }
 
   .nav.responsive .desktop-menu-social {
@@ -497,6 +504,18 @@ td {
   .nav.responsive .site-menu-inner > * {
     color: rgb(0, 0, 0);
     font-weight: 500;
+  }
+
+  .nav.responsive .desktop-menu-main li {
+    border-bottom: 1px solid #fff;
+    margin: 0;
+    width: 100%;
+  }
+  
+  .desktop-menu-main li a {
+    display: block;
+    letter-spacing: .4px;
+    text-align: left;
   }
 
   .nav.responsive ul {
