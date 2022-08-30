@@ -34,7 +34,10 @@ const Poll = (props) => {
 
   return (
     <div className="polls">
-      <p>{ name }</p>
+      <div className="avatar-wrapper poll">
+        <img src={props.pollAvatar} alt={`img of ${ name }`}/>
+        <span>{ name }</span>
+      </div>
       <span>{ formatDate(timestamp) }</span>
       <button
         className="btn btn-show-poll" 
@@ -48,12 +51,14 @@ const Poll = (props) => {
 
 const mapStateToProps = ({ authedUser, users, polls }, {id}) => {
   const poll = polls[id];
+  const pollAvatar = users[poll.author].avatarURL;
 
   return {
     authedUser,
     poll: poll
       ? formatPoll(poll, users[poll.author], authedUser)
       : null, 
+    pollAvatar,
   };
 };
 
