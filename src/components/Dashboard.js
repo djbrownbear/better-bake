@@ -16,14 +16,24 @@ const Dashboard = ({ authedUser, polls }) => {
   const toggleView = (e) => {
     e.preventDefault();
 
+    const el = document.getElementById(e.target.id);
+    const elOpposite = document.getElementById(e.target.id === ans ? unans : ans);
+    
+    const setSelected = (e) => {
+      el.classList.add('selected');
+      elOpposite.classList.remove('selected');
+    }
+
     switch (e.target.id) {
       case ans:
         setShowAnswered(showAnswered === false ? true : false);
         setShowUnanswered(showUnanswered === true ? false : true);
+        setSelected();
         break;
       case unans:
         setShowAnswered(showAnswered === true ? false : true);
         setShowUnanswered(showUnanswered === false ? true : false);
+        setSelected();
         break;
       default:
         return;
@@ -31,9 +41,9 @@ const Dashboard = ({ authedUser, polls }) => {
   }
 
   return (
-  <div>
+  <div className="page-wrapper inner">
     <h1>Dashboard</h1>
-    <div>
+    <div className="toggle-container">
       <button
         id={unans}
         type="button"

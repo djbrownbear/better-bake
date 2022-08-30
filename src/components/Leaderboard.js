@@ -4,7 +4,7 @@ const Leaderboard = ({ usersList }) => {
   const defaultAvatar = "https://img.icons8.com/external-others-inmotus-design/67/000000/external-Avatar-round-icons-others-inmotus-design-5.png";
 
   return (
-    <div>
+    <div className="page-wrapper inner">
       <h1>Leaderboard</h1>
       <table>
         <thead>
