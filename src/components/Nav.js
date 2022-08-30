@@ -11,7 +11,8 @@ const Nav = ({ dispatch, authedUser, user }) => {
 
   const handleClick = (e) => {
     e.preventDefault();
-
+    const el = document.querySelector(".page-container");
+    el.style.backgroundColor = "var(--bg-color-primary)";
     dispatch(logoutAuthedUser());
     navigate("/");
   }

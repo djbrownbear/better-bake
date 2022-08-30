@@ -13,7 +13,7 @@ const LoginAs = ({ dispatch, authedUser,usersList}) => {
   }
 
   return (
-    <div>
+    <div className="page-wrapper inner">
       <h1>Log In As</h1>
       <div className="userlist">
         {usersList.map((user) => (  

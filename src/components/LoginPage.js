@@ -34,6 +34,8 @@ const LoginPage = ({ dispatch, users }) => {
       setError(false);
       setErrorUserPwd(false);
       dispatch(setAuthedUser(user.id));
+      const el = document.querySelector(".page-container");
+      el.style.backgroundColor = "var(--bg-color-default)";
     } else if ( !usernameRef.current || !passwordRef.current) {
       setError(true);
       setSuccess(false);

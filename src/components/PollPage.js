@@ -83,7 +83,7 @@ const PollPage = (props) => {
   };
  
   return (
-      <div>
+      <div className="page-wrapper inner">
         <PollHeader 
           avatar={avatar}
           name={name}
@@ -91,7 +91,8 @@ const PollPage = (props) => {
         />
         <div className="poll-info">
           <div className={"poll-option " + (hasVotedOptionOne ? "vote-choice": "")}>
-              <p>{optionOneText}</p>
+            <div className="poll-option-wrapper-inner">
+              <h3>{optionOneText}</h3>
               <button
                 id="optionOne"
                 className="btn btn-vote" 
@@ -107,9 +108,11 @@ const PollPage = (props) => {
                   <span>{getVotePercentage("optionOne")}</span>
                 </p>
               }
+            </div>
           </div>
           <div className={"poll-option " + (hasVotedOptionTwo ? "vote-choice": "")}>
-              <p>{optionTwoText}</p>
+            <div className="poll-option-wrapper-inner">
+              <h3>{optionTwoText}</h3>
               <button
                 id="optionTwo"
                 className="btn btn-vote" 
@@ -125,6 +128,7 @@ const PollPage = (props) => {
                   <span>{getVotePercentage("optionTwo")}</span>
                 </p>
               }
+            </div>
           </div>
         </div>
       </div>

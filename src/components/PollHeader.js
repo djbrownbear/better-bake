@@ -6,11 +6,11 @@ const PollHeader = ({ avatar, name, timestamp}) => {
 
   return (
     <div className="poll-header">
+      <h2>Would You Rather...</h2>
       <div className="avatar-wrapper">
         <img src={avatar ? avatar : defaultAvatar} alt={`Avatar of ${name}`} className="avatar" />
         <span>{`Poll by ${name}`}</span>
       </div>
-      <h2>Would You Rather...</h2>
       <span>{ formatDate(timestamp) }</span>
     </div>
   );

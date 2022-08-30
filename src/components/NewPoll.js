@@ -33,7 +33,7 @@ const NewPoll = ({ dispatch, id, avatar, name }) => {
   };
 
   return (
-    <div className="new-poll-wrapper">
+    <div className="page-wrapper inner">
       <form name="new-poll" onSubmit={handleSubmit}>
         <h1>New Poll</h1>
         <PollHeader 
