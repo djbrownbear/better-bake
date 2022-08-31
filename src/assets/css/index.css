@@ -255,6 +255,7 @@ ul {
   align-items: center;
   padding: 4px;
   margin: 0 6px;
+  margin-top: 40px;
   width: 50%;
   /* height: 25vh; */
   background: var(--bg-color-secondary);
@@ -270,6 +271,15 @@ ul {
 .poll-option.vote-choice {
   background: var(--bg-color-primary);
   color: var(--color-secondary);
+}
+
+.poll-option-img {
+  position: relative;
+  display: flex;
+  width: 100%;
+  transform: translateY(-16px);
+  border-radius: 8px;
+  z-index: 2;
 }
 
 .poll-details {

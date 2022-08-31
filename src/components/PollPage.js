@@ -90,12 +90,9 @@ const PollPage = (props) => {
           timestamp={timestamp}
         />
         <div className="poll-info">
-          <img 
-            src="https://assets.adobe.com/public/f78c514e-8871-4d0c-5ee0-a811ecfe477e"
-            alt="cake"
-          />
           <div className={"poll-option " + (hasVotedOptionOne ? "vote-choice": "")}>
             <div className="poll-option-wrapper-inner">
+              <img className="poll-option-img" src={ props.bakerOne } alt={`${optionOneText}`} />
               <h3>{optionOneText}</h3>
               <button
                 id="optionOne"
@@ -116,6 +113,7 @@ const PollPage = (props) => {
           </div>
           <div className={"poll-option " + (hasVotedOptionTwo ? "vote-choice": "")}>
             <div className="poll-option-wrapper-inner">
+              <img className="poll-option-img" src={ props.bakerTwo } alt={`${optionTwoText}`} />
               <h3>{optionTwoText}</h3>
               <button
                 id="optionTwo"
@@ -139,15 +137,25 @@ const PollPage = (props) => {
   )
 };
 
-const mapStateToProps = ({ authedUser, users, polls }, props) => {
+const mapStateToProps = ({ authedUser, users, polls, bakers }, props) => {
   const { id } = props.router.params;
   const poll = polls[id];
+  const bOneSeason = Object.keys(poll.optionOne.season);
+  const bTwoSeason = Object.keys(poll.optionTwo.season);
+  const bOneEpisode = poll.optionOne.season[bOneSeason].episode;
+  const bTwoEpisode = poll.optionTwo.season[bTwoSeason].episode;
+  const bakerOne = bakers[bOneSeason].baker[poll.optionOne.baker].imageURL[bOneEpisode].bakeURL;
+  const bakerTwo = bakers[bTwoSeason].baker[poll.optionTwo.baker].imageURL[bTwoEpisode].bakeURL;
+  console.log(bakerOne);
+  console.log(poll.optionOne.season[bOneSeason].episode)
 
   return {
     authedUser,
     poll: poll
       ? formatPoll(poll, users[poll.author], authedUser)
       : null, 
+    bakerOne,
+    bakerTwo,
   };
 };
 

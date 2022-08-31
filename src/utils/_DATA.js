@@ -55,10 +55,14 @@ let questions = {
     optionOne: {
       votes: ['aaronb'],
       text: 'Flo\'s Davy Jones\' Locker Bread Sculpture',
+      season: {"08": {episode: '0803'}}, 
+      baker: 'Flo'
     },
     optionTwo: {
       votes: [],
-      text: 'Sophie\'s Picnic Basket Bread Sculpture'
+      text: 'Sophie\'s Picnic Basket Bread Sculpture',
+      season: {"08": {episode: '0803'}}, 
+      baker: 'Sophie'
     }
   },
   "6ni6ok3ym7mf1p33lnez": {
@@ -68,10 +72,14 @@ let questions = {
     optionOne: {
       votes: [],
       text: 'Stacey\'s Ascot Hat Bread Sculpture',
+      season: {"08": {episode: '0803'}}, 
+      baker: 'Stacey'
     },
     optionTwo: {
       votes: ['lennym', 'aaronb'],
-      text: 'Steven\'s The Bag I Knead Bread Sculpture'
+      text: 'Steven\'s The Bag I Knead Bread Sculpture',
+      season: {"08": {episode: '0803'}}, 
+      baker: 'Steven'
     }
   },
   "am8ehyc8byjqgar0jgpub9": {
@@ -81,10 +89,14 @@ let questions = {
     optionOne: {
       votes: [],
       text: 'Liam\'s Kneadapolitan Bread Sculpture',
+      season: {"08": {episode: '0803'}}, 
+      baker: 'Liam'
     },
     optionTwo: {
       votes: ['aaronb'],
-      text: 'Kate\'s Kraken Bread Sculpture'
+      text: 'Kate\'s Kraken Bread Sculpture',
+      season: {"08": {episode: '0803'}}, 
+      baker: 'Kate'
     }
   },
   "loxhs1bqm25b708cmbf3g": {
@@ -94,10 +106,14 @@ let questions = {
     optionOne: {
       votes: [],
       text: 'Yan\'s Chequerboard Pie',
+      season: {"08": {episode: '0806'}}, 
+      baker: 'Yan'
     },
     optionTwo: {
       votes: ['aaronb'],
-      text: 'Kate\'s Potato Curry Pie with Mango & Chilli Glaze'
+      text: 'Kate\'s Potato Curry Pie with Mango & Chilli Glaze',
+      season: {"08": {episode: '0806'}}, 
+      baker: 'Kate'
     }
   },
   "vthrdm985a262al8qx3do": {
@@ -107,10 +123,14 @@ let questions = {
     optionOne: {
       votes: ['anitab'],
       text: 'Rahul\'s Butterfly Pie',
+      season: {"09": {episode: '0906'}}, 
+      baker: 'Rahul'
     },
     optionTwo: {
       votes: ['lennym'],
-      text: 'Briony\'s "Down the Rabbit Hole" Banquet Pie'
+      text: 'Briony\'s "Down the Rabbit Hole" Banquet Pie',
+      season: {"09": {episode: '0906'}},
+      baker: 'Briony'
     }
   },
   "xj352vofupe1dqz9emx13r": {
@@ -120,10 +140,14 @@ let questions = {
     optionOne: {
       votes: ['lennym', 'maddiem'],
       text: 'Jon\'s Welsh Dragon Pie',
+      season: {"09": {episode: '0906'}},
+      baker: 'Jon'
     },
     optionTwo: {
       votes: ['anitab'],
-      text: 'Kim-Joy\'s Silke the Vegetarian Mermaid'
+      text: 'Kim-Joy\'s Silke the Vegetarian Mermaid',
+      season: {"09": {episode: '0906'}},
+      baker: 'Kim-Joy'
     }
   },
 }
@@ -136,84 +160,84 @@ let bakers = {
         id: 'Flo', 
         imageURL: {
           "0803": 
-            {id: '0803', URL:"https://imgur.com/J0t0VEC"}, 
+            {id: '0803', bakeURL:"https://i.imgur.com/J0t0VEC.png"}, 
         }
       }, 
       "James": {
         id: 'James', 
         imageURL: {
           "0803": 
-            {id: '0803', URL:"https://imgur.com/sdA4k1m"}, 
+            {id: '0803', bakeURL:"https://i.imgur.com/sdA4k1m.png"}, 
         }
       },  
       "Julia": {
         id: 'Julia', 
         imageURL: {
           "0803": 
-            {id: '0803', URL:"https://imgur.com/SYdRtGH"}, 
+            {id: '0803', bakeURL:"https://i.imgur.com/SYdRtGH.png"}, 
           "0806": 
-            {id: '0806', URL:"https://imgur.com/1vpJjLS"}
+            {id: '0806', bakeURL:"https://i.imgur.com/1vpJjLS.png"}
         }
       },  
       "Kate": {
         id: 'Kate', 
         imageURL: {
           "0803": 
-            {id: '0803', URL:"https://imgur.com/GSqOalb"}, 
+            {id: '0803', bakeURL:"https://i.imgur.com/GSqOalb.png"}, 
           "0806": 
-            {id: '0806', URL:"https://imgur.com/cSvbkV4"}
+            {id: '0806', bakeURL:"https://i.imgur.com/cSvbkV4.png"}
         }
       },  
       "Liam": {
         id: 'Liam', 
         imageURL: {
           "0803": 
-            {id: '0803', URL:"https://imgur.com/PBtPyax"}, 
+            {id: '0803', bakeURL:"https://i.imgur.com/PBtPyax.png"}, 
           "0806": 
-            {id: '0806', URL:"https://imgur.com/1dyOdk8"}
+            {id: '0806', bakeURL:"https://i.imgur.com/1dyOdk8.png"}
         }
       },  
       "Sophie": {
         id: 'Sophie', 
         imageURL: {
           "0803": 
-            {id: '0803', URL:"https://imgur.com/L38ueiN"}, 
+            {id: '0803', bakeURL:"https://i.imgur.com/L38ueiN.png"}, 
           "0806": 
-            {id: '0806', URL:"https://imgur.com/EfPNsco"}
+            {id: '0806', bakeURL:"https://i.imgur.com/EfPNsco.png"}
         }
       },  
       "Stacey": {
         id: 'Stacey', 
         imageURL: {
           "0803": 
-            {id: '0803', URL:"https://imgur.com/JEyxvlP"}, 
+            {id: '0803', bakeURL:"https://i.imgur.com/JEyxvlP.png"}, 
           "0806": 
-            {id: '0806', URL:"https://imgur.com/wNlfzTC"}
+            {id: '0806', bakeURL:"https://i.imgur.com/wNlfzTC.png"}
         }
       }, 
       "Steven": {
         id: 'Steven', 
         imageURL: {
           "0803": 
-            {id: '0803', URL:"https://imgur.com/yyJpbJC"}, 
+            {id: '0803', bakeURL:"https://i.imgur.com/yyJpbJC.png"}, 
           "0806": 
-            {id: '0806', URL:"https://imgur.com/NNdLoYP"}
+            {id: '0806', bakeURL:"https://i.imgur.com/NNdLoYP.png"}
         }
       },  
       "Tom": {
         id: 'Tom', 
         imageURL: {
           "0803": 
-            {id: '0803', URL:"https://imgur.com/4fmdOTt"}, 
+            {id: '0803', bakeURL:"https://i.imgur.com/4fmdOTt.png"}, 
         }
       },
       "Yan": {
         id: 'Yan', 
         imageURL: {
           "0803": 
-            {id: '0803', URL:"https://imgur.com/C6TZwf5"}, 
+            {id: '0803', bakeURL:"https://i.imgur.com/C6TZwf5.png"}, 
           "0806": 
-            {id: '0806', URL:"https://imgur.com/PD2pMgD"}
+            {id: '0806', bakeURL:"https://i.imgur.com/PD2pMgD.png"}
         }
       }, 
     }
@@ -225,49 +249,49 @@ let bakers = {
         id: 'Briony', 
         imageURL: {
           "0906": 
-            {id: "0906", URL:"https://imgur.com/79fLjn9"}, 
+            {id: "0906", bakeURL:"https://i.imgur.com/79fLjn9.png"}, 
         }
       }, 
       "Dan": {
         id: 'Dan', 
         imageURL: {
           "0906": 
-            {id: '0906', URL:"https://imgur.com/cqTobCf"}, 
+            {id: '0906', bakeURL:"https://i.imgur.com/cqTobCf.png"}, 
         }
       },  
       "Jon": {
         id: 'Jon', 
         imageURL: {
           "0906": 
-            {id: '0906', URL:"https://imgur.com/MB1FtlZ"}
+            {id: '0906', bakeURL:"https://i.imgur.com/MB1FtlZ.png"}
         }
       },  
       "Kim-Joy": {
         id: 'Kim-Joy', 
         imageURL: {
           "0806": 
-            {id: '0806', URL:"https://imgur.com/84Y8n0G"}
+            {id: '0806', bakeURL:"https://i.imgur.com/84Y8n0G.png"}
         }
       },  
       "Manon": {
         id: 'Manon', 
         imageURL: {
           "0806": 
-            {id: '0806', URL:"https://imgur.com/FowkCpl"}
+            {id: '0806', bakeURL:"https://i.imgur.com/FowkCpl.png"}
         }
       },  
       "Rahul": {
         id: 'Rahul', 
         imageURL: {
           "0806": 
-            {id: '0806', URL:"https://imgur.com/OfKpkVr"}
+            {id: '0806', bakeURL:"https://i.imgur.com/OfKpkVr.png"}
         }
       },  
       "Ruby": {
         id: 'Ruby', 
         imageURL: {
           "0806": 
-            {id: '0806', URL:"https://imgur.com/aBYze1Z"}
+            {id: '0806', bakeURL:"https://i.imgur.com/aBYze1Z.png"}
         }
       }, 
     }, 
