@@ -55,13 +55,15 @@ let questions = {
     optionOne: {
       votes: ['aaronb'],
       text: 'Flo\'s Davy Jones\' Locker Bread Sculpture',
-      season: {"08": {episode: '0803'}}, 
+      season: '08', 
+      episode: '0803',
       baker: 'Flo'
     },
     optionTwo: {
       votes: [],
       text: 'Sophie\'s Picnic Basket Bread Sculpture',
-      season: {"08": {episode: '0803'}}, 
+      season: '08', 
+      episode: '0803',
       baker: 'Sophie'
     }
   },
@@ -72,13 +74,15 @@ let questions = {
     optionOne: {
       votes: [],
       text: 'Stacey\'s Ascot Hat Bread Sculpture',
-      season: {"08": {episode: '0803'}}, 
+      season: '08', 
+      episode: '0803',
       baker: 'Stacey'
     },
     optionTwo: {
       votes: ['lennym', 'aaronb'],
       text: 'Steven\'s The Bag I Knead Bread Sculpture',
-      season: {"08": {episode: '0803'}}, 
+      season: '08', 
+      episode: '0803',
       baker: 'Steven'
     }
   },
@@ -89,13 +93,15 @@ let questions = {
     optionOne: {
       votes: [],
       text: 'Liam\'s Kneadapolitan Bread Sculpture',
-      season: {"08": {episode: '0803'}}, 
+      season: '08', 
+      episode: '0803',
       baker: 'Liam'
     },
     optionTwo: {
       votes: ['aaronb'],
       text: 'Kate\'s Kraken Bread Sculpture',
-      season: {"08": {episode: '0803'}}, 
+      season: '08', 
+      episode: '0803',
       baker: 'Kate'
     }
   },
@@ -106,13 +112,15 @@ let questions = {
     optionOne: {
       votes: [],
       text: 'Yan\'s Chequerboard Pie',
-      season: {"08": {episode: '0806'}}, 
+      season: '08', 
+      episode: '0806', 
       baker: 'Yan'
     },
     optionTwo: {
       votes: ['aaronb'],
       text: 'Kate\'s Potato Curry Pie with Mango & Chilli Glaze',
-      season: {"08": {episode: '0806'}}, 
+      season: '08', 
+      episode: '0806', 
       baker: 'Kate'
     }
   },
@@ -123,13 +131,15 @@ let questions = {
     optionOne: {
       votes: ['anitab'],
       text: 'Rahul\'s Butterfly Pie',
-      season: {"09": {episode: '0906'}}, 
+      season: '09', 
+      episode: '0906', 
       baker: 'Rahul'
     },
     optionTwo: {
       votes: ['lennym'],
       text: 'Briony\'s "Down the Rabbit Hole" Banquet Pie',
-      season: {"09": {episode: '0906'}},
+      season: '09', 
+      episode: '0906', 
       baker: 'Briony'
     }
   },
@@ -140,13 +150,15 @@ let questions = {
     optionOne: {
       votes: ['lennym', 'maddiem'],
       text: 'Jon\'s Welsh Dragon Pie',
-      season: {"09": {episode: '0906'}},
+      season: '09', 
+      episode: '0906', 
       baker: 'Jon'
     },
     optionTwo: {
       votes: ['anitab'],
       text: 'Kim-Joy\'s Silke the Vegetarian Mermaid',
-      season: {"09": {episode: '0906'}},
+      season: '09', 
+      episode: '0906', 
       baker: 'Kim-Joy'
     }
   },
@@ -158,21 +170,21 @@ let bakers = {
     baker: {
       "Flo": {
         id: 'Flo', 
-        imageURL: {
+        episodes: {
           "0803": 
             {id: '0803', bakeURL:"https://i.imgur.com/J0t0VEC.png"}, 
         }
       }, 
       "James": {
         id: 'James', 
-        imageURL: {
+        episodes: {
           "0803": 
             {id: '0803', bakeURL:"https://i.imgur.com/sdA4k1m.png"}, 
         }
       },  
       "Julia": {
         id: 'Julia', 
-        imageURL: {
+        episodes: {
           "0803": 
             {id: '0803', bakeURL:"https://i.imgur.com/SYdRtGH.png"}, 
           "0806": 
@@ -181,7 +193,7 @@ let bakers = {
       },  
       "Kate": {
         id: 'Kate', 
-        imageURL: {
+        episodes: {
           "0803": 
             {id: '0803', bakeURL:"https://i.imgur.com/GSqOalb.png"}, 
           "0806": 
@@ -190,7 +202,7 @@ let bakers = {
       },  
       "Liam": {
         id: 'Liam', 
-        imageURL: {
+        episodes: {
           "0803": 
             {id: '0803', bakeURL:"https://i.imgur.com/PBtPyax.png"}, 
           "0806": 
@@ -199,7 +211,7 @@ let bakers = {
       },  
       "Sophie": {
         id: 'Sophie', 
-        imageURL: {
+        episodes: {
           "0803": 
             {id: '0803', bakeURL:"https://i.imgur.com/L38ueiN.png"}, 
           "0806": 
@@ -208,7 +220,7 @@ let bakers = {
       },  
       "Stacey": {
         id: 'Stacey', 
-        imageURL: {
+        episodes: {
           "0803": 
             {id: '0803', bakeURL:"https://i.imgur.com/JEyxvlP.png"}, 
           "0806": 
@@ -217,7 +229,7 @@ let bakers = {
       }, 
       "Steven": {
         id: 'Steven', 
-        imageURL: {
+        episodes: {
           "0803": 
             {id: '0803', bakeURL:"https://i.imgur.com/yyJpbJC.png"}, 
           "0806": 
@@ -226,14 +238,14 @@ let bakers = {
       },  
       "Tom": {
         id: 'Tom', 
-        imageURL: {
+        episodes: {
           "0803": 
             {id: '0803', bakeURL:"https://i.imgur.com/4fmdOTt.png"}, 
         }
       },
       "Yan": {
         id: 'Yan', 
-        imageURL: {
+        episodes: {
           "0803": 
             {id: '0803', bakeURL:"https://i.imgur.com/C6TZwf5.png"}, 
           "0806": 
@@ -247,51 +259,51 @@ let bakers = {
     baker: {
       "Briony": {
         id: 'Briony', 
-        imageURL: {
+        episodes: {
           "0906": 
-            {id: "0906", bakeURL:"https://i.imgur.com/79fLjn9.png"}, 
+            {id: '0906', bakeURL:"https://i.imgur.com/79fLjn9.png"}, 
         }
       }, 
       "Dan": {
         id: 'Dan', 
-        imageURL: {
+        episodes: {
           "0906": 
             {id: '0906', bakeURL:"https://i.imgur.com/cqTobCf.png"}, 
         }
       },  
       "Jon": {
         id: 'Jon', 
-        imageURL: {
+        episodes: {
           "0906": 
             {id: '0906', bakeURL:"https://i.imgur.com/MB1FtlZ.png"}
         }
       },  
       "Kim-Joy": {
         id: 'Kim-Joy', 
-        imageURL: {
-          "0806": 
-            {id: '0806', bakeURL:"https://i.imgur.com/84Y8n0G.png"}
+        episodes: {
+          "0906": 
+            {id: '0906', bakeURL:"https://i.imgur.com/84Y8n0G.png"}
         }
       },  
       "Manon": {
         id: 'Manon', 
-        imageURL: {
-          "0806": 
-            {id: '0806', bakeURL:"https://i.imgur.com/FowkCpl.png"}
+        episodes: {
+          "0906": 
+            {id: '0906', bakeURL:"https://i.imgur.com/FowkCpl.png"}
         }
       },  
       "Rahul": {
         id: 'Rahul', 
-        imageURL: {
-          "0806": 
-            {id: '0806', bakeURL:"https://i.imgur.com/OfKpkVr.png"}
+        episodes: {
+          "0906": 
+            {id: '0906', bakeURL:"https://i.imgur.com/OfKpkVr.png"}
         }
       },  
       "Ruby": {
         id: 'Ruby', 
-        imageURL: {
-          "0806": 
-            {id: '0806', bakeURL:"https://i.imgur.com/aBYze1Z.png"}
+        episodes: {
+          "0906": 
+            {id: '0906', bakeURL:"https://i.imgur.com/aBYze1Z.png"}
         }
       }, 
     }, 

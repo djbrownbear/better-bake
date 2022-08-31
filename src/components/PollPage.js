@@ -140,14 +140,13 @@ const PollPage = (props) => {
 const mapStateToProps = ({ authedUser, users, polls, bakers }, props) => {
   const { id } = props.router.params;
   const poll = polls[id];
-  const bOneSeason = Object.keys(poll.optionOne.season);
-  const bTwoSeason = Object.keys(poll.optionTwo.season);
-  const bOneEpisode = poll.optionOne.season[bOneSeason].episode;
-  const bTwoEpisode = poll.optionTwo.season[bTwoSeason].episode;
-  const bakerOne = bakers[bOneSeason].baker[poll.optionOne.baker].imageURL[bOneEpisode].bakeURL;
-  const bakerTwo = bakers[bTwoSeason].baker[poll.optionTwo.baker].imageURL[bTwoEpisode].bakeURL;
-  console.log(bakerOne);
-  console.log(poll.optionOne.season[bOneSeason].episode)
+  const bOneSeason = poll.optionOne.season;
+  const bTwoSeason = poll.optionTwo.season;
+  const bOneEpisode = poll.optionOne.episode;
+  const bTwoEpisode = poll.optionTwo.episode;
+  const bakerOne = bakers[bOneSeason].baker[poll.optionOne.baker].episodes[bOneEpisode].bakeURL;
+  const bakerTwo = bakers[bTwoSeason].baker[poll.optionTwo.baker].episodes[bTwoEpisode].bakeURL;
+
 
   return {
     authedUser,
