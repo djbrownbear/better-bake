@@ -11,9 +11,10 @@ export function getInitialData () {
     _getUsers(),
     _getQuestions(),
     _getBakers(),
-  ]).then(([users, polls]) => ({
+  ]).then(([users, polls, bakers]) => ({
     users,
     polls,
+    bakers
   }))
 }
 
