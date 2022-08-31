@@ -90,6 +90,10 @@ const PollPage = (props) => {
           timestamp={timestamp}
         />
         <div className="poll-info">
+          <img 
+            src="https://assets.adobe.com/public/f78c514e-8871-4d0c-5ee0-a811ecfe477e"
+            alt="cake"
+          />
           <div className={"poll-option " + (hasVotedOptionOne ? "vote-choice": "")}>
             <div className="poll-option-wrapper-inner">
               <h3>{optionOneText}</h3>

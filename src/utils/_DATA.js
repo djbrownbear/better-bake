@@ -1,8 +1,8 @@
 let users = {
-  sarahedo: {
-    id: 'sarahedo',
+  aaronb: {
+    id: 'aaronb',
     password:'password123',
-    name: 'Sarah Edo',
+    name: 'Aaron B',
     avatarURL: 'https://github.com/djbrownbear/employee-polls/blob/main/src/assets/images/avatars/sarah.png?raw=true',
     answers: {
       "8xf0y6ziyjabvozdd253nd": 'optionOne',
@@ -12,10 +12,10 @@ let users = {
     },
     questions: ['8xf0y6ziyjabvozdd253nd', 'am8ehyc8byjqgar0jgpub9']
   },
-  tylermcginnis: {
-    id: 'tylermcginnis',
+  anitab: {
+    id: 'anitab',
     password:'abc321',
-    name: 'Tyler McGinnis',
+    name: 'Anita B',
     avatarURL: "https://github.com/djbrownbear/employee-polls/blob/main/src/assets/images/avatars/tyler.png?raw=true",
     answers: {
       "vthrdm985a262al8qx3do": 'optionOne',
@@ -23,10 +23,10 @@ let users = {
     },
     questions: ['loxhs1bqm25b708cmbf3g', 'vthrdm985a262al8qx3do'],
   },
-  mtsamis: {
-    id: 'mtsamis',
+  lennym: {
+    id: 'lennym',
     password:'xyz123',
-    name: 'Mike Tsamis',
+    name: 'Lenny M',
     avatarURL: "https://github.com/djbrownbear/employee-polls/blob/main/src/assets/images/avatars/mike.png?raw=true",
     answers: {
       "xj352vofupe1dqz9emx13r": 'optionOne',
@@ -35,10 +35,10 @@ let users = {
     },
     questions: ['6ni6ok3ym7mf1p33lnez', 'xj352vofupe1dqz9emx13r'],
   },
-  zoshikanlu: {
-    id: 'zoshikanlu',
+  maddiem: {
+    id: 'maddiem',
     password:'pass246',
-    name: 'Zenobia Oshikanlu',
+    name: 'Maddie M',
     avatarURL: 'https://github.com/djbrownbear/employee-polls/blob/main/src/assets/images/avatars/zenobia.png?raw=true',
     answers: {
       "xj352vofupe1dqz9emx13r": 'optionOne',
@@ -50,83 +50,229 @@ let users = {
 let questions = {
   "8xf0y6ziyjabvozdd253nd": {
     id: '8xf0y6ziyjabvozdd253nd',
-    author: 'sarahedo',
-    timestamp: 1467166872634,
+    author: 'aaronb',
+    timestamp: 1649386830421,
     optionOne: {
-      votes: ['sarahedo'],
-      text: 'Build our new application with Javascript',
+      votes: ['aaronb'],
+      text: 'Flo\'s Davy Jones\' Locker Bread Sculpture',
     },
     optionTwo: {
       votes: [],
-      text: 'Build our new application with Typescript'
+      text: 'Sophie\'s Picnic Basket Bread Sculpture'
     }
   },
   "6ni6ok3ym7mf1p33lnez": {
     id: '6ni6ok3ym7mf1p33lnez',
-    author: 'mtsamis',
-    timestamp: 1468479767190,
+    author: 'lennym',
+    timestamp: 1645928870305,
     optionOne: {
       votes: [],
-      text: 'hire more frontend developers',
+      text: 'Stacey\'s Ascot Hat Bread Sculpture',
     },
     optionTwo: {
-      votes: ['mtsamis', 'sarahedo'],
-      text: 'hire more backend developers'
+      votes: ['lennym', 'aaronb'],
+      text: 'Steven\'s The Bag I Knead Bread Sculpture'
     }
   },
   "am8ehyc8byjqgar0jgpub9": {
     id: 'am8ehyc8byjqgar0jgpub9',
-    author: 'sarahedo',
-    timestamp: 1488579767190,
+    author: 'aaronb',
+    timestamp: 1648435423015,
     optionOne: {
       votes: [],
-      text: 'conduct a release retrospective 1 week after a release',
+      text: 'Liam\'s Kneadapolitan Bread Sculpture',
     },
     optionTwo: {
-      votes: ['sarahedo'],
-      text: 'conduct release retrospectives quarterly'
+      votes: ['aaronb'],
+      text: 'Kate\'s Kraken Bread Sculpture'
     }
   },
   "loxhs1bqm25b708cmbf3g": {
     id: 'loxhs1bqm25b708cmbf3g',
-    author: 'tylermcginnis',
-    timestamp: 1482579767190,
+    author: 'anitab',
+    timestamp: 1641046114171,
     optionOne: {
       votes: [],
-      text: 'have code reviews conducted by peers',
+      text: 'Yan\'s Chequerboard Pie',
     },
     optionTwo: {
-      votes: ['sarahedo'],
-      text: 'have code reviews conducted by managers'
+      votes: ['aaronb'],
+      text: 'Kate\'s Potato Curry Pie with Mango & Chilli Glaze'
     }
   },
   "vthrdm985a262al8qx3do": {
     id: 'vthrdm985a262al8qx3do',
-    author: 'tylermcginnis',
-    timestamp: 1489579767190,
+    author: 'anitab',
+    timestamp: 1654892182619,
     optionOne: {
-      votes: ['tylermcginnis'],
-      text: 'take a course on ReactJS',
+      votes: ['anitab'],
+      text: 'Rahul\'s Butterfly Pie',
     },
     optionTwo: {
-      votes: ['mtsamis'],
-      text: 'take a course on unit testing with Jest'
+      votes: ['lennym'],
+      text: 'Briony\'s "Down the Rabbit Hole" Banquet Pie'
     }
   },
   "xj352vofupe1dqz9emx13r": {
     id: 'xj352vofupe1dqz9emx13r',
-    author: 'mtsamis',
-    timestamp: 1493579767190,
+    author: 'lennym',
+    timestamp: 1655317692670,
     optionOne: {
-      votes: ['mtsamis', 'zoshikanlu'],
-      text: 'deploy to production once every two weeks',
+      votes: ['lennym', 'maddiem'],
+      text: 'Jon\'s Welsh Dragon Pie',
     },
     optionTwo: {
-      votes: ['tylermcginnis'],
-      text: 'deploy to production once every month'
+      votes: ['anitab'],
+      text: 'Kim-Joy\'s Silke the Vegetarian Mermaid'
     }
   },
 }
+
+let bakers = {
+  "08": {
+    id: "08",
+    baker: {
+      "Flo": {
+        id: 'Flo', 
+        imageURL: {
+          "0803": 
+            {id: '0803', URL:"https://imgur.com/J0t0VEC"}, 
+        }
+      }, 
+      "James": {
+        id: 'James', 
+        imageURL: {
+          "0803": 
+            {id: '0803', URL:"https://imgur.com/sdA4k1m"}, 
+        }
+      },  
+      "Julia": {
+        id: 'Julia', 
+        imageURL: {
+          "0803": 
+            {id: '0803', URL:"https://imgur.com/SYdRtGH"}, 
+          "0806": 
+            {id: '0806', URL:"https://imgur.com/1vpJjLS"}
+        }
+      },  
+      "Kate": {
+        id: 'Kate', 
+        imageURL: {
+          "0803": 
+            {id: '0803', URL:"https://imgur.com/GSqOalb"}, 
+          "0806": 
+            {id: '0806', URL:"https://imgur.com/cSvbkV4"}
+        }
+      },  
+      "Liam": {
+        id: 'Liam', 
+        imageURL: {
+          "0803": 
+            {id: '0803', URL:"https://imgur.com/PBtPyax"}, 
+          "0806": 
+            {id: '0806', URL:"https://imgur.com/1dyOdk8"}
+        }
+      },  
+      "Sophie": {
+        id: 'Sophie', 
+        imageURL: {
+          "0803": 
+            {id: '0803', URL:"https://imgur.com/L38ueiN"}, 
+          "0806": 
+            {id: '0806', URL:"https://imgur.com/EfPNsco"}
+        }
+      },  
+      "Stacey": {
+        id: 'Stacey', 
+        imageURL: {
+          "0803": 
+            {id: '0803', URL:"https://imgur.com/JEyxvlP"}, 
+          "0806": 
+            {id: '0806', URL:"https://imgur.com/wNlfzTC"}
+        }
+      }, 
+      "Steven": {
+        id: 'Steven', 
+        imageURL: {
+          "0803": 
+            {id: '0803', URL:"https://imgur.com/yyJpbJC"}, 
+          "0806": 
+            {id: '0806', URL:"https://imgur.com/NNdLoYP"}
+        }
+      },  
+      "Tom": {
+        id: 'Tom', 
+        imageURL: {
+          "0803": 
+            {id: '0803', URL:"https://imgur.com/4fmdOTt"}, 
+        }
+      },
+      "Yan": {
+        id: 'Yan', 
+        imageURL: {
+          "0803": 
+            {id: '0803', URL:"https://imgur.com/C6TZwf5"}, 
+          "0806": 
+            {id: '0806', URL:"https://imgur.com/PD2pMgD"}
+        }
+      }, 
+    }
+  },
+  "09": {
+    id: '09',
+    baker: {
+      "Briony": {
+        id: 'Briony', 
+        imageURL: {
+          "0906": 
+            {id: "0906", URL:"https://imgur.com/79fLjn9"}, 
+        }
+      }, 
+      "Dan": {
+        id: 'Dan', 
+        imageURL: {
+          "0906": 
+            {id: '0906', URL:"https://imgur.com/cqTobCf"}, 
+        }
+      },  
+      "Jon": {
+        id: 'Jon', 
+        imageURL: {
+          "0906": 
+            {id: '0906', URL:"https://imgur.com/MB1FtlZ"}
+        }
+      },  
+      "Kim-Joy": {
+        id: 'Kim-Joy', 
+        imageURL: {
+          "0806": 
+            {id: '0806', URL:"https://imgur.com/84Y8n0G"}
+        }
+      },  
+      "Manon": {
+        id: 'Manon', 
+        imageURL: {
+          "0806": 
+            {id: '0806', URL:"https://imgur.com/FowkCpl"}
+        }
+      },  
+      "Rahul": {
+        id: 'Rahul', 
+        imageURL: {
+          "0806": 
+            {id: '0806', URL:"https://imgur.com/OfKpkVr"}
+        }
+      },  
+      "Ruby": {
+        id: 'Ruby', 
+        imageURL: {
+          "0806": 
+            {id: '0806', URL:"https://imgur.com/aBYze1Z"}
+        }
+      }, 
+    }, 
+  }
+} 
 
 function generateUID () {
   return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
@@ -141,6 +287,12 @@ export function _getUsers () {
 export function _getQuestions () {
   return new Promise((resolve) => {
     setTimeout(() => resolve({...questions}), 1000)
+  })
+}
+
+export function _getBakers () {
+  return new Promise((resolve) => {
+    setTimeout(() => resolve({...bakers}), 1000)
   })
 }
 
