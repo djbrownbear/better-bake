@@ -3,7 +3,7 @@ let users = {
     id: 'aaronb',
     password:'password123',
     name: 'Aaron B',
-    avatarURL: 'https://github.com/djbrownbear/employee-polls/blob/main/src/assets/images/avatars/sarah.png?raw=true',
+    avatarURL: 'https://i.imgur.com/IAwxwIa.png',
     answers: {
       "8xf0y6ziyjabvozdd253nd": 'optionOne',
       "6ni6ok3ym7mf1p33lnez": 'optionOne',
@@ -16,7 +16,7 @@ let users = {
     id: 'anitab',
     password:'abc321',
     name: 'Anita B',
-    avatarURL: "https://github.com/djbrownbear/employee-polls/blob/main/src/assets/images/avatars/tyler.png?raw=true",
+    avatarURL: "https://i.imgur.com/65jpbsM.png",
     answers: {
       "vthrdm985a262al8qx3do": 'optionOne',
       "xj352vofupe1dqz9emx13r": 'optionTwo',
@@ -27,7 +27,7 @@ let users = {
     id: 'lennym',
     password:'xyz123',
     name: 'Lenny M',
-    avatarURL: "https://github.com/djbrownbear/employee-polls/blob/main/src/assets/images/avatars/mike.png?raw=true",
+    avatarURL: "https://i.imgur.com/BP8swpu.png",
     answers: {
       "xj352vofupe1dqz9emx13r": 'optionOne',
       "vthrdm985a262al8qx3do": 'optionTwo',
@@ -39,7 +39,7 @@ let users = {
     id: 'maddiem',
     password:'pass246',
     name: 'Maddie M',
-    avatarURL: 'https://github.com/djbrownbear/employee-polls/blob/main/src/assets/images/avatars/zenobia.png?raw=true',
+    avatarURL: 'https://i.imgur.com/5mm4bTH.png',
     answers: {
       "xj352vofupe1dqz9emx13r": 'optionOne',
     },

@@ -75,7 +75,7 @@ const LoginPage = ({ dispatch, users }) => {
            <h1 data-testid="errorUserPwd-header">Error: Incorrect username or password. Please try again.</h1>
       }
       <form className="login-form" onSubmit={handleSubmit}>
-        <h1>Sign in to<br/>Would You Rather</h1>
+        <h1>Sign In</h1>
         <div className="login-field">
           <label hmtlFor="username">Username</label><br />
           <input 

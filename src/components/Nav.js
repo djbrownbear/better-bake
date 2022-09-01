@@ -37,6 +37,7 @@ const Nav = ({ dispatch, authedUser, user }) => {
               src="https://img.icons8.com/emoji/48/000000/ballot-box-with-ballot.png" 
               alt="Voting Ballot Box" 
             />
+            <span>Better Bake</span>
           </Link>
         </div>
         <div className="menu-content-wrapper">    
@@ -57,23 +58,23 @@ const Nav = ({ dispatch, authedUser, user }) => {
             </li>
           </ul>
           <button className="icon menu" type="button" onClick={toggleNav}>
-            <i className="fa fa-bars fa-2x"></i>
+            <i className="fa fa-bars fa-lg"></i>
           </button>
           {!authedUser &&
             <ul className="desktop-menu-social">
               <li>
                 <a href="https://github.com/djbrownbear" target="_blank" rel="noreferrer" alt="link to github">
-                  <FontAwesomeIcon icon={faGithub} size="2x" />
+                  <FontAwesomeIcon icon={faGithub} size="lg" />
                 </a>
               </li>
               <li>
                 <a href="https://www.linkedin.com/in/aarontimothybrown/" target="_blank" rel="noreferrer" alt="link to github">
-                  <FontAwesomeIcon icon={faLinkedin} size="2x"/>
+                  <FontAwesomeIcon icon={faLinkedin} size="lg"/>
                 </a>
               </li>
               <li>
                 <a href="https://aaron.aaronandanita.com" target="_blank" rel="noreferrer" alt="link to portfolio">
-                  <FontAwesomeIcon icon={faFolder} size="2x" />
+                  <FontAwesomeIcon icon={faFolder} size="lg" />
                 </a>
               </li>
             </ul>

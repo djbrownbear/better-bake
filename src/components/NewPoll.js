@@ -21,7 +21,6 @@ const NewPoll = ({ dispatch, id, avatar, name, allOptions }) => {
   }, []);
 
   const handleChange = (e) => {
-    console.log("choices: ", allOptions[0].bakeURL);
     let idx = e.target.options.selectedIndex;
     let imgURL = e.target.options[idx].dataset.imgurl;
 

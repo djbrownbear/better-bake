@@ -1,6 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Bree+Serif&family=Hammersmith+One&family=Lilita+One&family=Rampart+One&display=swap');
+
 :root {
  --text-shadow: 0.5px 0.5px rgba(31, 31, 31, 0.8);
  --fw-bold: 600;
+
+ --ff-main: 'Hammersmith One', serif;
+ --ff-secondary: 'Bree Serif', serif;
+ --ff-app-name: 'Lilita One', cursive;
 
  --color-primary: #24305e;
  --color-secondary: #fff;
@@ -75,8 +81,30 @@ ul {
   background-color: var(--bg-color-primary);
 }
 
+.page-wrapper {
+  min-height: 100vh;
+}
+
+
 .logo-wrapper {
   margin-left: 15px;
+  width: fit-content;
+}
+
+.logo-wrapper a {
+  display: flex; 
+  align-items: center;
+  transform: scale(1);
+  letter-spacing: 0.03em;
+}
+
+.logo-wrapper span {
+  display: block;
+  width: 120px;
+  font-family: var(--ff-app-name);
+  font-size: 1.25em;
+  font-weight: 400;
+  text-align: left;
 }
 
 .desktop-menu-main {
@@ -744,6 +772,7 @@ td {
 
   .btn-togglePollView {
     font-size: 0.6em;
+    margin: 0 -19px;
   }
 
   .poll-option {
