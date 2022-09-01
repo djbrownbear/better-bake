@@ -17,7 +17,7 @@ const LoginAs = ({ dispatch, authedUser,usersList}) => {
       <h1>Log In As</h1>
       <div className="userlist">
         {usersList.map((user) => (  
-          <button id={user.id} type="button" className="btn btn-userlist" onClick={handleClick}>
+          <button key={user.id} id={user.id} type="button" className="btn btn-userlist" onClick={handleClick}>
             <img 
               src={user.avatarURL}
               alt={`Avatar of ${user.name}`} 

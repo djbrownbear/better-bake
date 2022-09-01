@@ -1,6 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Bree+Serif&family=Hammersmith+One&family=Lilita+One&family=Rampart+One&display=swap');
+
 :root {
  --text-shadow: 0.5px 0.5px rgba(31, 31, 31, 0.8);
  --fw-bold: 600;
+
+ --ff-main: 'Hammersmith One', serif;
+ --ff-secondary: 'Bree Serif', serif;
+ --ff-app-name: 'Lilita One', cursive;
 
  --color-primary: #24305e;
  --color-secondary: #fff;
@@ -75,8 +81,30 @@ ul {
   background-color: var(--bg-color-primary);
 }
 
+.page-wrapper {
+  min-height: 100vh;
+}
+
+
 .logo-wrapper {
   margin-left: 15px;
+  width: fit-content;
+}
+
+.logo-wrapper a {
+  display: flex; 
+  align-items: center;
+  transform: scale(1);
+  letter-spacing: 0.03em;
+}
+
+.logo-wrapper span {
+  display: block;
+  width: 120px;
+  font-family: var(--ff-app-name);
+  font-size: 1.25em;
+  font-weight: 400;
+  text-align: left;
 }
 
 .desktop-menu-main {
@@ -141,8 +169,11 @@ ul {
 .login {
   display: flex;
   background: var(--bg-color-primary);
-  padding: 40px 16px;
+  color: var(--color-secondary);
+  padding: 20px 16px;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
 }
 
 .login-form {
@@ -153,6 +184,7 @@ ul {
   justify-content: flex-start;
   align-items: center;
   background: var(--bg-color-default);
+  color: var(--color-primary);
   /* box-shadow: 5px 40px 0 rgba(0, 0, 0, 0.1); */
   border-radius: 5px;
 }
@@ -202,19 +234,17 @@ ul {
 
 .polls {
   margin: 0;
-  padding: 0;
+  padding: 2px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 100%;
-  border: 1px solid #817f7c;
+  background: var(--bg-color-secondary);
   border-radius: 6px;
 }
-
-.btn-show-poll {
-  margin: 8px 0;
-  padding: 2px;
+.polls span {
+  margin: 6px;
 }
 
 .poll-header{
@@ -250,9 +280,10 @@ ul {
 .poll-option {
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-end;
   padding: 4px;
   margin: 0 6px;
+  margin-top: 40px;
   width: 50%;
   /* height: 25vh; */
   background: var(--bg-color-secondary);
@@ -261,13 +292,30 @@ ul {
   flex: 1 1 auto;
 }
 
+.poll-option h3 {
+  height: 50px;
+}
+
 .poll-option-wrapper-inner {
   max-width: 96%;
+}
+
+.poll-option.create-poll {
+  margin: 4px auto;
 }
 
 .poll-option.vote-choice {
   background: var(--bg-color-primary);
   color: var(--color-secondary);
+}
+
+.poll-option-img {
+  position: relative;
+  display: flex;
+  width: 100%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border-radius: 8px;
 }
 
 .poll-details {
@@ -310,6 +358,20 @@ ul {
   height: 100px;
 }
 
+.avatar-wrapper.poll {
+  flex-direction: row;
+  justify-content: center;
+  margin: 6px 0;
+  font-weight: 700;
+  width: 100%;
+}
+.avatar-wrapper.poll img {
+  padding: 0px 4px;
+}
+.avatar-wrapper.poll span {
+  margin: 0px 4px;
+}
+
 
 .avatar-wrapper.leaderboard {
   flex-direction: row;
@@ -345,9 +407,9 @@ img.app-logo {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: auto;
+  margin: 4px auto 20px auto;
   padding: 4px;
-  width: 100%;
+  width: 50%;
 }
 
 .userlist {
@@ -357,7 +419,7 @@ img.app-logo {
   align-items: center;
 }
 
-input[type="text"],input[type="password"] {
+input[type="text"],input[type="password"], select {
   padding: 10px;
   width: 80%;
   margin: 10px 0;
@@ -451,7 +513,8 @@ input[type="text"],input[type="password"] {
 }
 
 .btn-show-poll {
-  width: 120px;
+  width: 100px;
+  margin: 6px 0;
 }
 
 .btn-submit {
@@ -460,19 +523,17 @@ input[type="text"],input[type="password"] {
 
 .btn-vote {
   margin-bottom: 10px;
-  width: fit-content;
+  width: 100px;
   padding: 10px 6px;
   background: var(--bg-color-accent);
   color: var(--color-primary);
   text-transform: uppercase;
-  border: 1px solid var(--color-secondary);
   transition: all 0.7s ease;
 }
 
 .btn-vote:disabled {
   background:rgba(0, 0, 0, .2);
   color:rgba(65, 65, 65, 0.8);
-  border: 1px solid rgba(0, 0, 0, .2);
 }
 
 .btn-logout {
@@ -565,9 +626,17 @@ td {
 }
 
 @media screen and (max-width: 820px) {
+  .html {
+    font-size: 10px;
+  }
+
   .page-wrapper {
       max-width: 96%;
       margin: 0 auto;
+  }
+
+  .login > h1 {
+    font-size: 1.25em;
   }
 
   .nav .desktop-menu-social,
@@ -617,6 +686,7 @@ td {
     display: block;
     text-align: left;
     margin: 0;
+    padding-left: 0;
   }
 
   .nav.responsive ul li {
@@ -662,6 +732,19 @@ td {
     text-align: left;
   }
 
+  .nav.responsive .desktop-menu-social li {
+    padding-top: 0;
+  }
+
+  .nav.responsive .desktop-menu-social li:first-child {
+    margin-left: 0;
+    padding-left: 0;
+  }
+
+  .nav.responsive .desktop-menu-social li a {
+    margin: 0 20px;
+  }
+
   .nav.responsive ul {
     flex-direction: column;
     align-items: flex-start;
@@ -669,6 +752,10 @@ td {
 
   .avatar-wrapper.nav-avatar {
     margin-left: auto;
+  }
+
+  .poll-option-img {
+    height: 75%;
   }
 
   img {
@@ -685,14 +772,14 @@ td {
 
   .btn-togglePollView {
     font-size: 0.6em;
+    margin: 0 -19px;
   }
 
   .poll-option {
     display: flex;
     justify-content: center;
     width: 80%;
-    height: 240px;
-    margin: 10px 0;
+    margin: 20px 0;
   }
 
   .poll-option-wrapper-inner {
@@ -709,6 +796,10 @@ td {
   .poll-item {
     width: 100%;
     margin: auto;
+  }
+
+  .new-poll-option {
+    width: 70%;
   }
 
   thead, tbody tr {

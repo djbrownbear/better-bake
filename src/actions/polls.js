@@ -19,13 +19,15 @@ export function addPoll(poll) {
   };
 }
 
-export function handleAddPoll(optionOneText, optionTwoText) {
+export function handleAddPoll(optionOneText, optionTwoText, optionOneImage, optionTwoImage) {
   return (dispatch, getState) => {
     const { authedUser } = getState();
 
     return savePoll({
       optionOneText, 
       optionTwoText, 
+      optionOneImage,
+      optionTwoImage,
       author: authedUser,
     }).then((poll) => {
       dispatch(addPoll(poll))

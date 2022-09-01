@@ -37,11 +37,14 @@ const Nav = ({ dispatch, authedUser, user }) => {
               src="https://img.icons8.com/emoji/48/000000/ballot-box-with-ballot.png" 
               alt="Voting Ballot Box" 
             />
+            <span>Better Bake</span>
           </Link>
         </div>
         <div className="menu-content-wrapper">    
           <div className="top-bar">
-          <button className="icon close" type="button" onClick={toggleNav}><FontAwesomeIcon icon={faXmarkCircle}/></button>
+          <button className="icon close" type="button" onClick={toggleNav}>
+            <FontAwesomeIcon icon={faXmarkCircle} size="2x" />
+          </button>
           </div>
           <ul className="desktop-menu-main">
             <li>
@@ -54,12 +57,26 @@ const Nav = ({ dispatch, authedUser, user }) => {
               <Link to="/auth"><span>Switch User</span></Link>
             </li>
           </ul>
-          <button className="icon menu" type="button" onClick={toggleNav}><i className="fa fa-bars"></i></button>
+          <button className="icon menu" type="button" onClick={toggleNav}>
+            <i className="fa fa-bars fa-lg"></i>
+          </button>
           {!authedUser &&
             <ul className="desktop-menu-social">
-              <li><a href="https://github.com/djbrownbear" target="_blank" rel="noreferrer" alt="link to github"><FontAwesomeIcon icon={faLinkedin} /></a></li>
-              <li><a href="https://www.linkedin.com/in/aarontimothybrown/" target="_blank" rel="noreferrer" alt="link to github"><FontAwesomeIcon icon={faGithub} /></a></li>
-              <li><a href="https://aaron.aaronandanita.com" target="_blank" rel="noreferrer" alt="link to portfolio"><FontAwesomeIcon icon={faFolder} /></a></li>
+              <li>
+                <a href="https://github.com/djbrownbear" target="_blank" rel="noreferrer" alt="link to github">
+                  <FontAwesomeIcon icon={faGithub} size="lg" />
+                </a>
+              </li>
+              <li>
+                <a href="https://www.linkedin.com/in/aarontimothybrown/" target="_blank" rel="noreferrer" alt="link to github">
+                  <FontAwesomeIcon icon={faLinkedin} size="lg"/>
+                </a>
+              </li>
+              <li>
+                <a href="https://aaron.aaronandanita.com" target="_blank" rel="noreferrer" alt="link to portfolio">
+                  <FontAwesomeIcon icon={faFolder} size="lg" />
+                </a>
+              </li>
             </ul>
           }  
           {authedUser &&
