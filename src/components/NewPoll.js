@@ -4,13 +4,13 @@ import { handleAddPoll } from "../actions/polls";
 import { useNavigate } from "react-router-dom";
 import PollHeader from "./PollHeader";
 
-const NewPoll = ({ dispatch, id, avatar, name }) => {
+const NewPoll = ({ dispatch, id, avatar, name, allOptions }) => {
   const navigate = useNavigate();
   const [optionOneNew, setOptionOneNew] = useState(""); 
   const [optionTwoNew, setOptionTwoNew] = useState(""); 
 
   const handleChange = (e) => {
-    console.log(e.target.value)
+    // console.log(e.target.value);
     if (e.target.id === "optionOneNew") {
       const optionOneNew = e.target.value;
       setOptionOneNew(optionOneNew);
@@ -42,14 +42,22 @@ const NewPoll = ({ dispatch, id, avatar, name }) => {
           timestamp={new Date()}
         />
       
-        <div className="new-poll-option">
+        <div>
           <label htmlFor="optionOneNew">Option One</label>
-          <input type="text" id="optionOneNew" name="optionOneNew" placeholder="Enter Option 1" onChange={handleChange}></input>
+          <select name="optionOneNew" id="optionOneNew" className="new-poll-option" onChange={handleChange}>
+            {allOptions && 
+              allOptions.map((curOption) => (<option value={curOption}>{curOption}</option>))
+            }
+          </select>
         </div>
-
-        <div className="new-poll-option">
+        
+        <div>
           <label htmlFor="optionTwoNew">Option Two</label>
-          <input type="text" id="optionTwoNew" name="optionTwoNew" placeholder="Enter Option 2" onChange={handleChange}></input>
+          <select name="optionTwoNew" id="optionTwoNew" className="new-poll-option" onChange={handleChange}>
+            {allOptions && 
+              allOptions.map((curOption) => (<option value={curOption}>{curOption}</option>))
+            }
+          </select>
         </div>
 
         <button className="btn btn-submit" type="submit" disabled={(optionOneNew === "" || optionTwoNew === "")}>
@@ -60,16 +68,31 @@ const NewPoll = ({ dispatch, id, avatar, name }) => {
   );
 }
 
-const mapStateToProps = ({ dispatch, authedUser, users }) => {
+const mapStateToProps = ({ dispatch, authedUser, users, bakers }) => {
   const user = users[authedUser];
   const name = user.name;
   const avatar = user.avatarURL;
+
+  // https://stackoverflow.com/questions/54857222/find-all-values-by-specific-key-in-a-deep-nested-object
+  function findAllByKey(obj, keyToFind) {
+    return Object.entries(obj)
+      .reduce((acc, [key, value]) => (key === keyToFind)
+        ? acc.concat(value)
+        : (typeof value === 'object')
+        ? acc.concat(findAllByKey(value, keyToFind))
+        : acc
+      , [])
+  }
+
+  const allOptions = findAllByKey(bakers,'text');
 
   return{
     dispatch,
     authedUser,
     name,
     avatar,
+    bakers,
+    allOptions,
   };
 }
 

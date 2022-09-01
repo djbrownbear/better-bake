@@ -54,14 +54,14 @@ let questions = {
     timestamp: 1649386830421,
     optionOne: {
       votes: ['aaronb'],
-      text: 'Flo\'s Davy Jones\' Locker Bread Sculpture',
+      text: "Flo's Davy Jones Locker Bread Sculpture",
       season: '08', 
       episode: '0803',
       baker: 'Flo'
     },
     optionTwo: {
       votes: [],
-      text: 'Sophie\'s Picnic Basket Bread Sculpture',
+      text: "Sophie's Picnic Basket Bread Sculpture",
       season: '08', 
       episode: '0803',
       baker: 'Sophie'
@@ -73,14 +73,14 @@ let questions = {
     timestamp: 1645928870305,
     optionOne: {
       votes: [],
-      text: 'Stacey\'s Ascot Hat Bread Sculpture',
+      text: "Stacey's Ascot Hat Bread Sculpture",
       season: '08', 
       episode: '0803',
       baker: 'Stacey'
     },
     optionTwo: {
       votes: ['lennym', 'aaronb'],
-      text: 'Steven\'s The Bag I Knead Bread Sculpture',
+      text: "Steven's The Bag I Knead Bread Sculpture",
       season: '08', 
       episode: '0803',
       baker: 'Steven'
@@ -92,14 +92,14 @@ let questions = {
     timestamp: 1648435423015,
     optionOne: {
       votes: [],
-      text: 'Liam\'s Kneadapolitan Bread Sculpture',
+      text: "Liam's Kneadapolitan Bread Sculpture",
       season: '08', 
       episode: '0803',
       baker: 'Liam'
     },
     optionTwo: {
       votes: ['aaronb'],
-      text: 'Kate\'s Kraken Bread Sculpture',
+      text: "Kate's Kraken Bread Sculpture",
       season: '08', 
       episode: '0803',
       baker: 'Kate'
@@ -111,14 +111,14 @@ let questions = {
     timestamp: 1641046114171,
     optionOne: {
       votes: [],
-      text: 'Yan\'s Chequerboard Pie',
+      text: "Yan's Chequerboard Pie",
       season: '08', 
       episode: '0806', 
       baker: 'Yan'
     },
     optionTwo: {
       votes: ['aaronb'],
-      text: 'Kate\'s Potato Curry Pie with Mango & Chilli Glaze',
+      text: "Kate's Potato Curry Pie with Mango & Chilli Glaze",
       season: '08', 
       episode: '0806', 
       baker: 'Kate'
@@ -130,14 +130,14 @@ let questions = {
     timestamp: 1654892182619,
     optionOne: {
       votes: ['anitab'],
-      text: 'Rahul\'s Butterfly Pie',
+      text: "Rahul's Butterfly Pie",
       season: '09', 
       episode: '0906', 
       baker: 'Rahul'
     },
     optionTwo: {
       votes: ['lennym'],
-      text: 'Briony\'s "Down the Rabbit Hole" Banquet Pie',
+      text: "Briony's 'Down the Rabbit Hole' Banquet Pie",
       season: '09', 
       episode: '0906', 
       baker: 'Briony'
@@ -149,14 +149,14 @@ let questions = {
     timestamp: 1655317692670,
     optionOne: {
       votes: ['lennym', 'maddiem'],
-      text: 'Jon\'s Welsh Dragon Pie',
+      text: "Jon's Welsh Dragon Pie",
       season: '09', 
       episode: '0906', 
       baker: 'Jon'
     },
     optionTwo: {
       votes: ['anitab'],
-      text: 'Kim-Joy\'s Silke the Vegetarian Mermaid',
+      text: "Kim-Joy's Silke the Vegetarian Mermaid",
       season: '09', 
       episode: '0906', 
       baker: 'Kim-Joy'
@@ -172,84 +172,84 @@ let bakers = {
         id: 'Flo', 
         episodes: {
           "0803": 
-            {id: '0803', bakeURL:"https://i.imgur.com/J0t0VEC.png"}, 
+            {id: '0803', bakeURL:"https://i.imgur.com/J0t0VEC.png", text: "Flo's Davy Jones Locker Bread Sculpture"}, 
         }
       }, 
       "James": {
         id: 'James', 
         episodes: {
           "0803": 
-            {id: '0803', bakeURL:"https://i.imgur.com/sdA4k1m.png"}, 
+            {id: '0803', bakeURL:"https://i.imgur.com/sdA4k1m.png", text: "James' Owl in the Woods Bread Sculpture"}, 
         }
       },  
       "Julia": {
         id: 'Julia', 
         episodes: {
           "0803": 
-            {id: '0803', bakeURL:"https://i.imgur.com/SYdRtGH.png"}, 
+            {id: '0803', bakeURL:"https://i.imgur.com/SYdRtGH.png", text: "Julia's The Snail Under a Mushroom Bread Sculpture"}, 
           "0806": 
-            {id: '0806', bakeURL:"https://i.imgur.com/1vpJjLS.png"}
+            {id: '0806', bakeURL:"https://i.imgur.com/1vpJjLS.png", text: "Julia's Special Occasion Pie"}
         }
       },  
       "Kate": {
         id: 'Kate', 
         episodes: {
           "0803": 
-            {id: '0803', bakeURL:"https://i.imgur.com/GSqOalb.png"}, 
+            {id: '0803', bakeURL:"https://i.imgur.com/GSqOalb.png", text: "Kate's Kraken Bread Sculpture"}, 
           "0806": 
-            {id: '0806', bakeURL:"https://i.imgur.com/cSvbkV4.png"}
+            {id: '0806', bakeURL:"https://i.imgur.com/cSvbkV4.png"}, text: "Kate's Potato Curry Pie with Mango & Chilli Glaze"
         }
       },  
       "Liam": {
         id: 'Liam', 
         episodes: {
           "0803": 
-            {id: '0803', bakeURL:"https://i.imgur.com/PBtPyax.png"}, 
+            {id: '0803', bakeURL:"https://i.imgur.com/PBtPyax.png", text: "Liam's Kneadapolitan Bread Sculpture"}, 
           "0806": 
-            {id: '0806', bakeURL:"https://i.imgur.com/1dyOdk8.png"}
+            {id: '0806', bakeURL:"https://i.imgur.com/1dyOdk8.png", text: "Liam's Nan's Sunday Dinner Pie"}
         }
       },  
       "Sophie": {
         id: 'Sophie', 
         episodes: {
           "0803": 
-            {id: '0803', bakeURL:"https://i.imgur.com/L38ueiN.png"}, 
+            {id: '0803', bakeURL:"https://i.imgur.com/L38ueiN.png", text: "Sophie's Picnic Basket Bread Sculpture"}, 
           "0806": 
-            {id: '0806', bakeURL:"https://i.imgur.com/EfPNsco.png"}
+            {id: '0806', bakeURL:"https://i.imgur.com/EfPNsco.png", text: "Sophie's Game Pie with Glazed Forest Fruits"}
         }
       },  
       "Stacey": {
         id: 'Stacey', 
         episodes: {
           "0803": 
-            {id: '0803', bakeURL:"https://i.imgur.com/JEyxvlP.png"}, 
+            {id: '0803', bakeURL:"https://i.imgur.com/JEyxvlP.png", text: "Stacey's Ascot Hat Bread Sculpture"}, 
           "0806": 
-            {id: '0806', bakeURL:"https://i.imgur.com/wNlfzTC.png"}
+            {id: '0806', bakeURL:"https://i.imgur.com/wNlfzTC.png", text: "Stacey's Indian Hand Raised Pie with Mango"}
         }
       }, 
       "Steven": {
         id: 'Steven', 
         episodes: {
           "0803": 
-            {id: '0803', bakeURL:"https://i.imgur.com/yyJpbJC.png"}, 
+            {id: '0803', bakeURL:"https://i.imgur.com/yyJpbJC.png", text: "Steven The Bag I Knead Bread Sculpture"}, 
           "0806": 
-            {id: '0806', bakeURL:"https://i.imgur.com/NNdLoYP.png"}
+            {id: '0806', bakeURL:"https://i.imgur.com/NNdLoYP.png", text: "Steven Christmas Pie"}
         }
       },  
       "Tom": {
         id: 'Tom', 
         episodes: {
           "0803": 
-            {id: '0803', bakeURL:"https://i.imgur.com/4fmdOTt.png"}, 
+            {id: '0803', bakeURL:"https://i.imgur.com/4fmdOTt.png", text: "Pink & Yellow Rose Centrepiece' Bread Sculpture"}, 
         }
       },
       "Yan": {
         id: 'Yan', 
         episodes: {
           "0803": 
-            {id: '0803', bakeURL:"https://i.imgur.com/C6TZwf5.png"}, 
+            {id: '0803', bakeURL:"https://i.imgur.com/C6TZwf5.png", text: "Yan's Basil the Vegetarian Dragon with his Pumpkin Hoard Bread Sculpture"}, 
           "0806": 
-            {id: '0806', bakeURL:"https://i.imgur.com/PD2pMgD.png"}
+            {id: '0806', bakeURL:"https://i.imgur.com/PD2pMgD.png", text: "Yan's Chequerboard Pie"}
         }
       }, 
     }
@@ -261,49 +261,49 @@ let bakers = {
         id: 'Briony', 
         episodes: {
           "0906": 
-            {id: '0906', bakeURL:"https://i.imgur.com/79fLjn9.png"}, 
+            {id: '0906', bakeURL:"https://i.imgur.com/79fLjn9.png", text: "Briony's 'Down the Rabbit Hole' Banquet Pie"}, 
         }
       }, 
       "Dan": {
         id: 'Dan', 
         episodes: {
           "0906": 
-            {id: '0906', bakeURL:"https://i.imgur.com/cqTobCf.png"}, 
+            {id: '0906', bakeURL:"https://i.imgur.com/cqTobCf.png", text: "Dan's Salmon Coulibiac"}, 
         }
       },  
       "Jon": {
         id: 'Jon', 
         episodes: {
           "0906": 
-            {id: '0906', bakeURL:"https://i.imgur.com/MB1FtlZ.png"}
+            {id: '0906', bakeURL:"https://i.imgur.com/MB1FtlZ.png", text: "Jon's Welsh Dragon Pie"}
         }
       },  
       "Kim-Joy": {
         id: 'Kim-Joy', 
         episodes: {
           "0906": 
-            {id: '0906', bakeURL:"https://i.imgur.com/84Y8n0G.png"}
+            {id: '0906', bakeURL:"https://i.imgur.com/84Y8n0G.png", text: "Kim-Joy's Silke the Vegetarian Mermaid"}
         }
       },  
       "Manon": {
         id: 'Manon', 
         episodes: {
           "0906": 
-            {id: '0906', bakeURL:"https://i.imgur.com/FowkCpl.png"}
+            {id: '0906', bakeURL:"https://i.imgur.com/FowkCpl.png", text: "Manon's 'What Has Poppy Eaten?'"}
         }
       },  
       "Rahul": {
         id: 'Rahul', 
         episodes: {
           "0906": 
-            {id: '0906', bakeURL:"https://i.imgur.com/OfKpkVr.png"}
+            {id: '0906', bakeURL:"https://i.imgur.com/OfKpkVr.png", text: "Rahul's Butterfly Pie"}
         }
       },  
       "Ruby": {
         id: 'Ruby', 
         episodes: {
           "0906": 
-            {id: '0906', bakeURL:"https://i.imgur.com/aBYze1Z.png"}
+            {id: '0906', bakeURL:"https://i.imgur.com/aBYze1Z.png", text: "Ruby's Kohinoor Crown"}
         }
       }, 
     }, 

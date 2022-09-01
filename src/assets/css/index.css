@@ -252,7 +252,7 @@ ul {
 .poll-option {
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-end;
   padding: 4px;
   margin: 0 6px;
   margin-top: 40px;
@@ -262,6 +262,10 @@ ul {
   color: var(--color-primary);
   border-radius: 8px;
   flex: 1 1 auto;
+}
+
+.poll-option h3 {
+  height: 50px;
 }
 
 .poll-option-wrapper-inner {
@@ -277,9 +281,9 @@ ul {
   position: relative;
   display: flex;
   width: 100%;
-  transform: translateY(-16px);
+  margin-top: 10px;
+  margin-bottom: 10px;
   border-radius: 8px;
-  z-index: 2;
 }
 
 .poll-details {
