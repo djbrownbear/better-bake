@@ -1,17 +1,27 @@
 import { connect } from "react-redux";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { handleAddPoll } from "../actions/polls";
 import { useNavigate } from "react-router-dom";
 import PollHeader from "./PollHeader";
 
-const NewPoll = ({ dispatch, id, avatar, name, bakers, allOptions }) => {
+const NewPoll = ({ dispatch, id, avatar, name, allOptions }) => {
   const navigate = useNavigate();
   const [optionOneNew, setOptionOneNew] = useState(""); 
   const [optionTwoNew, setOptionTwoNew] = useState(""); 
   const [optionOneImage, setOptionOneImage] = useState("");
   const [optionTwoImage, setOptionTwoImage] = useState("");
 
+  useEffect(() => {
+    setOptionOneNew(allOptions[0].text);
+    setOptionTwoNew(allOptions[1].text);
+    setOptionOneImage(allOptions[0].bakeURL);
+    setOptionTwoImage(allOptions[1].bakeURL);
+    const el = document.querySelector('#optionTwoNew');
+    el.value = allOptions[1].text;
+  }, []);
+
   const handleChange = (e) => {
+    console.log("choices: ", allOptions[0].bakeURL);
     let idx = e.target.options.selectedIndex;
     let imgURL = e.target.options[idx].dataset.imgurl;
 
@@ -24,7 +34,6 @@ const NewPoll = ({ dispatch, id, avatar, name, bakers, allOptions }) => {
       setOptionTwoNew(optionTwoNew);
       setOptionTwoImage(imgURL);
     };
-    console.log(optionOneImage, optionTwoImage);
   };
 
   const handleSubmit = (e) => {
@@ -110,15 +119,11 @@ const mapStateToProps = ({ dispatch, authedUser, users, bakers }) => {
 
   const allOptions = findAllByProp(bakers,'bakeURL');
 
-  console.log(findAllByProp(bakers,'bakeURL'))
-
-
   return{
     dispatch,
     authedUser,
     name,
     avatar,
-    bakers,
     allOptions,
   };
 }
