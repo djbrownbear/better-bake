@@ -1,15 +1,15 @@
 # Visit the Live Project
 
-Open [Employee-Polls App](https://aaron.aaronandanita.com/employee-polls) to view in your browser.
+Open [Better Bake App](https://aaron.aaronandanita.com/bettter-bake) to view in your browser.
 
-# Employee Polls Project
+# Better Bake Polls Project
 
-This is the final assessment from Udacity's React & Redux course. It is a "Would You Rather" polling app to vote between two options. Here are a few of the key features:
+This is inspired by the final assessment from Udacity's React & Redux course. It is a "Who Baked It Better" polling app to vote between two options. Here are a few of the key features:
 
     1. Login - allows user to login. 
     2. Dashboard - toggle between answered and unanswered polls.
     3. Leaderboard - to see number of votes and polls answered.
-    4. New Poll - create new "Would You Rather" polls.
+    4. New Poll - create new "Who Baked It Better" polls.
 
 ## TL;DR
 
