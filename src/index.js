@@ -17,7 +17,7 @@ const root = createRoot(container);
 
 root.render(
   <Provider store={store}>
-    <Router basename="/employee-polls">
+    <Router basename="/better-bake">
      <App />
     </Router>
   </Provider>
