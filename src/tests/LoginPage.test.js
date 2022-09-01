@@ -29,7 +29,7 @@ describe('LoginPage', () => {
     renderWithProviders(<LoginPage />);
 
     const username = screen.getByTestId('username-input');
-    fireEvent.change(username, {target: { value:'sarahedo' }});
+    fireEvent.change(username, {target: { value:'aaronb' }});
 
     const submitButton = screen.getByTestId('submit-button');
     fireEvent.click(submitButton);
@@ -72,7 +72,7 @@ describe('LoginPage', () => {
     renderWithProviders(<LoginPage dispatch={dispatch} users={users}/>);
 
     const username = screen.getByTestId('username-input');
-    fireEvent.change(username, {target: { value: 'sarahedo' }});
+    fireEvent.change(username, {target: { value: 'aaronb' }});
 
     const credential = screen.getByTestId('password-input');
     fireEvent.change(credential, {target: { value: 'password' }});
@@ -91,7 +91,7 @@ describe('LoginPage', () => {
     const { dispatch } = store.dispatch;
     const state = store.getState();
     const users = state.users;
-    const user = 'tylermcginnis';
+    const user = 'anitab';
 
     renderWithProviders(<LoginPage dispatch={dispatch} users={users}/>);
 

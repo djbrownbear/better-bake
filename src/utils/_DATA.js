@@ -197,7 +197,7 @@ let bakers = {
           "0803": 
             {id: '0803', bakeURL:"https://i.imgur.com/GSqOalb.png", text: "Kate's Kraken Bread Sculpture"}, 
           "0806": 
-            {id: '0806', bakeURL:"https://i.imgur.com/cSvbkV4.png"}, text: "Kate's Potato Curry Pie with Mango & Chilli Glaze"
+            {id: '0806', bakeURL:"https://i.imgur.com/cSvbkV4.png", text: "Kate's Potato Curry Pie with Mango & Chilli Glaze"}
         }
       },  
       "Liam": {
@@ -231,16 +231,16 @@ let bakers = {
         id: 'Steven', 
         episodes: {
           "0803": 
-            {id: '0803', bakeURL:"https://i.imgur.com/yyJpbJC.png", text: "Steven The Bag I Knead Bread Sculpture"}, 
+            {id: '0803', bakeURL:"https://i.imgur.com/yyJpbJC.png", text: "Steven's The Bag I Knead Bread Sculpture"}, 
           "0806": 
-            {id: '0806', bakeURL:"https://i.imgur.com/NNdLoYP.png", text: "Steven Christmas Pie"}
+            {id: '0806', bakeURL:"https://i.imgur.com/NNdLoYP.png", text: "Steven's Christmas Pie"}
         }
       },  
       "Tom": {
         id: 'Tom', 
         episodes: {
           "0803": 
-            {id: '0803', bakeURL:"https://i.imgur.com/4fmdOTt.png", text: "Pink & Yellow Rose Centrepiece' Bread Sculpture"}, 
+            {id: '0803', bakeURL:"https://i.imgur.com/4fmdOTt.png", text: "Pink & Yellow Rose Centrepiece Bread Sculpture"}, 
         }
       },
       "Yan": {
@@ -332,7 +332,7 @@ export function _getBakers () {
   })
 }
 
-function formatQuestion ({ optionOneText, optionTwoText, author }) {
+function formatQuestion ({ optionOneText, optionTwoText, optionOneImage, optionTwoImage, author }) {
   return {
     id: generateUID(),
     timestamp: Date.now(),
@@ -340,17 +340,24 @@ function formatQuestion ({ optionOneText, optionTwoText, author }) {
     optionOne: {
       votes: [],
       text: optionOneText,
+      imgURL: optionOneImage,
     },
     optionTwo: {
       votes: [],
       text: optionTwoText,
+      imgURL: optionTwoImage,
     }
   }
 }
 
 export function _saveQuestion (question) {
   return new Promise((resolve, reject) => {
-    if (!question.optionOneText || !question.optionTwoText || !question.author) {
+    if (!question.optionOneText 
+        || !question.optionTwoText 
+        || !question.optionOneImage 
+        || !question.optionTwoImage 
+        || !question.author
+      ) {
       reject("Please provide optionOneText, optionTwoText, and author");
     }
 

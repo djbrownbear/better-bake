@@ -144,8 +144,8 @@ const mapStateToProps = ({ authedUser, users, polls, bakers }, props) => {
   const bTwoSeason = poll.optionTwo.season;
   const bOneEpisode = poll.optionOne.episode;
   const bTwoEpisode = poll.optionTwo.episode;
-  const bakerOne = bakers[bOneSeason].baker[poll.optionOne.baker].episodes[bOneEpisode].bakeURL;
-  const bakerTwo = bakers[bTwoSeason].baker[poll.optionTwo.baker].episodes[bTwoEpisode].bakeURL;
+  const bakerOne = bOneSeason ? bakers[bOneSeason].baker[poll.optionOne.baker].episodes[bOneEpisode].bakeURL : poll.optionOne.imgURL;
+  const bakerTwo = bTwoSeason ? bakers[bTwoSeason].baker[poll.optionTwo.baker].episodes[bTwoEpisode].bakeURL : poll.optionTwo.imgURL;
 
 
   return {

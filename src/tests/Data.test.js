@@ -4,11 +4,15 @@ describe("_saveQuestion", () => {
   it("should return true with all correct parameters", async () => {
     const optionOneText = "More team outings";
     const optionTwoText = "Days of service";
-    const author = "tylermcginnis";
+    const optionOneImage = "https://i.imgur.com/aBYze1Z.png";
+    const optionTwoImage = "https://i.imgur.com/OfKpkVr.png";
+    const author = "aaronb";
 
    const res = await _saveQuestion(
       {optionOneText, 
        optionTwoText, 
+       optionOneImage,
+       optionTwoImage,
        author,
       }
     );
@@ -19,11 +23,15 @@ describe("_saveQuestion", () => {
   it("should display error if optionOneText is invalid", async () => {
     const optionOneText = undefined;
     const optionTwoText = "Days of service";
-    const author = "tylermcginnis";
+    const optionOneImage = "https://i.imgur.com/aBYze1Z.png";
+    const optionTwoImage = "https://i.imgur.com/OfKpkVr.png";
+    const author = "aaronb";
 
     const res = await _saveQuestion(
         {optionOneText, 
          optionTwoText, 
+         optionOneImage,
+         optionTwoImage,
          author,
         }
       ).catch(e => e);
@@ -34,11 +42,15 @@ describe("_saveQuestion", () => {
   it("should display error if optionTwoText is invalid", async () => {
     const optionOneText = "More team outings";
     const optionTwoText = undefined;
-    const author = "tylermcginnis";
+    const optionOneImage = "https://i.imgur.com/aBYze1Z.png";
+    const optionTwoImage = "https://i.imgur.com/OfKpkVr.png";
+    const author = "aaronb";
 
     const res = await _saveQuestion(
         {optionOneText, 
          optionTwoText, 
+         optionOneImage,
+         optionTwoImage,         
          author,
         }
       ).catch(e => e);
@@ -49,11 +61,15 @@ describe("_saveQuestion", () => {
   it("should display error if author is invalid", async () => {
     const optionOneText = "More team outings";
     const optionTwoText = "Days of service";
+    const optionOneImage = "https://i.imgur.com/aBYze1Z.png";
+    const optionTwoImage = "https://i.imgur.com/OfKpkVr.png";
     const author = undefined;
 
     const res = await _saveQuestion(
         {optionOneText, 
          optionTwoText, 
+         optionOneImage,
+         optionTwoImage,            
          author,
         }
       ).catch(e => e);
@@ -64,7 +80,7 @@ describe("_saveQuestion", () => {
 
 describe("_saveQuestionAnswer", () => {
   it("should return true with all correct parameters", async () => {
-    const user = "tylermcginnis";
+    const user = "aaronb";
     const id = "vthrdm985a262al8qx3do";
     const ans = "optionOne";
 
@@ -94,7 +110,7 @@ describe("_saveQuestionAnswer", () => {
   });
 
   it("should display error if qid is invalid", async () => {
-    const user = "tylermcginnis";
+    const user = "aaronb";
     const id = undefined;
     const ans = "optionOne";
 
@@ -109,7 +125,7 @@ describe("_saveQuestionAnswer", () => {
   });
 
   it("should display error if ans is invalid", async () => {
-    const user = "tylermcginnis";
+    const user = "aaronb";
     const id = "vthrdm985a262al8qx3do";
     const ans = undefined;
 

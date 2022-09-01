@@ -4,28 +4,37 @@ import { handleAddPoll } from "../actions/polls";
 import { useNavigate } from "react-router-dom";
 import PollHeader from "./PollHeader";
 
-const NewPoll = ({ dispatch, id, avatar, name, allOptions }) => {
+const NewPoll = ({ dispatch, id, avatar, name, bakers, allOptions }) => {
   const navigate = useNavigate();
   const [optionOneNew, setOptionOneNew] = useState(""); 
   const [optionTwoNew, setOptionTwoNew] = useState(""); 
+  const [optionOneImage, setOptionOneImage] = useState("");
+  const [optionTwoImage, setOptionTwoImage] = useState("");
 
   const handleChange = (e) => {
-    // console.log(e.target.value);
+    let idx = e.target.options.selectedIndex;
+    let imgURL = e.target.options[idx].dataset.imgurl;
+
     if (e.target.id === "optionOneNew") {
       const optionOneNew = e.target.value;
       setOptionOneNew(optionOneNew);
+      setOptionOneImage(imgURL);
     } else if (e.target.id === "optionTwoNew") {
       const optionTwoNew = e.target.value;
       setOptionTwoNew(optionTwoNew);
+      setOptionTwoImage(imgURL);
     };
+    console.log(optionOneImage, optionTwoImage);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    dispatch(handleAddPoll(optionOneNew, optionTwoNew));
+    dispatch(handleAddPoll(optionOneNew, optionTwoNew, optionOneImage, optionTwoImage));
     setOptionOneNew("");
     setOptionTwoNew("");
+    setOptionOneImage("");
+    setOptionTwoImage("");
 
     if (!id) {
       navigate("/");
@@ -44,18 +53,32 @@ const NewPoll = ({ dispatch, id, avatar, name, allOptions }) => {
       
         <div>
           <label htmlFor="optionOneNew">Option One</label>
+          <div className="poll-info">
+            <div className="poll-option create-poll">
+              <div className="poll-option-wrapper-inner">
+                <img className="poll-option-img" src={ optionOneImage } alt={`${optionOneNew}`} />
+              </div>
+            </div>
+          </div>
           <select name="optionOneNew" id="optionOneNew" className="new-poll-option" onChange={handleChange}>
             {allOptions && 
-              allOptions.map((curOption) => (<option value={curOption}>{curOption}</option>))
+              allOptions.map((curOption) => (<option data-imgurl={curOption.bakeURL} value={curOption.text}>{curOption.text}</option>))
             }
           </select>
         </div>
         
         <div>
           <label htmlFor="optionTwoNew">Option Two</label>
+          <div className="poll-info">
+            <div className="poll-option create-poll">
+              <div className="poll-option-wrapper-inner">
+                <img className="poll-option-img" src={ optionTwoImage } alt={`${optionTwoNew}`} />
+              </div>
+            </div>
+          </div>
           <select name="optionTwoNew" id="optionTwoNew" className="new-poll-option" onChange={handleChange}>
             {allOptions && 
-              allOptions.map((curOption) => (<option value={curOption}>{curOption}</option>))
+              allOptions.map((curOption) => (<option data-imgurl={curOption.bakeURL} value={curOption.text}>{curOption.text}</option>))
             }
           </select>
         </div>
@@ -73,18 +96,22 @@ const mapStateToProps = ({ dispatch, authedUser, users, bakers }) => {
   const name = user.name;
   const avatar = user.avatarURL;
 
+  // modified based on function from the following source:
   // https://stackoverflow.com/questions/54857222/find-all-values-by-specific-key-in-a-deep-nested-object
-  function findAllByKey(obj, keyToFind) {
+  function findAllByProp(obj, keyToFind) {
     return Object.entries(obj)
       .reduce((acc, [key, value]) => (key === keyToFind)
-        ? acc.concat(value)
+        ? acc.concat(obj)
         : (typeof value === 'object')
-        ? acc.concat(findAllByKey(value, keyToFind))
+        ? acc.concat(findAllByProp(value, keyToFind))
         : acc
       , [])
   }
 
-  const allOptions = findAllByKey(bakers,'text');
+  const allOptions = findAllByProp(bakers,'bakeURL');
+
+  console.log(findAllByProp(bakers,'bakeURL'))
+
 
   return{
     dispatch,
