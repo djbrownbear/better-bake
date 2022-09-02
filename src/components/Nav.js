@@ -31,14 +31,14 @@ const Nav = ({ dispatch, authedUser, user }) => {
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
       <div className="site-menu-inner">
         <div className="logo-wrapper">
-          <NavLink activeClassName="active" to="/">
+          <Link to="/">
             <img 
               className="app-logo" 
               src="https://img.icons8.com/emoji/48/000000/ballot-box-with-ballot.png" 
               alt="Voting Ballot Box" 
             />
             <span>Better Bake</span>
-          </NavLink>
+          </Link>
         </div>
         <div className="menu-content-wrapper">    
           <div className="top-bar">
@@ -48,7 +48,7 @@ const Nav = ({ dispatch, authedUser, user }) => {
           </div>
           <ul className="desktop-menu-main">
             <li>
-              <NavLink to="/add"><span>New Poll</span></NavLink>
+              <NavLink activeClassName="active" to="/add"><span>New Poll</span></NavLink>
             </li>
             <li>
               <NavLink to="/leaderboard"><span>Leaderboard</span></NavLink>
