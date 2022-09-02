@@ -2,7 +2,7 @@ let users = {
   aaronb: {
     id: 'aaronb',
     password:'password123',
-    name: 'Aaron B',
+    name: 'Aaron Brown',
     avatarURL: 'https://i.imgur.com/IAwxwIa.png',
     answers: {
       "8xf0y6ziyjabvozdd253nd": 'optionOne',
@@ -15,7 +15,7 @@ let users = {
   anitab: {
     id: 'anitab',
     password:'abc321',
-    name: 'Anita B',
+    name: 'Anita Brown',
     avatarURL: "https://i.imgur.com/65jpbsM.png",
     answers: {
       "vthrdm985a262al8qx3do": 'optionOne',
@@ -26,7 +26,7 @@ let users = {
   lennym: {
     id: 'lennym',
     password:'xyz123',
-    name: 'Lenny M',
+    name: 'Lenny Civic',
     avatarURL: "https://i.imgur.com/BP8swpu.png",
     answers: {
       "xj352vofupe1dqz9emx13r": 'optionOne',
@@ -38,7 +38,7 @@ let users = {
   maddiem: {
     id: 'maddiem',
     password:'pass246',
-    name: 'Maddie M',
+    name: 'Maddie Mazda',
     avatarURL: 'https://i.imgur.com/5mm4bTH.png',
     answers: {
       "xj352vofupe1dqz9emx13r": 'optionOne',
@@ -240,7 +240,7 @@ let bakers = {
         id: 'Tom', 
         episodes: {
           "0803": 
-            {id: '0803', bakeURL:"https://i.imgur.com/4fmdOTt.png", text: "Pink & Yellow Rose Centrepiece Bread Sculpture"}, 
+            {id: '0803', bakeURL:"https://i.imgur.com/4fmdOTt.png", text: "Tom's Pink & Yellow Rose Centrepiece Bread Sculpture"}, 
         }
       },
       "Yan": {
