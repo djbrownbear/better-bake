@@ -24,7 +24,9 @@
 *,
 *:before,
 *:after {
-  box-sizing: inherit;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 html {
@@ -63,6 +65,11 @@ h1, h2, h3, span {
   width: 100%;
 }
 
+h1 {
+  margin: 20px 0;
+}
+
+
 a {
   text-decoration: none;
   color: var(--color-secondary);
@@ -99,6 +106,11 @@ ul {
 
 .page-wrapper {
   min-height: 100vh;
+}
+
+.page-wrapper.inner {
+  max-width: 96%;
+  margin: 0 auto;
 }
 
 .container {
@@ -218,6 +230,7 @@ ul {
   color: var(--color-primary);
   box-shadow: 0 0.5rem 1rem 0 rgb(0 0 0 / 10%);
   border-radius: 5px;
+  margin-top: 75px;
 }
 
 .login-form span {
@@ -248,9 +261,9 @@ ul {
 
 .polls-wrapper {
   padding: 0;
-  margin: 12px auto;
+  margin: 20px auto;
   display: flex;
-  width: 90%;
+  width: 100%;
   border: 1px solid var(--bg-color-primary);
   flex-direction: column;
 }
@@ -264,12 +277,15 @@ ul {
 
 .polls-flex {
   margin: auto 10px;
-  padding: 10px;
+  padding: 10px 20px;
   display: flex;
   flex-wrap: wrap;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: center;
-  padding-inline-start: 0px;
+  gap: 16px;
+}
+.polls-flex .poll-item:last-child{
+  margin-right: auto;
 }
 
 .poll-item {
@@ -292,9 +308,9 @@ ul {
   margin: 6px;
 }
 
-.poll-header{
+.poll-header {
   display: flex;
-  width: 90%;
+  width: 100%;
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
@@ -321,6 +337,11 @@ ul {
   margin: 0;
   padding: 0;
   display: flex;
+}
+
+.poll-info.test {
+  flex-direction: column;
+  align-items: center;
 }
 
 .poll-option {
@@ -453,7 +474,7 @@ img.app-logo {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 4px auto 20px auto;
+  margin: 12px auto 20px auto;
   padding: 4px;
   width: 50%;
 }

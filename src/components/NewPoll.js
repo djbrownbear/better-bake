@@ -51,7 +51,7 @@ const NewPoll = ({ dispatch, id, avatar, name, allOptions }) => {
 
   return (
     <div className="page-wrapper inner">
-      <form name="new-poll" className="center-h flex-wrap" onSubmit={handleSubmit}>
+      <form name="new-poll" className="poll-info test" onSubmit={handleSubmit}>
         <h1>New Poll</h1>
         <PollHeader 
           avatar={avatar}
@@ -59,39 +59,40 @@ const NewPoll = ({ dispatch, id, avatar, name, allOptions }) => {
           timestamp={new Date()}
         />
       
-        <div className="container">
-          <label htmlFor="optionOneNew" className="center-h">Option One</label>
-          <div className="poll-info">
-            <div className="poll-option create-poll">
-              <div className="poll-option-wrapper-inner">
-                <img className="poll-option-img" src={ optionOneImage } alt={`${optionOneNew}`} />
+        <div className="poll-info">
+          <div>
+            <label htmlFor="optionOneNew" className="center-h">Option One</label>
+            <div className="poll-info">
+              <div className="poll-option create-poll">
+                <div className="poll-option-wrapper-inner">
+                  <img className="poll-option-img" src={ optionOneImage } alt={`${optionOneNew}`} />
+                </div>
               </div>
             </div>
+            <select name="optionOneNew" id="optionOneNew" className="new-poll-option" onChange={handleChange}>
+              {allOptions && 
+                allOptions.map((curOption) => (<option data-imgurl={curOption.bakeURL} value={curOption.text}>{curOption.text}</option>))
+              }
+            </select>
           </div>
-          <select name="optionOneNew" id="optionOneNew" className="new-poll-option" onChange={handleChange}>
-            {allOptions && 
-              allOptions.map((curOption) => (<option data-imgurl={curOption.bakeURL} value={curOption.text}>{curOption.text}</option>))
-            }
-          </select>
-        </div>
-        
-        <div className="container">
-          <label htmlFor="optionTwoNew" className="center-h">Option Two</label>
-          <div className="poll-info">
-            <div className="poll-option create-poll">
-              <div className="poll-option-wrapper-inner">
-                <img className="poll-option-img" src={ optionTwoImage } alt={`${optionTwoNew}`} />
-              </div>
-            </div>
-          </div>
-          <select name="optionTwoNew" id="optionTwoNew" className="new-poll-option" onChange={handleChange}>
-            {allOptions && 
-              allOptions.map((curOption) => (<option data-imgurl={curOption.bakeURL} value={curOption.text}>{curOption.text}</option>))
-            }
-          </select>
-        </div>
 
-        <button className="btn btn-submit center-h" type="submit" disabled={(optionOneNew === "" || optionTwoNew === "")}>
+          <div>
+            <label htmlFor="optionTwoNew" className="center-h">Option Two</label>
+            <div className="poll-info">
+              <div className="poll-option create-poll">
+                <div className="poll-option-wrapper-inner">
+                  <img className="poll-option-img" src={ optionTwoImage } alt={`${optionTwoNew}`} />
+                </div>
+              </div>
+            </div>
+            <select name="optionTwoNew" id="optionTwoNew" className="new-poll-option" onChange={handleChange}>
+              {allOptions && 
+                allOptions.map((curOption) => (<option data-imgurl={curOption.bakeURL} value={curOption.text}>{curOption.text}</option>))
+              }
+            </select>
+          </div>
+        </div>
+        <button className="btn btn-submit" type="submit" disabled={(optionOneNew === "" || optionTwoNew === "")}>
           Submit
         </button>
       </form>
