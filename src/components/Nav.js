@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, NavLink } from "react-router-dom";
 import { connect } from "react-redux";
 import { logoutAuthedUser } from "../actions/authedUser";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -31,14 +31,14 @@ const Nav = ({ dispatch, authedUser, user }) => {
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
       <div className="site-menu-inner">
         <div className="logo-wrapper">
-          <Link to="/">
+          <NavLink activeClassName="active" to="/">
             <img 
               className="app-logo" 
               src="https://img.icons8.com/emoji/48/000000/ballot-box-with-ballot.png" 
               alt="Voting Ballot Box" 
             />
             <span>Better Bake</span>
-          </Link>
+          </NavLink>
         </div>
         <div className="menu-content-wrapper">    
           <div className="top-bar">
@@ -48,13 +48,13 @@ const Nav = ({ dispatch, authedUser, user }) => {
           </div>
           <ul className="desktop-menu-main">
             <li>
-              <Link to="/add"><span>New Poll</span></Link>
+              <NavLink to="/add"><span>New Poll</span></NavLink>
             </li>
             <li>
-              <Link to="/leaderboard"><span>Leaderboard</span></Link>
+              <NavLink to="/leaderboard"><span>Leaderboard</span></NavLink>
             </li>
             <li>
-              <Link to="/auth"><span>Switch User</span></Link>
+              <NavLink to="/auth"><span>Switch User</span></NavLink>
             </li>
           </ul>
           <button className="icon menu" type="button" onClick={toggleNav}>

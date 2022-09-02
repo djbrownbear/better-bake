@@ -2,6 +2,7 @@
 
 :root {
  --text-shadow: 0.5px 0.5px rgba(31, 31, 31, 0.8);
+ --text-shadow-active: 0.5px 0.8px rgba(172, 160, 242, 0.8);
  --box-shadow: 0 0.5rem 1rem 0 rgb(0 0 0 / 10%);
  --fw-bold: 600;
 
@@ -12,6 +13,7 @@
  --color-primary: #24305e;
  --color-secondary: #fff;
  --color-accent:rgba(168, 208, 230, 1.0);
+ --color-active: rgba(172, 160, 242, 1.0);
 
  --bg-color-default: rgba(255, 255, 255, 1.0);
  --bg-color-primary: rgba(36, 48, 94, 1.0);
@@ -32,7 +34,6 @@
 html {
   background: var(--bg-color-default);
   color: var(--color-primary);
-  /* text-align: center; */
 }
 
 body {
@@ -81,6 +82,12 @@ a:hover {
   color: var(--color-accent);
   font-weight: 600;
   transform: scale(1.2);
+}
+
+.active {
+  text-shadow: var(--text-shadow-active);
+  font-weight: 600;
+  border-bottom: 2px solid var(--bg-color-accent);
 }
 
 li {
@@ -157,6 +164,11 @@ ul {
 .desktop-menu-main li {
   padding: 0 10px;
 }
+
+.desktop-menu-main a {
+  padding-bottom: 8px;
+}
+
 
 .desktop-menu-social {
   margin-left: auto;
@@ -810,6 +822,8 @@ td {
     display: block;
     letter-spacing: .4px;
     text-align: left;
+    padding-bottom: 0;
+    border-bottom: none;
   }
 
   .nav.responsive .desktop-menu-social li {
