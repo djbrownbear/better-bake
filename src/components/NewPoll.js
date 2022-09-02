@@ -51,7 +51,7 @@ const NewPoll = ({ dispatch, id, avatar, name, allOptions }) => {
 
   return (
     <div className="page-wrapper inner">
-      <form name="new-poll" onSubmit={handleSubmit}>
+      <form name="new-poll" className="center-h flex-wrap" onSubmit={handleSubmit}>
         <h1>New Poll</h1>
         <PollHeader 
           avatar={avatar}
@@ -59,8 +59,8 @@ const NewPoll = ({ dispatch, id, avatar, name, allOptions }) => {
           timestamp={new Date()}
         />
       
-        <div>
-          <label htmlFor="optionOneNew">Option One</label>
+        <div className="container">
+          <label htmlFor="optionOneNew" className="center-h">Option One</label>
           <div className="poll-info">
             <div className="poll-option create-poll">
               <div className="poll-option-wrapper-inner">
@@ -75,8 +75,8 @@ const NewPoll = ({ dispatch, id, avatar, name, allOptions }) => {
           </select>
         </div>
         
-        <div>
-          <label htmlFor="optionTwoNew">Option Two</label>
+        <div className="container">
+          <label htmlFor="optionTwoNew" className="center-h">Option Two</label>
           <div className="poll-info">
             <div className="poll-option create-poll">
               <div className="poll-option-wrapper-inner">
@@ -91,7 +91,7 @@ const NewPoll = ({ dispatch, id, avatar, name, allOptions }) => {
           </select>
         </div>
 
-        <button className="btn btn-submit" type="submit" disabled={(optionOneNew === "" || optionTwoNew === "")}>
+        <button className="btn btn-submit center-h" type="submit" disabled={(optionOneNew === "" || optionTwoNew === "")}>
           Submit
         </button>
       </form>

@@ -91,9 +91,9 @@ const PollPage = (props) => {
         />
         <div className="poll-info">
           <div className={"poll-option " + (hasVotedOptionOne ? "vote-choice": "")}>
-            <div className="poll-option-wrapper-inner">
+            <div className="poll-option-wrapper-inner center-h ">
               <img className="poll-option-img" src={ props.bakerOne } alt={`${optionOneText}`} />
-              <h3>{optionOneText}</h3>
+              <h3 className="center-v">{optionOneText}</h3>
               <button
                 id="optionOne"
                 className="btn btn-vote" 
@@ -112,9 +112,9 @@ const PollPage = (props) => {
             </div>
           </div>
           <div className={"poll-option " + (hasVotedOptionTwo ? "vote-choice": "")}>
-            <div className="poll-option-wrapper-inner">
+            <div className="poll-option-wrapper-inner center-h ">
               <img className="poll-option-img" src={ props.bakerTwo } alt={`${optionTwoText}`} />
-              <h3>{optionTwoText}</h3>
+              <h3 className="center-v">{optionTwoText}</h3>
               <button
                 id="optionTwo"
                 className="btn btn-vote" 
