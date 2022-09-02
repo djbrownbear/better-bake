@@ -46,7 +46,7 @@ const Nav = ({ dispatch, authedUser, user }) => {
             <FontAwesomeIcon icon={faXmarkCircle} size="2x" />
           </button>
           </div>
-          <ul className="desktop-menu-main">
+          <ul className="desktop-menu-main" onClick={toggleNav}>
             <li>
               <NavLink activeClassName="active" to="/add"><span>New Poll</span></NavLink>
             </li>
@@ -61,7 +61,7 @@ const Nav = ({ dispatch, authedUser, user }) => {
             <i className="fa fa-bars fa-lg"></i>
           </button>
           {!authedUser &&
-            <ul className="desktop-menu-social">
+            <ul className="desktop-menu-social" onClick={toggleNav}>
               <li>
                 <a href="https://github.com/djbrownbear" target="_blank" rel="noreferrer" alt="link to github">
                   <FontAwesomeIcon icon={faGithub} size="lg" />

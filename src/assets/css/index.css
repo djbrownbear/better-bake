@@ -300,8 +300,8 @@ ul {
 }
 
 .poll-item {
-  width: 30%;
-  padding: 4px;
+  width: 31.5%;
+  padding: 2px;
   margin: 6px;
   box-shadow: var(--box-shadow);
 }
