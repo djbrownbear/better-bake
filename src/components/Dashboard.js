@@ -41,58 +41,62 @@ const Dashboard = ({ authedUser, polls }) => {
   }
 
   return (
-  <div className="page-wrapper inner">
-    <h1>Dashboard</h1>
-    <div className="toggle-container">
-      <button
-        id={unans}
-        type="button"
-        className="btn btn-togglePollView"
-        onClick={toggleView}
-        disabled={showUnanswered ? true : false}
-      >
-        Unanswered
-      </button>
-      <button
-        id={ans}
-        type="button"
-        className="btn btn-togglePollView"
-        onClick={toggleView}
-        disabled={showAnswered ? true : false}
-      >
-        Answered
-      </button>
+  <div>
+    <div className="title">
+      <h1>Dashboard</h1>
     </div>
-    {showUnanswered && 
-      <div className="polls-wrapper">
-        <h2>Unanswered Polls</h2>
-        <ul className="polls-flex">
-          {polls
-            .filter(unanswered)
-            .map(
-              (poll) => (
-              <li key={poll.id} className="poll-item">
-                <Poll id={poll.id} />
-              </li>
-          ))}
-        </ul>
+    <div className="page-wrapper inner">
+      <div className="toggle-container">
+        <button
+          id={unans}
+          type="button"
+          className="btn btn-togglePollView"
+          onClick={toggleView}
+          disabled={showUnanswered ? true : false}
+        >
+          Unanswered
+        </button>
+        <button
+          id={ans}
+          type="button"
+          className="btn btn-togglePollView"
+          onClick={toggleView}
+          disabled={showAnswered ? true : false}
+        >
+          Answered
+        </button>
       </div>
-    }
-    {showAnswered && 
-      <div className="polls-wrapper">
-        <h2>Answered Polls</h2>
-        <ul className="polls-flex">
-          {polls
-            .filter(answered)
-            .map(
-              (poll) => (
-              <li key={poll.id} className="poll-item">
-                <Poll id={poll.id} />
-              </li>
-          ))}
-        </ul>
-      </div>
-    }
+      {showUnanswered && 
+        <div className="polls-wrapper">
+          <h2>Unanswered Polls</h2>
+          <ul className="polls-flex">
+            {polls
+              .filter(unanswered)
+              .map(
+                (poll) => (
+                <li key={poll.id} className="poll-item">
+                  <Poll id={poll.id} />
+                </li>
+            ))}
+          </ul>
+        </div>
+      }
+      {showAnswered && 
+        <div className="polls-wrapper">
+          <h2>Answered Polls</h2>
+          <ul className="polls-flex">
+            {polls
+              .filter(answered)
+              .map(
+                (poll) => (
+                <li key={poll.id} className="poll-item">
+                  <Poll id={poll.id} />
+                </li>
+            ))}
+          </ul>
+        </div>
+      }
+    </div>
   </div>
   );
 };

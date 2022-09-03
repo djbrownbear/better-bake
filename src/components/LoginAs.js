@@ -13,20 +13,24 @@ const LoginAs = ({ dispatch, authedUser,usersList}) => {
   }
 
   return (
-    <div className="page-wrapper inner">
-      <h1>Log In As</h1>
-      <div className="userlist">
-        {usersList.map((user) => (  
-          <button key={user.id} id={user.id} type="button" className="btn btn-userlist" onClick={handleClick}>
-            <img 
-              src={user.avatarURL}
-              alt={`Avatar of ${user.name}`} 
-              focusable="false"
-            />
-            <span focusable="false">{user.name}</span>
-            <span focusable="false">{user.id}</span>
-          </button>
-        ))}
+    <div>
+      <div className="title">
+        <h1>Switch User</h1>
+      </div>
+      <div className="page-wrapper inner">
+        <div className="userlist">
+          {usersList.map((user) => (  
+            <button key={user.id} id={user.id} type="button" className="btn btn-userlist" onClick={handleClick}>
+              <img 
+                src={user.avatarURL}
+                alt={`Avatar of ${user.name}`} 
+                focusable="false"
+              />
+              <span focusable="false">{user.name}</span>
+              <span focusable="false">{user.id}</span>
+            </button>
+          ))}
+        </div>
       </div>
     </div>
   );

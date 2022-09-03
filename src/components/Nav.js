@@ -1,4 +1,5 @@
 import { Link, useNavigate, NavLink } from "react-router-dom";
+import { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { logoutAuthedUser } from "../actions/authedUser";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -8,6 +9,24 @@ import { faFolder, faXmarkCircle } from "@fortawesome/free-regular-svg-icons";
 
 const Nav = ({ dispatch, authedUser, user }) => {
   const navigate = useNavigate();
+  const [stickyClass, setStickyClass] = useState('');
+
+  useEffect(() => {
+    window.addEventListener('scroll', stickNavbar);
+  
+    return () => {
+      window.removeEventListener('scroll', stickNavbar);
+    };
+  }, []);
+
+  const stickNavbar = () => {
+    if (window !== undefined) {
+      let windowHeight = window.scrollY;
+      windowHeight > 10 ? setStickyClass('sticky-nav') : setStickyClass('');
+    }
+  };
+
+  console.log(window.scrollY);
 
   const handleClick = (e) => {
     e.preventDefault();
@@ -27,7 +46,7 @@ const Nav = ({ dispatch, authedUser, user }) => {
   }
 
   return (
-    <nav className="nav" id="myTopnav">
+    <nav className={`nav ${stickyClass}`} id="myTopnav">
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
       <div className="site-menu-inner">
         <div className="logo-wrapper">
@@ -47,6 +66,9 @@ const Nav = ({ dispatch, authedUser, user }) => {
           </button>
           </div>
           <ul className="desktop-menu-main" onClick={toggleNav}>
+            <li>
+              <NavLink activeClassName="active" to="/"><span>Home</span></NavLink>
+            </li>
             <li>
               <NavLink activeClassName="active" to="/add"><span>New Poll</span></NavLink>
             </li>

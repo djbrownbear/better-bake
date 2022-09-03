@@ -31,6 +31,10 @@
   box-sizing: border-box;
 }
 
+/* .App {
+  height: 200vh;
+} */
+
 html {
   background: var(--bg-color-default);
   color: var(--color-primary);
@@ -116,7 +120,7 @@ ul {
 }
 
 .page-wrapper.inner {
-  max-width: 96%;
+  max-width: 65em;
   margin: 0 auto;
 }
 
@@ -139,6 +143,24 @@ ul {
   max-width: 92%;
   margin: 0 auto;
 }
+
+.title {
+  background-color: var(--bg-color-secondary);
+  color: var(--color-primary);
+  font-family: var(--ff-main);
+  width: 100%;
+  padding: 40px 0;
+  letter-spacing: 0.75em;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+.title h1 {
+  padding-left: 20px;
+  padding-right: 20px;
+  font-size: clamp(1.5em, 6vw, 2em);
+}
+
 
 .logo-wrapper a {
   display: flex; 
@@ -190,12 +212,16 @@ ul {
 }
 
 .nav {
+  position: sticky;
   display: flex;
+  width: 100%;
   background-color: var(--bg-color-primary);
   border-bottom: 1px solid #817f7c;
   justify-content: center;
   align-items: center;
   padding: 6px;
+  top: 0;
+  z-index: 1000;
 }
 
 .nav ul {
@@ -218,6 +244,7 @@ ul {
 .avatar-wrapper.nav-avatar {
   color: var(--color-secondary);
   flex-direction: row;
+  padding: 0 10px;
 }
 
 .login {
@@ -498,6 +525,7 @@ img.app-logo {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin: 0 auto;
 }
 
 input[type="text"],input[type="password"], select {
@@ -537,8 +565,9 @@ input[type="text"],input[type="password"], select {
   display: flex;
   justify-content: space-evenly;
   align-items: center;
-  width: 50vw;
+  width: 40em;
   cursor: pointer;
+  margin: 4px auto;
 }
 
 .btn-userlist > :nth-child(1) {
@@ -637,6 +666,8 @@ button.btn-logout:hover:not(:disabled) {
 /* table style */
 
 table {
+  /* top: 200px;
+  position: relative; */
   table-layout: fixed;
   margin: auto;
   width: 80%;
@@ -691,16 +722,26 @@ td {
   justify-content: center;
 }
 
-@media screen and (min-width: 1024px) {
+.relative {
+  position: relative;
+}
+
+.sticky-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 50;
+}
+
+/* @media screen and (min-width: 2560px) {
   .site-menu-inner {
     max-width: 100rem;
   }
-}
+} */
 
 
 @media screen and (min-width: 1024px) {
   .page-wrapper {
-    max-width: 80%;
     margin: 0 auto;
   }
 
@@ -724,7 +765,7 @@ td {
     font-size: 10px;
   }
 
-  .page-wrapper {
+  .page-wrapper.inner {
       max-width: 96%;
       margin: 0 auto;
   }
@@ -747,6 +788,7 @@ td {
     background: transparent;
     border: none;
     color: var(--color-secondary);
+    padding-right: 10px;
   }
 
   .nav .menu-content-wrapper {
@@ -896,6 +938,10 @@ td {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+  }
+
+  .poll-info.wrapper {
+    margin-bottom: 40px;
   }
 
   .poll-item {
