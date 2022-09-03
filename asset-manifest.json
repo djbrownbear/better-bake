@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/better-bake/static/css/main.71117386.css",
-    "main.js": "/better-bake/static/js/main.0a9de3ee.js",
+    "main.css": "/better-bake/static/css/main.7646bb8c.css",
+    "main.js": "/better-bake/static/js/main.5f49a7bc.js",
     "static/js/787.580f9956.chunk.js": "/better-bake/static/js/787.580f9956.chunk.js",
     "index.html": "/better-bake/index.html",
-    "main.71117386.css.map": "/better-bake/static/css/main.71117386.css.map",
-    "main.0a9de3ee.js.map": "/better-bake/static/js/main.0a9de3ee.js.map",
+    "main.7646bb8c.css.map": "/better-bake/static/css/main.7646bb8c.css.map",
+    "main.5f49a7bc.js.map": "/better-bake/static/js/main.5f49a7bc.js.map",
     "787.580f9956.chunk.js.map": "/better-bake/static/js/787.580f9956.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.71117386.css",
-    "static/js/main.0a9de3ee.js"
+    "static/css/main.7646bb8c.css",
+    "static/js/main.5f49a7bc.js"
   ]
 }
