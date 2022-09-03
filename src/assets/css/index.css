@@ -140,6 +140,29 @@ ul {
   margin: 0 auto;
 }
 
+.container.no-gutter{
+  /* background-color: var(--bg-color-primary);
+  color: var(--color-secondary); */
+  font-family: var(--ff-main);
+  width: 100%;
+  display: flex;
+}
+
+.container.no-gutter h1 {
+  text-align: left;
+  margin: 4px 0;
+}
+
+.color-accent {
+  background-color: var(--bg-color-accent);
+  color: var(--color-primary);
+}
+
+.color-main {
+  background-color: var(--bg-color-primary);
+  color: var(--color-secondary);
+}
+
 .title {
   background-color: var(--bg-color-secondary);
   color: var(--color-primary);

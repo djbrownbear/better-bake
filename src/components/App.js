@@ -5,6 +5,7 @@ import Leaderboard from './Leaderboard'
 import PollPage from './PollPage';
 import Custom404 from './Custom404';
 import LoginAs from './LoginAs';
+import LandingPage from './LandingPage';
 import { useEffect, Fragment } from "react";
 import { handleInitialData } from '../actions/shared';
 import { connect } from 'react-redux';
@@ -43,6 +44,7 @@ const App = (props) => {
               <Routes>
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/error" element={<Custom404 />} />        
+                <Route path="/welcome" element={<LandingPage />} />
                 <Route 
                   path="/"
                   element={

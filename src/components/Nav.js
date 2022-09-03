@@ -26,7 +26,7 @@ const Nav = ({ dispatch, authedUser, user }) => {
     }
   };
 
-  console.log(window.scrollY);
+  // console.log(window.scrollY);
 
   const handleClick = (e) => {
     e.preventDefault();
