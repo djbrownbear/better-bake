@@ -556,29 +556,30 @@ input[type="text"],input[type="password"], select {
 
 .toggle-container {
   display: flex;
-  background-color: transparent; 
+  background-color: var(--bg-color-primary); 
   color: var(--color-secondary);
   justify-content: center;
   align-items: center;
   height: 42px;
   max-width: 380px;
   border-radius: 200px;
-  padding: 2px;
+  padding: 0 6px;
   margin: 0 auto;
 }
 
 .btn-togglePollView {
   width: 50%;
-  margin: 0 -24px;
+  margin: 0;
   border-radius: 200px;
-  background: var(--bg-color-accent);
+  background: var(--bg-color-primary);
+  color: var(--color-secondary);
   flex: 0 1 auto;
   z-index: 0;
 }
 
 .btn-togglePollView.selected {
-  background-color: var(--bg-color-primary);
-  color: var(--color-secondary);
+  background-color: var(--bg-color-accent);
+  /* color: var(--color-secondary); */
   z-index: 2;
 }
 
@@ -588,8 +589,8 @@ input[type="text"],input[type="password"], select {
 }
 
 .btn-togglePollView:disabled {
-  background-color: var(--bg-color-primary);
-  color: var(--color-secondary);
+  background-color: var(--bg-color-accent);
+  color: var(--color-primary);
   z-index: 2;
 }
 
@@ -641,6 +642,7 @@ table {
   width: 80%;
   border-collapse: collapse;
   border: 2px solid var(--bg-color-primary);
+  text-align: center;
 }
 
 thead { 
@@ -871,7 +873,6 @@ td {
 
   .btn-togglePollView {
     font-size: 0.6em;
-    margin: 0 -19px;
   }
 
   .login {
