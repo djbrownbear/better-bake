@@ -9,6 +9,7 @@ import { faFolder, faXmarkCircle } from "@fortawesome/free-regular-svg-icons";
 
 const Nav = ({ dispatch, authedUser, user }) => {
   const navigate = useNavigate();
+  const [isOpen, setIsOpen] = useState(false);
   const [stickyClass, setStickyClass] = useState('');
 
   useEffect(() => {
@@ -26,27 +27,19 @@ const Nav = ({ dispatch, authedUser, user }) => {
     }
   };
 
-  // console.log(window.scrollY);
-
   const handleClick = (e) => {
     e.preventDefault();
     const el = document.querySelector(".page-container");
     el.style.backgroundColor = "var(--bg-color-primary)";
+    toggleNav();
     dispatch(logoutAuthedUser());
     navigate("/");
   }
 
-  function toggleNav() {
-    var x = document.getElementById("myTopnav");
-    if (x.className === "nav") {
-      x.className += " responsive";
-    } else {
-      x.className = "nav";
-    }
-  }
+  const toggleNav = () => setIsOpen(!isOpen); 
 
   return (
-    <nav className={`nav ${stickyClass}`} id="myTopnav">
+    <nav className={`nav ${stickyClass} ${isOpen ? 'responsive' : ''}`} id="myTopnav">
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
       <div className="site-menu-inner">
         <div className="logo-wrapper">
@@ -65,12 +58,12 @@ const Nav = ({ dispatch, authedUser, user }) => {
             <FontAwesomeIcon icon={faXmarkCircle} size="2x" />
           </button>
           </div>
-          <ul className="desktop-menu-main" onClick={toggleNav}>
+          <ul className={`desktop-menu-main ${isOpen ? '' : 'mm-hide'}`} onClick={(isOpen ? toggleNav : () => {})}>
             <li>
               <NavLink activeClassName="active" to="/"><span>Home</span></NavLink>
             </li>
             <li>
-              <NavLink activeClassName="active" to="/add"><span>New Poll</span></NavLink>
+              <NavLink to="/add"><span>New Poll</span></NavLink>
             </li>
             <li>
               <NavLink to="/leaderboard"><span>Leaderboard</span></NavLink>
@@ -83,7 +76,7 @@ const Nav = ({ dispatch, authedUser, user }) => {
             <i className="fa fa-bars fa-lg"></i>
           </button>
           {!authedUser &&
-            <ul className="desktop-menu-social" onClick={toggleNav}>
+            <ul className={`desktop-menu-social ${isOpen ? '' : 'mm-hide'}`} onClick={(isOpen ? toggleNav : () => {})}>
               <li>
                 <a href="https://github.com/djbrownbear" target="_blank" rel="noreferrer" alt="link to github">
                   <FontAwesomeIcon icon={faGithub} size="lg" />

@@ -24,7 +24,7 @@ let users = {
     questions: ['loxhs1bqm25b708cmbf3g', 'vthrdm985a262al8qx3do'],
   },
   lennym: {
-    id: 'lennym',
+    id: 'lennyc',
     password:'xyz123',
     name: 'Lenny Civic',
     avatarURL: "https://i.imgur.com/BP8swpu.png",

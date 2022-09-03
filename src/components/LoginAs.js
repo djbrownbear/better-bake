@@ -2,7 +2,7 @@ import { connect } from "react-redux";
 import { setAuthedUser } from "../actions/authedUser";
 import { useNavigate, useLocation } from "react-router-dom";
 
-const LoginAs = ({ dispatch, authedUser,usersList}) => {
+const LoginAs = ({ dispatch, authedUser, usersList}) => {
   const navigate = useNavigate();
   const { state } = useLocation();
 
