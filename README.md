@@ -1,6 +1,6 @@
 # Visit the Live Project
 
-Open [Better Bake App](https://aaron.aaronandanita.com/bettter-bake) to view in your browser.
+Open [Better Bake App](https://aaron.aaronandanita.com/better-bake) to view in your browser.
 
 # Better Bake Polls Project
 
