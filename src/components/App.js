@@ -12,7 +12,7 @@ import { connect } from 'react-redux';
 import LoadingBar from 'react-redux-loading-bar';
 import NewPoll from './NewPoll';
 import Nav from './Nav';
-import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import { Routes, Route, Navigate, useLocation, Outlet } from 'react-router-dom';
 import Favicon from "react-favicon";
 
 // Source for RequireAuth: https://ui.dev/react-router-protected-routes-authentication
@@ -23,6 +23,15 @@ function RequireAuth({ children, authedUser }) {
     ? ( children )
     : ( <Navigate to="/login" replace state={{ path: location.pathname }} /> );
 }
+
+const Layout = () => {
+  return (
+    <div>
+      <Outlet />
+    </div>
+  );
+} 
+
 
 const App = (props) => {
 
@@ -44,15 +53,21 @@ const App = (props) => {
               <Routes>
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/error" element={<Custom404 />} />        
-                <Route path="/welcome" element={<LandingPage />} />
                 <Route 
                   path="/"
-                  element={
-                    <RequireAuth authedUser={props.authedUser}>
-                      <Dashboard />
-                    </RequireAuth>
-                  }
-                />
+                  element={<Layout/>}
+                >
+                  <Route index element={<LandingPage />} />
+                  <Route path="/welcome" element={<LandingPage />} />
+                  <Route
+                    path="dashboard"
+                    element={
+                      <RequireAuth authedUser={props.authedUser}>
+                        <Dashboard />
+                      </RequireAuth>
+                    } 
+                  />
+                </Route>
                 <Route 
                   path="/auth"
                   element={

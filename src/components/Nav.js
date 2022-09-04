@@ -5,12 +5,15 @@ import { logoutAuthedUser } from "../actions/authedUser";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGithub, faLinkedin,  } from "@fortawesome/free-brands-svg-icons";
 import { faFolder, faXmarkCircle } from "@fortawesome/free-regular-svg-icons";
+import { faBars } from "@fortawesome/free-solid-svg-icons";
 
 
 const Nav = ({ dispatch, authedUser, user }) => {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const [stickyClass, setStickyClass] = useState('');
+
+  console.log({ user, authedUser });
 
   useEffect(() => {
     window.addEventListener('scroll', stickNavbar);
@@ -23,7 +26,7 @@ const Nav = ({ dispatch, authedUser, user }) => {
   const stickNavbar = () => {
     if (window !== undefined) {
       let windowHeight = window.scrollY;
-      windowHeight > 10 ? setStickyClass('sticky-nav') : setStickyClass('');
+      windowHeight > 50 ? setStickyClass('sticky-nav') : setStickyClass('');
     }
   };
 
@@ -40,7 +43,6 @@ const Nav = ({ dispatch, authedUser, user }) => {
 
   return (
     <nav className={`nav ${stickyClass} ${isOpen ? 'responsive' : ''}`} id="myTopnav">
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
       <div className="site-menu-inner">
         <div className="logo-wrapper">
           <Link to="/">
@@ -58,9 +60,9 @@ const Nav = ({ dispatch, authedUser, user }) => {
             <FontAwesomeIcon icon={faXmarkCircle} size="2x" />
           </button>
           </div>
-          <ul className={`desktop-menu-main ${isOpen ? '' : 'mm-hide'}`} onClick={(isOpen ? toggleNav : () => {})}>
+          <ul className={`menu-main ${isOpen ? '' : 'mm-hide'}`} onClick={(isOpen ? toggleNav : () => {})}>
             <li>
-              <NavLink activeClassName="active" to="/"><span>Home</span></NavLink>
+              <NavLink activeClassName="active" to="dashboard"><span>Home</span></NavLink>
             </li>
             <li>
               <NavLink to="/add"><span>New Poll</span></NavLink>
@@ -68,15 +70,12 @@ const Nav = ({ dispatch, authedUser, user }) => {
             <li>
               <NavLink to="/leaderboard"><span>Leaderboard</span></NavLink>
             </li>
-            <li>
-              <NavLink to="/auth"><span>Switch User</span></NavLink>
-            </li>
           </ul>
           <button className="icon menu" type="button" onClick={toggleNav}>
-            <i className="fa fa-bars fa-lg"></i>
+              <FontAwesomeIcon icon={faBars} size="lg" /> 
           </button>
           {!authedUser &&
-            <ul className={`desktop-menu-social ${isOpen ? '' : 'mm-hide'}`} onClick={(isOpen ? toggleNav : () => {})}>
+            <ul className={`menu-social ${isOpen ? '' : 'mm-hide'}`} onClick={(isOpen ? toggleNav : () => {})}>
               <li>
                 <a href="https://github.com/djbrownbear" target="_blank" rel="noreferrer" alt="link to github">
                   <FontAwesomeIcon icon={faGithub} size="lg" />
@@ -94,7 +93,15 @@ const Nav = ({ dispatch, authedUser, user }) => {
               </li>
             </ul>
           }  
-          {authedUser &&
+          <ul className={`menu-cta center-v ${isOpen ? '' : 'mm-hide'}`} onClick={(isOpen ? toggleNav : () => {})}>
+            <li>
+              {authedUser 
+                ? <NavLink to="/auth"><span>Switch User</span></NavLink>
+                : <NavLink to="/login"><span>Sign In</span></NavLink>
+              }
+           </li> 
+          </ul>
+          {user &&
             <div className="avatar-wrapper nav-avatar">
                 <img src={user.avatarURL} alt={`Avatar of ${user.name}`} className="avatar" />
                 <span>{user.id}</span>

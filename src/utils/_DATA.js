@@ -23,7 +23,7 @@ let users = {
     },
     questions: ['loxhs1bqm25b708cmbf3g', 'vthrdm985a262al8qx3do'],
   },
-  lennym: {
+  lennyc: {
     id: 'lennyc',
     password:'xyz123',
     name: 'Lenny Civic',
@@ -69,7 +69,7 @@ let questions = {
   },
   "6ni6ok3ym7mf1p33lnez": {
     id: '6ni6ok3ym7mf1p33lnez',
-    author: 'lennym',
+    author: 'lennyc',
     timestamp: 1645928870305,
     optionOne: {
       votes: [],
@@ -79,7 +79,7 @@ let questions = {
       baker: 'Stacey'
     },
     optionTwo: {
-      votes: ['lennym', 'aaronb'],
+      votes: ['lennyc', 'aaronb'],
       text: "Steven's The Bag I Knead Bread Sculpture",
       season: '08', 
       episode: '0803',
@@ -136,7 +136,7 @@ let questions = {
       baker: 'Rahul'
     },
     optionTwo: {
-      votes: ['lennym'],
+      votes: ['lennyc'],
       text: "Briony's 'Down the Rabbit Hole' Banquet Pie",
       season: '09', 
       episode: '0906', 
@@ -145,10 +145,10 @@ let questions = {
   },
   "xj352vofupe1dqz9emx13r": {
     id: 'xj352vofupe1dqz9emx13r',
-    author: 'lennym',
+    author: 'lennyc',
     timestamp: 1655317692670,
     optionOne: {
-      votes: ['lennym', 'maddiem'],
+      votes: ['lennyc', 'maddiem'],
       text: "Jon's Welsh Dragon Pie",
       season: '09', 
       episode: '0906', 

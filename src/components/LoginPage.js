@@ -69,10 +69,10 @@ const LoginPage = ({ dispatch, users }) => {
         )
       }
       {error &&
-          <h1 data-testid="error-header">Error: Please ensure all fields are filled out.</h1>
+          <h1 data-testid="error-header" className="warning-text">Error: Please ensure all fields are filled out.</h1>
       }
       {errorUserPwd &&
-           <h1 data-testid="errorUserPwd-header">Error: Incorrect username or password. Please try again.</h1>
+           <h1 data-testid="errorUserPwd-header" className="warning-text">Error: Incorrect username or password. Please try again.</h1>
       }
       <form className="login-form" onSubmit={handleSubmit}>
         <div className="column">
