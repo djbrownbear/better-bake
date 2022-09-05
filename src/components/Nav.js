@@ -13,8 +13,6 @@ const Nav = ({ dispatch, authedUser, user }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [stickyClass, setStickyClass] = useState('');
 
-  console.log({ user, authedUser });
-
   useEffect(() => {
     window.addEventListener('scroll', stickNavbar);
   

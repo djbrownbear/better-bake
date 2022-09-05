@@ -6,7 +6,7 @@ import PollPage from './PollPage';
 import Custom404 from './Custom404';
 import LoginAs from './LoginAs';
 import LandingPage from './LandingPage';
-import { useEffect, Fragment } from "react";
+import { useState, useEffect, Fragment } from "react";
 import { handleInitialData } from '../actions/shared';
 import { connect } from 'react-redux';
 import LoadingBar from 'react-redux-loading-bar';
@@ -34,9 +34,14 @@ const Layout = () => {
 
 
 const App = (props) => {
+  const [isLoginPage, setIsLoginPage] = useState(false);
+  const location = useLocation();
+  
+  const checkLocation = () => (location.pathname === "/login" ? setIsLoginPage(true) : setIsLoginPage(false));
 
   useEffect(() => {
-    props.dispatch(handleInitialData())
+    props.dispatch(handleInitialData());
+    checkLocation();
   }, [props]);
 
   return (
@@ -45,7 +50,7 @@ const App = (props) => {
         <Favicon 
           url="https://img.icons8.com/emoji/48/000000/ballot-box-with-ballot.png" 
         />
-        <div className="page-container">
+        <div className={`page-container ${isLoginPage ? "bg-primary" : ""}`}>
           <LoadingBar />
           <Nav /> 
           <div className="page-wrapper">

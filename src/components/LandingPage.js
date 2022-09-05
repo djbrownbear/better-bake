@@ -1,5 +1,8 @@
 import { connect } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faGithub, faLinkedin,  } from "@fortawesome/free-brands-svg-icons";
+import { faFolder } from "@fortawesome/free-regular-svg-icons";
 
 const LandingPage = ({ dispatch }) => {
   const navigate = useNavigate();
@@ -45,28 +48,28 @@ const LandingPage = ({ dispatch }) => {
       </section>
 
       <section id="two">
-        <div className="container no-gutter color-accent">
+        <div className="container no-gutter color-main">
           <div className="column f-start mw">
             <div className="textBlock">
               <h1>Vote</h1>
               <p>Cast your vote on the best bakes from user-created polls, including your own polls.</p>
             </div>
-            <div className="img-wrapper">
-              <img src="https://i.imgur.com/wXxGfuV.png" alt="vote for best bake" />
+            <div className="img-wrapper col-2">
+              <img src="https://i.imgur.com/wXxGfuV.png" alt="vote for best bake" className="img-screenshot"/>
             </div>
           </div>
         </div>
       </section>
 
       <section id="three">
-        <div className="container no-gutter color-main">
+        <div className="container no-gutter color-accent">
           <div className="column f-start mw">
             <div className="textBlock">
               <h1>Leaderboard</h1>
               <p>View user rankings by the number of polls answered and created.</p>
             </div>
-            <div className="img-wrapper">
-              <img src="https://i.imgur.com/wXxGfuV.png" alt="vote for best bake" />
+            <div className="img-wrapper col-2">
+              <img src="https://i.imgur.com/Ftq4FdE.png" alt="vote for best bake" className="img-screenshot" />
             </div>
           </div>
         </div>
@@ -79,12 +82,44 @@ const LandingPage = ({ dispatch }) => {
               <h1>Create New Polls</h1>
               <p>Missing the match up you have been waiting for? Well, wait no longer. Create the poll now for others to vote.</p>
             </div>
-            <div className="img-wrapper">
-              <img src="https://i.imgur.com/wXxGfuV.png" alt="vote for best bake" />
+            <div className="img-wrapper col-2">
+              <img src="https://i.imgur.com/efqscCF.png" alt="vote for best bake" className="img-screenshot" />
             </div>
           </div>
         </div>
       </section>
+
+      <footer>
+        <div className="container no-gutter">
+          <div className="textBlock color-main">
+            <h3>Photo Credits</h3>
+            <ul>
+              <li>Netflix</li>
+              <li><a href="http://www.tomhovey.co.uk/" alt="Tom Hovey"><span>Tom Hovey</span></a></li>
+            </ul>
+          </div>
+          <div className="textBlock color-main">
+            <h3>Social</h3>
+            <ul className="menu-social">
+              <li>
+                <a href="https://github.com/djbrownbear" target="_blank" rel="noreferrer" alt="link to github">
+                  <FontAwesomeIcon icon={faGithub} size="lg" />
+                </a>
+              </li>
+              <li>
+                <a href="https://www.linkedin.com/in/aarontimothybrown/" target="_blank" rel="noreferrer" alt="link to github">
+                  <FontAwesomeIcon icon={faLinkedin} size="lg"/>
+                </a>
+              </li>
+              <li>
+                <a href="https://aaron.aaronandanita.com" target="_blank" rel="noreferrer" alt="link to portfolio">
+                  <FontAwesomeIcon icon={faFolder} size="lg" />
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </footer>
 
     </div>
   );
