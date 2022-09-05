@@ -62,12 +62,7 @@ const App = (props) => {
                   path="/"
                   element={<Layout/>}
                 >
-                  <Route index element={
-                      <RequireAuth authedUser={props.authedUser}>
-                        <Dashboard />
-                      </RequireAuth>
-                    }  
-                  />
+                  <Route index element={<LandingPage />}/>
                   <Route path="/welcome" element={<LandingPage />} />
                   <Route
                     path="dashboard"
