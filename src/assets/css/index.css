@@ -60,7 +60,6 @@ form label {
   font-size: 1.5em;
 }
 
-
 h1, h2, h3, span {
   text-align: center;
   width: 100%;
@@ -69,7 +68,6 @@ h1, h2, h3, span {
 h1 {
   margin: 20px 0;
 }
-
 
 a {
   text-decoration: none;
@@ -103,6 +101,10 @@ ul {
 
 .flex-wrap {
   flex-wrap: wrap;
+}
+
+.App {
+  min-height: 100vh;
 }
 
 .page-container {
@@ -330,10 +332,75 @@ ul {
   border-radius: 5px 5px 0 0;
 }
 
-#one > div {
+/* #one > div {
   background-image: url("https://images.squarespace-cdn.com/content/v1/53db930be4b04ee7c4020290/1559899792825-I5EQCC3M1FMCW8ILW7R6/Benjamina%27s-Floral-Tea-Cake-Series-7.jpg?format=400w");
+  background-color: #fff;
   background-repeat: no-repeat;
   background-position: left;
+  clip-path: circle(200px at 0 100px);
+  mix-blend-mode: mutilply;
+} */
+
+.content {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.content .textBlock, .textBlock {
+  position: relative;
+  max-width: 20em;
+}
+
+.content.column span {
+  color: var(--color-accent);
+  font-size: 1.25em;
+  font-weight: 600;
+}
+
+.content.column .textBlock > * { text-align: center; }
+
+.content .textBlock h1 span {
+  font-family: var(--ff-app-name);
+  font-size: 1.75em;
+  color: var(--color-accent);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.circle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(255, 255, 255, .1);
+  clip-path: circle(300px at center);
+  z-index: 0;
+  mix-blend-mode: overlay;
+}
+
+.img-wrapper {
+  width: 500px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.img-wrapper img {
+  max-width: 250px;
+  z-index: 1;
+  margin: 0 auto;
+}
+
+.img-wrapper .img-left {
+  clip-path: circle(80% at 30% 60%);
+}
+
+.img-wrapper .img-right {
+  clip-path: circle(80% at 70% 60%);
 }
 
 
@@ -407,7 +474,11 @@ ul {
 .poll-header > *:nth-child(2) {
   font-weight: 500;
 }
+.poll-header>*:nth-child(2) span {
+  margin-top: 10px;
+}
 .poll-header>*:nth-child(3) {
+  margin-top: 0;
   font-style: italic;
 }
 
@@ -428,7 +499,7 @@ ul {
   align-items: flex-end;
   padding: 4px;
   margin: 0 6px;
-  margin-top: 40px;
+  margin-top: 10px;
   width: 50%;
   background: var(--bg-color-card);
   color: var(--color-primary);
@@ -758,6 +829,17 @@ td {
   justify-content: center;
 }
 
+.f-start {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.mw {
+  max-width: 75em;
+}
+
 .relative {
   position: relative;
 }
@@ -937,15 +1019,35 @@ td {
 
   .avatar-wrapper.nav-avatar {
     margin-left: auto;
+    margin-right: 0;
+  }
+
+  .img-wrapper .img-left {
+    max-width: 40vw;
+    margin-right: auto;
+    margin-left: 0;
+  }
+  .img-wrapper .img-right {
+    max-width: 40vw;
+    margin-left: auto;
+    margin-right: 0;
+  }
+
+  .content .textBlock h1 {
+    margin-top: 14px;
+    margin-bottom: 14px;
+  }
+  .content .textBlock h1 span {
+    font-size: 1.5em;
   }
 
   .poll-option-img {
     height: 75%;
   }
 
-  img {
+  /* img {
     height: 30px;
-  }
+  } */
 
   img.app-logo {
     padding: 4px;

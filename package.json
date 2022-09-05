@@ -1,9 +1,14 @@
 {
-  "name": "employee-polls",
+  "name": "better-bake",
   "version": "0.1.0",
-  "homepage": "https://aaron.aaronandanita.com/employee-polls",
+  "homepage": "https://aaron.aaronandanita.com/better-bake",
   "private": true,
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.1.2",
+    "@fortawesome/free-brands-svg-icons": "^6.1.2",
+    "@fortawesome/free-regular-svg-icons": "^6.1.2",
+    "@fortawesome/free-solid-svg-icons": "^6.1.2",
+    "@fortawesome/react-fontawesome": "^0.2.0",
     "@reduxjs/toolkit": "^1.8.3",
     "@testing-library/user-event": "^14.4.1",
     "react": "^18.2.0",

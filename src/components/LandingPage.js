@@ -1,48 +1,91 @@
 import { connect } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const LandingPage = ({ dispatch }) => {
+  const navigate = useNavigate();
+
+  const handleClick = (e) => {
+    e.preventDefault();
+
+    navigate('/login');
+  } 
 
   return (
     <div>
       <section id="one">
         <div className="container no-gutter center-v color-main">
-          <div className="column">
-            <h1>Settle who had the better bake.</h1>
-            <p>
-              Together, we can decide the better bake from contestants on <a href="https://thegreatbritishbakeoff.co.uk/" alt="The Great British Bake Off site">
-              The Great British Bake Off.
-              </a>
-            </p>
-            {/* <div className="avatar-wrapper center-h row">
-              <img 
-                src="https://images.squarespace-cdn.com/content/v1/53db930be4b04ee7c4020290/1559899792825-I5EQCC3M1FMCW8ILW7R6/Benjamina%27s-Floral-Tea-Cake-Series-7.jpg?format=400w"
-                alt="Benjamina's Floral Tea Cake" 
+          <div className="column content">
+            <div className="img-wrapper">
+              <img                 
+                src="https://images.squarespace-cdn.com/content/v1/53db930be4b04ee7c4020290/1559899792825-I5EQCC3M1FMCW8ILW7R6/Benjamina%27s-Floral-Tea-Cake-Series-7.jpg?format=600w"
+                alt="Benjamina's Floral Tea Cake"  
+                className="img-right"
               />
               <img 
-                src="https://images.squarespace-cdn.com/content/v1/53db930be4b04ee7c4020290/1559899883718-Z3LHPYK96M5GZH882LS8/Kim-Joy-Lavender-%26-Lemon-Fox-Cake.jpg?format=400w"
+                src="https://images.squarespace-cdn.com/content/v1/53db930be4b04ee7c4020290/1559899883718-Z3LHPYK96M5GZH882LS8/Kim-Joy-Lavender-%26-Lemon-Fox-Cake.jpg?format=600w"
                 alt="Kim-Joy's Lavender and Lemon Fox Cake"
+                className="img-left"
               />
-            </div> */}
+              <div className="circle"></div>
+            </div>
+            <div className="textBlock">
+              <h1>Settle who had the <span>better bake</span>.</h1>
+              <p>
+                Together, we can decide the better bake between contestants from <br/><a href="https://thegreatbritishbakeoff.co.uk/" alt="The Great British Bake Off site">
+                <span>The Great British Bake Off</span>.
+                </a>
+              </p>
+              <p>On your marks, get set, vote!</p>
+              <div className="center-h">
+                <button className="btn" type="button" onClick={handleClick}>Demo</button>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
       <section id="two">
-        <div className="container no-gutter center-v color-accent">
-          <div className="column">
-            <h1>More to come...</h1>
-            <p>Great, can't wait.</p>
+        <div className="container no-gutter color-accent">
+          <div className="column f-start mw">
+            <div className="textBlock">
+              <h1>Vote</h1>
+              <p>Cast your vote on the best bakes from user-created polls, including your own polls.</p>
+            </div>
+            <div className="img-wrapper">
+              <img src="https://i.imgur.com/wXxGfuV.png" alt="vote for best bake" />
+            </div>
           </div>
         </div>
       </section>
 
       <section id="three">
-        <div className="container no-gutter center-v color-main">
-          <div className="column">
-            <h1>Thank You For Visiting.</h1>
+        <div className="container no-gutter color-main">
+          <div className="column f-start mw">
+            <div className="textBlock">
+              <h1>Leaderboard</h1>
+              <p>View user rankings by the number of polls answered and created.</p>
+            </div>
+            <div className="img-wrapper">
+              <img src="https://i.imgur.com/wXxGfuV.png" alt="vote for best bake" />
+            </div>
           </div>
         </div>
       </section>
+      
+      <section id="four">
+        <div className="container no-gutter color-main">
+          <div className="column f-start mw">
+            <div className="textBlock">
+              <h1>Create New Polls</h1>
+              <p>Missing the match up you have been waiting for? Well, wait no longer. Create the poll now for others to vote.</p>
+            </div>
+            <div className="img-wrapper">
+              <img src="https://i.imgur.com/wXxGfuV.png" alt="vote for best bake" />
+            </div>
+          </div>
+        </div>
+      </section>
+
     </div>
   );
 };  
