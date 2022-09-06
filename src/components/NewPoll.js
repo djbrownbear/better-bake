@@ -45,7 +45,7 @@ const NewPoll = ({ dispatch, id, avatar, name, allOptions }) => {
     setOptionTwoImage("");
 
     if (!id) {
-      navigate("/");
+      navigate("/dashboard");
     }
   };
 

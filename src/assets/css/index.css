@@ -110,7 +110,6 @@ ul {
 .page-container {
   overflow: hidden;
   position: relative;
-  /* background-color: var(--bg-color-primary); */
 }
 
 .page-wrapper {
@@ -120,6 +119,7 @@ ul {
 .page-wrapper.inner {
   max-width: 65em;
   margin: 0 auto;
+  margin-bottom: 10em;
 }
 
 .container {
