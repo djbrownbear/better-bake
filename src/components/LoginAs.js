@@ -9,7 +9,7 @@ const LoginAs = ({ dispatch, authedUser, usersList}) => {
   const handleClick = (e) => {
     e.preventDefault();
     dispatch(setAuthedUser(e.currentTarget.id));
-    navigate((state?.path || "/"));
+    navigate((state?.path || "/dashboard"));
   }
 
   return (
