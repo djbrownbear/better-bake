@@ -14,7 +14,7 @@ const LandingPage = ({ dispatch }) => {
   } 
 
   return (
-    <div>
+    <div className="page-wrapper">
       <section id="one">
         <div className="container no-gutter center-v color-main">
           <div className="column content">
