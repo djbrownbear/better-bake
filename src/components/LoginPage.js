@@ -34,8 +34,6 @@ const LoginPage = ({ dispatch, users }) => {
       setError(false);
       setErrorUserPwd(false);
       dispatch(setAuthedUser(user.id));
-      const el = document.querySelector(".page-container");
-      el.style.backgroundColor = "var(--bg-color-default)";
     } else if ( !usernameRef.current || !passwordRef.current) {
       setError(true);
       setSuccess(false);
@@ -63,55 +61,57 @@ const LoginPage = ({ dispatch, users }) => {
   }
 
   return (
-    <div className="login">
-      {success && (
-        <Navigate to={(state?.path || "/auth")} /> // if successful, take user to homepage or page prior to login
-        )
-      }
-      {error &&
-          <h1 data-testid="error-header" className="warning-text">Error: Please ensure all fields are filled out.</h1>
-      }
-      {errorUserPwd &&
-           <h1 data-testid="errorUserPwd-header" className="warning-text">Error: Incorrect username or password. Please try again.</h1>
-      }
-      <form className="login-form" onSubmit={handleSubmit}>
-        <div className="column">
-          <span>Better Bake</span>
-          <div className="row">
-            <h2>Sign In</h2>
+    <div className="page-wrapper bg-primary">
+      <div className="login">
+        {success && (
+          <Navigate to={(state?.path || "/auth")} /> // if successful, take user to homepage or page prior to login
+          )
+        }
+        {error &&
+            <h1 data-testid="error-header" className="warning-text">Error: Please ensure all fields are filled out.</h1>
+        }
+        {errorUserPwd &&
+            <h1 data-testid="errorUserPwd-header" className="warning-text">Error: Incorrect username or password. Please try again.</h1>
+        }
+        <form className="login-form" onSubmit={handleSubmit}>
+          <div className="column">
+            <span>Better Bake</span>
+            <div className="row">
+              <h2>Sign In</h2>
+            </div>
+            <div className="container">
+              <div className="login-field">
+                {/* <label hmtlFor="username">Username</label><br /> */}
+                <input 
+                  data-testid="username-input"
+                  type="text" 
+                  id="username" 
+                  name="username" 
+                  placeholder="Username" 
+                  ref={usernameRef}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="login-field">
+                {/* <label htmlFor="pwd">Password</label><br /> */}
+                <input 
+                  data-testid="password-input"
+                  type="password" 
+                  id="pwd" 
+                  name="pwd" 
+                  placeholder="Password" 
+                  ref={passwordRef}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="login-field">
+                <button data-testid="submit-button" className="btn btn-login" type="submit">Submit</button>
+                <button data-testid="demo-button" className="btn btn-login" type="button" onClick={handleDemoLogin}>Demo</button>
+              </div>
+            </div>
           </div>
-          <div className="container">
-            <div className="login-field">
-              {/* <label hmtlFor="username">Username</label><br /> */}
-              <input 
-                data-testid="username-input"
-                type="text" 
-                id="username" 
-                name="username" 
-                placeholder="Username" 
-                ref={usernameRef}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="login-field">
-              {/* <label htmlFor="pwd">Password</label><br /> */}
-              <input 
-                data-testid="password-input"
-                type="password" 
-                id="pwd" 
-                name="pwd" 
-                placeholder="Password" 
-                ref={passwordRef}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="login-field">
-              <button data-testid="submit-button" className="btn btn-login" type="submit">Submit</button>
-              <button data-testid="demo-button" className="btn btn-login" type="button" onClick={handleDemoLogin}>Demo</button>
-            </div>
-          </div>
-        </div>
-      </form>
+        </form>
+      </div>
     </div>
   );
 };  

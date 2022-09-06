@@ -110,7 +110,7 @@ ul {
 .page-container {
   overflow: hidden;
   position: relative;
-  background-color: var(--bg-color-primary);
+  /* background-color: var(--bg-color-primary); */
 }
 
 .page-wrapper {
@@ -348,15 +348,6 @@ footer > div > .textBlock:first-child ul {
   margin-bottom: -75px;
   border-radius: 5px 5px 0 0;
 }
-
-/* #one > div {
-  background-image: url("https://images.squarespace-cdn.com/content/v1/53db930be4b04ee7c4020290/1559899792825-I5EQCC3M1FMCW8ILW7R6/Benjamina%27s-Floral-Tea-Cake-Series-7.jpg?format=400w");
-  background-color: #fff;
-  background-repeat: no-repeat;
-  background-position: left;
-  clip-path: circle(200px at 0 100px);
-  mix-blend-mode: mutilply;
-} */
 
 .content {
   position: relative;
@@ -1088,10 +1079,6 @@ td {
   .poll-option-img {
     height: 75%;
   }
-
-  /* img {
-    height: 30px;
-  } */
 
   img.app-logo {
     padding: 4px;

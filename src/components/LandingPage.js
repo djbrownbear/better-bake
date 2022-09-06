@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faGithub, faLinkedin,  } from "@fortawesome/free-brands-svg-icons";
+import { faGithub, faLinkedin } from "@fortawesome/free-brands-svg-icons";
 import { faFolder } from "@fortawesome/free-regular-svg-icons";
 
 const LandingPage = ({ dispatch }) => {
@@ -48,7 +48,7 @@ const LandingPage = ({ dispatch }) => {
       </section>
 
       <section id="two">
-        <div className="container no-gutter color-main">
+        <div className="container no-gutter">
           <div className="column f-start mw">
             <div className="textBlock">
               <h1>Vote</h1>
@@ -76,7 +76,7 @@ const LandingPage = ({ dispatch }) => {
       </section>
       
       <section id="four">
-        <div className="container no-gutter color-main">
+        <div className="container no-gutter">
           <div className="column f-start mw">
             <div className="textBlock">
               <h1>Create New Polls</h1>
