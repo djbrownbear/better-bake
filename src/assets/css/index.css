@@ -139,12 +139,30 @@ footer {
 }
 
 footer > div {
-  justify-content: space-evenly;
+  justify-content: center;
+}
+
+footer>div>.textBlock {
+  padding-left: 60px;
+  padding-right: 60px;
+}
+
+footer > div >.textBlock ul {
+  padding-top: 4px;
+  padding-bottom: 20px;
 }
 
 footer > div > .textBlock:first-child ul {
   flex-direction: column;
 }
+footer>div>.textBlock:first-child ul li {
+  padding: 2px;
+}
+footer>div>.textBlock:nth-child(2) ul li {
+  padding: 6px;
+  padding-top: 0;
+}
+
 
 .logo-wrapper {
   margin-left: 8px;
