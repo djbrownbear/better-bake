@@ -58,7 +58,7 @@ const Nav = ({ dispatch, authedUser, user }) => {
           </div>
           <ul className={`menu-main ${isOpen ? '' : 'mm-hide'}`} onClick={(isOpen ? toggleNav : () => {})}>
             <li>
-              <NavLink activeClassName="active" to="dashboard"><span>Home</span></NavLink>
+              <NavLink activeClassName="active" to="dashboard"><span>Dashboard</span></NavLink>
             </li>
             <li>
               <NavLink to="/add"><span>New Poll</span></NavLink>
