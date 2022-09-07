@@ -64,7 +64,7 @@ const LoginPage = ({ dispatch, users }) => {
     <div className="page-wrapper bg-primary">
       <div className="login">
         {success && (
-          <Navigate to={(state?.path || "/auth")} /> // if successful, take user to homepage or page prior to login
+          <Navigate to={(state?.path || "/dashboard")} /> // if successful, take user to homepage or page prior to login
           )
         }
         {error &&

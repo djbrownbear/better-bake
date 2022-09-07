@@ -40,11 +40,7 @@ To get started developing right away:
     │   │   └── index.css # Global styles.
     │   └── images    
     │   │   └── avatars # Holding spot for user icons. Not for production use.
-    │   │   │   ├── icons8-avatar-67.png
-    │   │   │   ├── mike.png
-    │   │   │   ├── sarah.png    
-    │   │   │   ├── tyler.png
-    │   │   │   └── zenobia.png    
+    │   │   │   ├── icons8-avatar-67.png   
     │   │   └── logo.svg    
     └── components
     │   ├── App.js # root of the app.  
