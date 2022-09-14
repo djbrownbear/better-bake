@@ -8,7 +8,7 @@ import reportWebVitals from './reportWebVitals';
 import './assets/css/index.css';
 import reducer from './reducers';
 import middleware from './middleware';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { HashRouter as Router } from 'react-router-dom';
 
 const store = createStore(reducer, middleware);
 
@@ -17,7 +17,7 @@ const root = createRoot(container);
 
 root.render(
   <Provider store={store}>
-    <Router basename="/better-bake">
+    <Router basename="/">
      <App />
     </Router>
   </Provider>
