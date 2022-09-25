@@ -3,6 +3,18 @@ import { useState, useEffect } from "react";
 import { handleAddPoll } from "../actions/polls";
 import { useNavigate } from "react-router-dom";
 import PollHeader from "./PollHeader";
+import { 
+  Box,
+  Typography, 
+  Button,
+  Card,
+  CardMedia,
+  CardActions,
+  Grid,
+  FormControl,
+  InputLabel,
+  NativeSelect,
+} from "@mui/material";
 
 const NewPoll = ({ dispatch, id, avatar, name, allOptions }) => {
   const navigate = useNavigate();
@@ -50,57 +62,101 @@ const NewPoll = ({ dispatch, id, avatar, name, allOptions }) => {
   };
 
   return (
-    <div>
-      <div className="title">
-        <h1>New Poll</h1>
-      </div>
-      <div className="page-wrapper inner">
+    <Box>
+      <Typography variant="h3" className="title">
+        New Poll
+      </Typography>
+      <Box className="page-wrapper inner">
         <form name="new-poll" className="poll-info wrapper" onSubmit={handleSubmit}>
           <PollHeader 
             avatar={avatar}
             name={name}
             timestamp={new Date()}
           />
-        
-          <div className="poll-info">
-            <div>
-              <label htmlFor="optionOneNew" className="center-h">Option One</label>
-              <div className="poll-info">
-                <div className="poll-option create-poll">
-                  <div className="poll-option-wrapper-inner">
-                    <img className="poll-option-img" src={ optionOneImage } alt={`${optionOneNew}`} />
-                  </div>
-                </div>
-              </div>
-              <select name="optionOneNew" id="optionOneNew" className="new-poll-option" onChange={handleChange}>
-                {allOptions && 
-                  allOptions.map((curOption) => (<option data-imgurl={curOption.bakeURL} value={curOption.text}>{curOption.text}</option>))
-                }
-              </select>
-            </div>
+          <Grid container spacing={5} className="poll-info">
+            <Grid item xs={12} md={6}>
+              <Card>
+                <CardMedia
+                  // className="poll-option-img" 
+                  component="img"
+                  image={ optionOneImage } 
+                  alt={`${optionOneNew}`} 
+                />
+                <CardActions>
+                  <FormControl fullWidth>
+                    <InputLabel id="optionOneNew">Option One</InputLabel>
+                    <NativeSelect 
+                      inputProps={{
+                        labelid:"optionOneNew",
+                        name:"optionOneNew",
+                        id:"optionOneNew",
+                        // className="new-poll-option"
+                      }}
+                      onChange={handleChange}                      
+                    >
+                      {allOptions && 
+                        allOptions.map((curOption) => (
+                          <option 
+                            key={curOption.text}
+                            data-imgurl={curOption.bakeURL} 
+                            value={curOption.text}
+                          >
+                            {curOption.text}
+                          </option>
+                        ))
+                      }
+                    </NativeSelect>
+                  </FormControl>
+                </CardActions>
+              </Card>
+            </Grid>
 
-            <div>
-              <label htmlFor="optionTwoNew" className="center-h">Option Two</label>
-              <div className="poll-info">
-                <div className="poll-option create-poll">
-                  <div className="poll-option-wrapper-inner">
-                    <img className="poll-option-img" src={ optionTwoImage } alt={`${optionTwoNew}`} />
-                  </div>
-                </div>
-              </div>
-              <select name="optionTwoNew" id="optionTwoNew" className="new-poll-option" onChange={handleChange}>
-                {allOptions && 
-                  allOptions.map((curOption) => (<option data-imgurl={curOption.bakeURL} value={curOption.text}>{curOption.text}</option>))
-                }
-              </select>
-            </div>
-          </div>
-          <button className="btn btn-submit" type="submit" disabled={(optionOneNew === "" || optionTwoNew === "")}>
+            <Grid item xs={12} md={6}>
+              <Card>
+                <CardMedia 
+                  component="img"
+                  image={ optionTwoImage } 
+                  alt={`${optionTwoNew}`}                   
+                />      
+                <CardActions>   
+                  <FormControl fullWidth>
+                    <InputLabel id="optionTwoNew">Option Two</InputLabel>
+                    <NativeSelect 
+                      inputProps={{
+                        labelid:"optionTwoNew",
+                        name:"optionTwoNew",
+                        id:"optionTwoNew",
+                        // className="new-poll-option",
+                      }}
+                      onChange={handleChange}
+                    >
+                      {allOptions && 
+                        allOptions.map((curOption) => (
+                        <option 
+                          key={curOption.text}
+                          data-imgurl={curOption.bakeURL} 
+                          value={curOption.text}
+                        >
+                          {curOption.text}
+                        </option>
+                        ))
+                      }
+                    </NativeSelect>
+                  </FormControl>
+                </CardActions>
+              </Card>
+            </Grid>
+          </Grid>
+          <Button 
+            // className="btn btn-submit" 
+            type="submit" 
+            disabled={(optionOneNew === "" || optionTwoNew === "")}
+          >
             Submit
-          </button>
+          </Button>
         </form>
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 }
 
