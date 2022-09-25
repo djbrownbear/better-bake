@@ -1,6 +1,15 @@
 import { connect } from "react-redux";
 import { formatPoll, formatDate } from "../utils/helpers";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { 
+  Typography, 
+  Box, 
+  Button,
+  CardContent,
+  CardMedia,
+  CardActions,
+} from "@mui/material";
+
 
 const withRouter = (Component) => {
   const ComponentWithRouterProp = (props) => {
@@ -33,19 +42,28 @@ const Poll = (props) => {
   } = props.poll
 
   return (
-    <div className="polls">
-      <div className="avatar-wrapper poll">
-        <img src={props.pollAvatar} alt={`img of ${ name }`}/>
-        <span>{ name }</span>
-      </div>
-      <span>{ formatDate(timestamp) }</span>
-      <button
-        className="btn btn-show-poll" 
-        onClick={(e) => toPoll(e, id) }
-      >
-        Show
-      </button>
-    </div>
+    <Box textAlign="center">
+      <CardMedia
+        component="img"
+        alt={`img of ${ name }`}
+        height="68"
+        image={props.pollAvatar}
+      />
+      <CardContent>
+        <Typography variant="subtitle1" >{ name }</Typography>
+        <Typography variant="subtitle2" >{ formatDate(timestamp) }</Typography>
+      </CardContent>
+      <CardActions style={{justifyContent: "center"}}>
+        <Button
+          // className="btn btn-show-poll" 
+          variant="outlined"
+          size="small"
+          onClick={(e) => toPoll(e, id) }
+        >
+          Show
+        </Button>
+      </CardActions>
+    </Box>
   )
 };
 
