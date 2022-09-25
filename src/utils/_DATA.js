@@ -3,7 +3,7 @@ let users = {
     id: 'aaronb',
     password:'password123',
     name: 'Aaron Brown',
-    avatarURL: 'https://i.imgur.com/IAwxwIa.png',
+    avatarURL: 'https://i.imgur.com/lF8TibM.png',
     answers: {
       "8xf0y6ziyjabvozdd253nd": 'optionOne',
       "6ni6ok3ym7mf1p33lnez": 'optionOne',
@@ -16,7 +16,7 @@ let users = {
     id: 'anitab',
     password:'abc321',
     name: 'Anita Brown',
-    avatarURL: "https://i.imgur.com/65jpbsM.png",
+    avatarURL: "https://i.imgur.com/HKCv3hu.png",
     answers: {
       "vthrdm985a262al8qx3do": 'optionOne',
       "xj352vofupe1dqz9emx13r": 'optionTwo',
@@ -27,7 +27,7 @@ let users = {
     id: 'lennyc',
     password:'xyz123',
     name: 'Lenny Civic',
-    avatarURL: "https://i.imgur.com/BP8swpu.png",
+    avatarURL: "https://i.imgur.com/2zUPqSn.png",
     answers: {
       "xj352vofupe1dqz9emx13r": 'optionOne',
       "vthrdm985a262al8qx3do": 'optionTwo',
@@ -39,7 +39,7 @@ let users = {
     id: 'maddiem',
     password:'pass246',
     name: 'Maddie Mazda',
-    avatarURL: 'https://i.imgur.com/5mm4bTH.png',
+    avatarURL: 'https://i.imgur.com/UM9UYHZ.png',
     answers: {
       "xj352vofupe1dqz9emx13r": 'optionOne',
     },
