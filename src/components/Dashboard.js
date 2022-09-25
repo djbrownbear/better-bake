@@ -1,6 +1,7 @@
 import { connect } from "react-redux";
 import { useState } from "react";
 import Poll from "./Poll";
+import { Container, Typography, Box, Grid, Card, ToggleButtonGroup, ToggleButton } from "@mui/material";
 
 const ans = "ANSWERED";
 const unans = "UNANSWERED"; 
@@ -41,63 +42,73 @@ const Dashboard = ({ authedUser, polls }) => {
   }
 
   return (
-  <div>
-    <div className="title">
-      <h1>Dashboard</h1>
-    </div>
-    <div className="page-wrapper inner">
-      <div className="toggle-container">
-        <button
+  <Container>
+    <Typography variant="h1" align="center">
+      Dashboard
+    </Typography>
+    <Container>
+      <ToggleButtonGroup
+        color="primary"
+        exclusive
+        onChange={toggleView}
+      >
+        <ToggleButton
           id={unans}
-          type="button"
-          className="btn btn-togglePollView"
-          onClick={toggleView}
+          // className="btn btn-togglePollView"
           disabled={showUnanswered ? true : false}
+          value={unans}
         >
           Unanswered
-        </button>
-        <button
+        </ToggleButton>
+        <ToggleButton
           id={ans}
-          type="button"
-          className="btn btn-togglePollView"
-          onClick={toggleView}
+          // className="btn btn-togglePollView"
           disabled={showAnswered ? true : false}
+          value={ans}
         >
           Answered
-        </button>
-      </div>
+        </ToggleButton>
+      </ToggleButtonGroup>
       {showUnanswered && 
-        <div className="polls-wrapper">
-          <h2>Unanswered Polls</h2>
-          <ul className="polls-flex">
+        <Box>
+          <Typography variant="h2" align="center">
+            Unanswered Polls
+          </Typography>
+          <Grid container spacing={2}>
             {polls
               .filter(unanswered)
               .map(
                 (poll) => (
-                <li key={poll.id} className="poll-item">
-                  <Poll id={poll.id} />
-                </li>
+                <Grid item xs={6}>
+                  <Card key={poll.id}>
+                    <Poll id={poll.id} />
+                  </Card>
+                </Grid>
             ))}
-          </ul>
-        </div>
+          </Grid>
+        </Box>
       }
       {showAnswered && 
-        <div className="polls-wrapper">
-          <h2>Answered Polls</h2>
-          <ul className="polls-flex">
+        <Box>
+          <Typography variant="h2" align="center">
+            Answered Polls
+          </Typography>
+          <Grid container spacing={2}>
             {polls
               .filter(answered)
               .map(
                 (poll) => (
-                <li key={poll.id} className="poll-item">
-                  <Poll id={poll.id} />
-                </li>
+                <Grid item xs={6}>
+                  <Card key={poll.id}>
+                    <Poll id={poll.id} />
+                  </Card>
+                </Grid>
             ))}
-          </ul>
-        </div>
+          </Grid>
+        </Box>
       }
-    </div>
-  </div>
+    </Container>
+  </Container>
   );
 };
 

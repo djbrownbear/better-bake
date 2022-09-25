@@ -14,6 +14,7 @@ import NewPoll from './NewPoll';
 import Nav from './Nav';
 import { Routes, Route, Navigate, useLocation, Outlet } from 'react-router-dom';
 import Favicon from "react-favicon";
+import { Container } from "@mui/material";
 
 // Source for RequireAuth: https://ui.dev/react-router-protected-routes-authentication
 function RequireAuth({ children, authedUser }) {
@@ -26,9 +27,9 @@ function RequireAuth({ children, authedUser }) {
 
 const Layout = () => {
   return (
-    <div>
+    <Container>
       <Outlet />
-    </div>
+    </Container>
   );
 } 
 
@@ -41,14 +42,15 @@ const App = (props) => {
 
   return (
     <Fragment>
-      <div className="App">
+      <Container maxWidth="xl">
         <Favicon 
           url="https://img.icons8.com/emoji/48/000000/ballot-box-with-ballot.png" 
         />
-        <div className="page-container">
+        {/* <div className="page-container"> */}
           <LoadingBar />
           <Nav /> 
-          <div className="page-wrapper">
+          <Container maxWidth="lg">
+          {/* <div className="page-wrapper"> */}
             { props.loading === true ? null : (
               <Routes>
                 <Route path="/login" element={<LoginPage />} />
@@ -102,9 +104,8 @@ const App = (props) => {
                 />   
               </Routes> 
             )}
-          </div>
-        </div>
-      </div>
+          </Container>
+      </Container>
     </Fragment>
   );
 }
