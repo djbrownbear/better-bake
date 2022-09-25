@@ -55,7 +55,6 @@ const Poll = (props) => {
       </CardContent>
       <CardActions style={{justifyContent: "center"}}>
         <Button
-          // className="btn btn-show-poll" 
           variant="outlined"
           size="small"
           onClick={(e) => toPoll(e, id) }

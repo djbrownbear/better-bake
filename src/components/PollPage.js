@@ -3,6 +3,16 @@ import { handleAddAnswer } from "../actions/polls";
 import { formatPoll, formatPercent } from "../utils/helpers";
 import PollHeader from "./PollHeader";
 import { useLocation, useNavigate, useParams, Navigate } from "react-router-dom";
+import { 
+  Container,
+  Typography, 
+  Button,
+  Card,
+  CardContent,
+  CardMedia,
+  CardActions,
+  Grid,
+} from "@mui/material";
 
 const withRouter = (Component) => {
   const ComponentWithRouterProp = (props) => {
@@ -83,57 +93,79 @@ const PollPage = (props) => {
   };
  
   return (
-      <div className="page-wrapper inner">
+      <Container>
         <PollHeader 
           avatar={avatar}
           name={name}
           timestamp={timestamp}
         />
-        <div className="poll-info">
-          <div className={"poll-option " + (hasVotedOptionOne ? "vote-choice": "")}>
-            <div className="poll-option-wrapper-inner center-h ">
-              <img className="poll-option-img" src={ props.bakerOne } alt={`${optionOneText}`} />
-              <h3 className="center-v">{optionOneText}</h3>
-              <button
-                id="optionOne"
-                className="btn btn-vote" 
-                onClick={(e) => handleVote(e)}
-                type="button"
-                disabled={hasVoted ? true : false }
-              >
-                Vote
-              </button>
-              { hasVoted &&
-                <p className={"poll-details " + (winLose(optionOneVotes.length, optionTwoVotes.length))}>
-                  <span>{`${optionOneVotes.length} out of ${allVotesCount} votes`}</span>
-                  <span>{getVotePercentage("optionOne")}</span>
-                </p>
-              }
-            </div>
-          </div>
-          <div className={"poll-option " + (hasVotedOptionTwo ? "vote-choice": "")}>
-            <div className="poll-option-wrapper-inner center-h ">
-              <img className="poll-option-img" src={ props.bakerTwo } alt={`${optionTwoText}`} />
-              <h3 className="center-v">{optionTwoText}</h3>
-              <button
-                id="optionTwo"
-                className="btn btn-vote" 
-                onClick={(e) => handleVote(e)}
-                type="button"
-                disabled={hasVoted ? true : false }
-              >
-                Vote
-              </button>
-              { hasVoted &&
-                <p className={"poll-details " + (winLose(optionTwoVotes.length, optionOneVotes.length))}>
-                  <span>{`${optionTwoVotes.length} out of ${allVotesCount} votes`}</span>
-                  <span>{getVotePercentage("optionTwo")}</span>
-                </p>
-              }
-            </div>
-          </div>
-        </div>
-      </div>
+        <Grid container spacing={2}>
+          <Grid item xs={12} sm={6}>
+            <Card className={"poll-option " + (hasVotedOptionOne ? "vote-choice": "")}>
+              <CardMedia 
+                component="img"
+                className="poll-option-img" 
+                alt={`${optionOneText}`}
+                image={ props.bakerOne } 
+              />
+              <CardContent>
+                <Typography variant="subtitle1" align="center">{optionOneText}</Typography>
+                { hasVoted &&
+                  <Typography 
+                    variant="subtitle2"
+                    className={"poll-details " + (winLose(optionOneVotes.length, optionTwoVotes.length))}
+                  >
+                    <span>{`${optionOneVotes.length} out of ${allVotesCount} votes`}</span>
+                    <span>{getVotePercentage("optionOne")}</span>
+                  </Typography>
+                }                
+              </CardContent>
+              <CardActions style={{justifyContent: "center"}}>
+                <Button
+                  id="optionOne"
+                  // className="btn btn-vote" 
+                  onClick={(e) => handleVote(e)}
+                  disabled={hasVoted ? true : false }
+                  >
+                  Vote
+                </Button>
+              </CardActions>
+            </Card>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Card className={"poll-option " + (hasVotedOptionTwo ? "vote-choice": "")}>
+              <CardMedia 
+                component="img"
+                className="poll-option-img" 
+                alt={`${optionTwoText}`}
+                image={ props.bakerTwo } 
+              />
+              <CardContent>
+                <Typography variant="subtitle1" align="center">{optionTwoText}</Typography>
+                { hasVoted &&
+                  <Typography 
+                    variant="subtitle2"
+                    className={"poll-details " + (winLose(optionTwoVotes.length, optionOneVotes.length))}
+                  >
+                    <span>{`${optionTwoVotes.length} out of ${allVotesCount} votes`}</span>
+                    <span>{getVotePercentage("optionTwo")}</span>
+                  </Typography>
+                }
+              </CardContent>
+              <CardActions style={{justifyContent: "center"}}>
+                <Button
+                  id="optionTwo"
+                  // className="btn btn-vote" 
+                  onClick={(e) => handleVote(e)}
+                  disabled={hasVoted ? true : false }
+                >
+                  Vote
+                </Button>
+              </CardActions>
+            </Card>
+          </Grid>          
+        </Grid>
+      </Container>
   )
 };
 

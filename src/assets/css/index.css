@@ -531,26 +531,7 @@ footer>div>.textBlock:nth-child(2) ul li {
 
 .poll-option {
   display: flex;
-  justify-content: center;
-  align-items: flex-end;
-  padding: 4px;
-  margin: 0 6px;
-  margin-top: 10px;
-  width: 50%;
-  background: var(--bg-color-card);
-  color: var(--color-primary);
-  flex: 1 1 auto;
-  box-shadow: var(--box-shadow);
-}
-
-.poll-option h3 {
-  height: 50px;
-  width: 100%;
-}
-
-.poll-option-wrapper-inner {
-  max-width: 96%;
-  flex-wrap: wrap;
+  flex-direction: column;
 }
 
 .poll-option.create-poll {
@@ -566,8 +547,6 @@ footer>div>.textBlock:nth-child(2) ul li {
   position: relative;
   display: flex;
   width: 100%;
-  margin-top: 10px;
-  margin-bottom: 10px;
 }
 
 .poll-details {
@@ -1094,10 +1073,6 @@ td {
     font-size: 1.5em;
   }
 
-  .poll-option-img {
-    height: 75%;
-  }
-
   img.app-logo {
     padding: 4px;
   }
@@ -1116,15 +1091,7 @@ td {
   }
 
   .poll-option {
-    display: flex;
-    justify-content: center;
-    width: 90%;
     margin: 20px 0;
-  }
-
-  .poll-option-wrapper-inner {
-    margin: 0;
-    max-width: 92%;
   }
 
   .poll-info {
