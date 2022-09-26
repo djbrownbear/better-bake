@@ -674,6 +674,10 @@ img.app-logo {
   margin: 0 auto;
 }
 
+.userlist img {
+  height: 68px;
+}
+
 input[type="text"],input[type="password"], select {
   padding: 10px;
   width: 100%;
