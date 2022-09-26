@@ -24,6 +24,7 @@ const Leaderboard = ({ usersList }) => {
                   <td>
                     <div className="avatar-wrapper leaderboard">
                       <img 
+                        className="avatar"
                         src={user.avatarURL ? user.avatarURL : defaultAvatar }
                         alt={`Avatar of ${user.name}`} 
                       />
