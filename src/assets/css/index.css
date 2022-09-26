@@ -1073,6 +1073,10 @@ td {
 
   .f-start { justify-content: center;}
 
+  .avatar-wrapper .avatar {
+    height: 58px;
+  }
+
   .img-wrapper .img-left {
     max-width: 40vw;
     margin-right: auto;
