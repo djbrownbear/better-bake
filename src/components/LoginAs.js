@@ -1,6 +1,12 @@
 import { connect } from "react-redux";
 import { setAuthedUser } from "../actions/authedUser";
 import { useNavigate, useLocation } from "react-router-dom";
+import { 
+  Avatar,
+  Box,
+  Button,
+  Typography,
+} from "@mui/material";
 
 const LoginAs = ({ dispatch, authedUser, usersList}) => {
   const navigate = useNavigate();
@@ -13,26 +19,25 @@ const LoginAs = ({ dispatch, authedUser, usersList}) => {
   }
 
   return (
-    <div>
-      <div className="title">
-        <h1>Switch User</h1>
-      </div>
-      <div className="page-wrapper inner">
-        <div className="userlist">
+    <Box>
+      <Typography variant="h3" className="title">
+        Switch User
+      </Typography>
+      <Box className="page-wrapper inner">
+        <Box className="userlist">
           {usersList.map((user) => (  
-            <button key={user.id} id={user.id} type="button" className="btn btn-userlist" onClick={handleClick}>
-              <img 
+            <Button key={user.id} id={user.id} type="button" className="btn btn-userlist" onClick={handleClick}>
+              <Avatar 
                 src={user.avatarURL}
                 alt={`Avatar of ${user.name}`} 
-                focusable="false"
               />
-              <span focusable="false">{user.name}</span>
-              <span focusable="false">{user.id}</span>
-            </button>
+              <Typography variant="string" focusable="false" align="left">{user.name}</Typography>
+              <Typography variant="string" focusable="false" align="left">{user.id}</Typography>
+            </Button>
           ))}
-        </div>
-      </div>
-    </div>
+        </Box>
+      </Box>
+    </Box>
   );
 }
 

@@ -692,7 +692,7 @@ input[type="text"],input[type="password"], select {
   display: flex;
   justify-content: space-evenly;
   align-items: center;
-  width: 40em;
+  width: 24em;
   cursor: pointer;
   margin: 4px auto;
 }
@@ -703,12 +703,12 @@ input[type="text"],input[type="password"], select {
 } 
 
 .btn-userlist > :nth-child(2) {
-  width: 300px;
+  padding-left: 10px;
 }
-
+/*
 .btn-userlist> :nth-child(3) {
   width: 200px;
-}
+} */
 
 .toggle-container {
   display: flex;
@@ -1124,7 +1124,7 @@ td {
   }
 
   .btn-userlist {
-    width: 90vw;
+    width: 100%;
   }
 
   .hide,
