@@ -6,9 +6,9 @@ import {
   Box, 
   Button,
   CardContent,
-  CardMedia,
   CardActions,
 } from "@mui/material";
+import AvatarInfo from "./AvatarWrapper"
 
 
 const withRouter = (Component) => {
@@ -43,13 +43,10 @@ const Poll = (props) => {
 
   return (
     <Box textAlign="center">
-      <CardMedia
-        component="img"
-        alt={`img of ${ name }`}
-        height="68"
-        image={props.pollAvatar}
-      />
       <CardContent>
+        <AvatarInfo 
+          avatar={props.pollAvatar}
+        />
         <Typography variant="subtitle1" >{ name }</Typography>
         <Typography variant="subtitle2" >{ formatDate(timestamp) }</Typography>
       </CardContent>

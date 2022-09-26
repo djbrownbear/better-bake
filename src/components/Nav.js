@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGithub, faLinkedin,  } from "@fortawesome/free-brands-svg-icons";
 import { faFolder, faXmarkCircle } from "@fortawesome/free-regular-svg-icons";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
-
+import AvatarInfo from "./AvatarWrapper"
 
 const Nav = ({ dispatch, authedUser, user }) => {
   const navigate = useNavigate();
@@ -98,11 +98,12 @@ const Nav = ({ dispatch, authedUser, user }) => {
            </li> 
           </ul>
           {user &&
-            <div className="avatar-wrapper nav-avatar">
-                <img src={user.avatarURL} alt={`Avatar of ${user.name}`} className="avatar" />
-                <span>{user.id}</span>
-                <button data-testid="logout-button" className="btn btn-logout" type="button" onClick={handleClick}>Logout</button>
-            </div>
+            <AvatarInfo 
+              avatar={user.avatarURL}
+              name={user.name}
+              id={user.id}
+              handleClick={handleClick}
+            />
           }
         </div>
       </div>

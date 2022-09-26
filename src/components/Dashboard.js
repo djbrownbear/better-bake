@@ -51,6 +51,7 @@ const Dashboard = ({ authedUser, polls }) => {
         color="primary"
         exclusive
         onChange={toggleView}
+        class="center-h"
       >
         <ToggleButton
           id={unans}

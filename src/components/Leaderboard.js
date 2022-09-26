@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
+import AvatarInfo from "./AvatarWrapper";
 
 const Leaderboard = ({ usersList }) => {
-  const defaultAvatar = "https://img.icons8.com/external-others-inmotus-design/67/000000/external-Avatar-round-icons-others-inmotus-design-5.png";
 
   return (
     <div>
@@ -22,17 +22,11 @@ const Leaderboard = ({ usersList }) => {
               usersList.map((user) => (
                 <tr key={user.id}>
                   <td>
-                    <div className="avatar-wrapper leaderboard">
-                      <img 
-                        className="avatar"
-                        src={user.avatarURL ? user.avatarURL : defaultAvatar }
-                        alt={`Avatar of ${user.name}`} 
-                      />
-                      <div>
-                        <span>{user.name}</span>
-                        <span className="small-caps">{user.id}</span>
-                      </div>
-                    </div>
+                    <AvatarInfo
+                      avatar={user.avatarURL}
+                      name={user.name}
+                      id={user.id}
+                    />
                   </td>
                   <td>{user.questions.length}</td>
                   <td>{Object.keys(user.answers).length}</td>
