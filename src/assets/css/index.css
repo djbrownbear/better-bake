@@ -791,7 +791,7 @@ button.btn-logout:hover:not(:disabled) {
 
 /* table style */
 
-table {
+/* table {
   table-layout: fixed;
   margin: auto;
   width: 80%;
@@ -833,7 +833,7 @@ th{
 td {
   font-size: 1.25em;
   font-weight: 600;
-}
+} */
 
 .center-h {
   display: flex;

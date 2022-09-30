@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
 import { useState } from "react";
 import Poll from "./Poll";
-import { Container, Typography, Box, Grid, Card, ToggleButtonGroup, ToggleButton } from "@mui/material";
+import { Typography, Box, Grid, Card, ToggleButtonGroup, ToggleButton } from "@mui/material";
 
 const ans = "ANSWERED";
 const unans = "UNANSWERED"; 
@@ -42,11 +42,11 @@ const Dashboard = ({ authedUser, polls }) => {
   }
 
   return (
-  <Container>
-    <Typography variant="h1" align="center">
+  <Box>
+    <Typography variant="h3" align="center" className="title">
       Dashboard
     </Typography>
-    <Container>
+    <Box>
       <ToggleButtonGroup
         color="primary"
         exclusive
@@ -72,7 +72,7 @@ const Dashboard = ({ authedUser, polls }) => {
       </ToggleButtonGroup>
       {showUnanswered && 
         <Box>
-          <Typography variant="h2" align="center">
+          <Typography variant="h4" align="center">
             Unanswered Polls
           </Typography>
           <Grid container spacing={2}>
@@ -108,8 +108,8 @@ const Dashboard = ({ authedUser, polls }) => {
           </Grid>
         </Box>
       }
-    </Container>
-  </Container>
+    </Box>
+  </Box>
   );
 };
 

@@ -1,41 +1,52 @@
 import { connect } from "react-redux";
 import AvatarInfo from "./AvatarWrapper";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
 
 const Leaderboard = ({ usersList }) => {
 
   return (
-    <div>
-      <div className="title">
-        <h1>Leaderboard</h1>
-      </div>
-      <div className="page-wrapper inner">
-        <table>
-          <thead>
-            <tr>
-              <th>User</th>
-              <th>Created</th>
-              <th>Answered</th>
-            </tr>
-          </thead>
-          <tbody>
-            { 
-              usersList.map((user) => (
-                <tr key={user.id}>
-                  <td>
-                    <AvatarInfo
-                      avatar={user.avatarURL}
-                      name={user.name}
-                      id={user.id}
-                    />
-                  </td>
-                  <td>{user.questions.length}</td>
-                  <td>{Object.keys(user.answers).length}</td>
-                </tr>
-              ))}
-          </tbody>
-        </table>
-      </div>
-    </div>
+    <Box>
+      <Typography variant="h3" className="title">
+        Leaderboard
+      </Typography>
+      <Box maxWidth="sm" sx={{ margin: '0 auto' }}>
+        <TableContainer component={Paper}>
+          <Table aria-label="leaderboard">
+            <TableHead>
+              <TableRow>
+                <TableCell align="right">User</TableCell>
+                <TableCell align="right">Created</TableCell>
+                <TableCell align="right">Answered</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              { 
+                usersList.map((user) => (
+                  <TableRow key={user.id}>
+                    <TableCell align="right">
+                      <AvatarInfo
+                        avatar={user.avatarURL}
+                        name={user.name}
+                        id={user.id}
+                      />
+                    </TableCell>
+                    <TableCell align="right">{user.questions.length}</TableCell>
+                    <TableCell align="right">{Object.keys(user.answers).length}</TableCell>
+                  </TableRow>
+                ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Box>
+    </Box>
   );
 }
 
