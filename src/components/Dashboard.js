@@ -91,7 +91,7 @@ const Dashboard = ({ authedUser, polls }) => {
       }
       {showAnswered && 
         <Box>
-          <Typography variant="h2" align="center">
+          <Typography variant="h4" align="center">
             Answered Polls
           </Typography>
           <Grid container spacing={2}>
