@@ -26,19 +26,6 @@ const AvatarInfo = ({ avatar, name, timestamp, id, handleClick}) => {
         { formatDate(timestamp) }
       </Typography>
     }
-    { // for Nav
-    id && handleClick &&
-      <Box className="avatar-wrapper nav-avatar p0">
-        <Typography variant="string" sx={{ paddingLeft: 1, paddingRight: 1}}>{id}</Typography>
-        <Button 
-          data-testid="logout-button" 
-          className="btn btn-logout" 
-          onClick={handleClick}
-        >
-          Logout
-        </Button>
-      </Box>
-    }
     { // for Leaderboard
     id && name && !handleClick &&
       <Box>

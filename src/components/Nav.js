@@ -1,16 +1,46 @@
+import * as React from 'react';
 import { Link, useNavigate, NavLink } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { logoutAuthedUser } from "../actions/authedUser";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGithub, faLinkedin,  } from "@fortawesome/free-brands-svg-icons";
-import { faFolder, faXmarkCircle } from "@fortawesome/free-regular-svg-icons";
-import { faBars } from "@fortawesome/free-solid-svg-icons";
+import { faFolder } from "@fortawesome/free-regular-svg-icons";
 import AvatarInfo from "./AvatarWrapper"
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import Toolbar from '@mui/material/Toolbar';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import Menu from '@mui/material/Menu';
+import MenuIcon from '@mui/icons-material/Menu';
+import Container from '@mui/material/Container';
+import Button from '@mui/material/Button';
+import Tooltip from '@mui/material/Tooltip';
+import MenuItem from '@mui/material/MenuItem';
+
+
 
 const Nav = ({ dispatch, authedUser, user }) => {
+  const [anchorElNav, setAnchorElNav] = React.useState(null);
+  const [anchorElUser, setAnchorElUser] = React.useState(null);
+
+  const handleOpenNavMenu = (event) => {
+    setAnchorElNav(event.currentTarget);
+  };
+  const handleOpenUserMenu = (event) => {
+    setAnchorElUser(event.currentTarget);
+  };
+
+  const handleCloseNavMenu = () => {
+    setAnchorElNav(null);
+  };
+
+  const handleCloseUserMenu = () => {
+    setAnchorElUser(null);
+  };
+
   const navigate = useNavigate();
-  const [isOpen, setIsOpen] = useState(false);
   const [stickyClass, setStickyClass] = useState('');
 
   useEffect(() => {
@@ -30,84 +60,227 @@ const Nav = ({ dispatch, authedUser, user }) => {
 
   const handleClick = (e) => {
     e.preventDefault();
-    toggleNav();
     dispatch(logoutAuthedUser());
     navigate("/");
   }
 
-  const toggleNav = () => setIsOpen(!isOpen); 
 
   return (
-    <nav className={`nav ${stickyClass} ${isOpen ? 'responsive' : ''}`} id="myTopnav">
-      <div className="site-menu-inner">
-        <div className="logo-wrapper">
-          <Link to="/">
-            <img 
-              className="app-logo" 
-              src="https://img.icons8.com/emoji/48/000000/ballot-box-with-ballot.png" 
-              alt="Voting Ballot Box" 
-            />
-            <span>Better Bake</span>
-          </Link>
-        </div>
-        <div className="menu-content-wrapper">    
-          <div className="top-bar">
-          <button className="icon close" type="button" onClick={toggleNav}>
-            <FontAwesomeIcon icon={faXmarkCircle} size="2x" />
-          </button>
-          </div>
-          <ul className={`menu-main ${isOpen ? '' : 'mm-hide'}`} onClick={(isOpen ? toggleNav : () => {})}>
-            <li>
-              <NavLink activeClassName="active" to="dashboard"><span>Dashboard</span></NavLink>
-            </li>
-            <li>
-              <NavLink to="/add"><span>New Poll</span></NavLink>
-            </li>
-            <li>
-              <NavLink to="/leaderboard"><span>Leaderboard</span></NavLink>
-            </li>
-          </ul>
-          <button className="icon menu" type="button" onClick={toggleNav}>
-              <FontAwesomeIcon icon={faBars} size="lg" /> 
-          </button>
-          {!authedUser &&
-            <ul className={`menu-social ${isOpen ? '' : 'mm-hide'}`} onClick={(isOpen ? toggleNav : () => {})}>
-              <li>
-                <a href="https://github.com/djbrownbear" target="_blank" rel="noreferrer" alt="link to github">
-                  <FontAwesomeIcon icon={faGithub} size="lg" />
-                </a>
-              </li>
-              <li>
-                <a href="https://www.linkedin.com/in/aarontimothybrown/" target="_blank" rel="noreferrer" alt="link to github">
-                  <FontAwesomeIcon icon={faLinkedin} size="lg"/>
-                </a>
-              </li>
-              <li>
-                <a href="https://aaron.aaronandanita.com" target="_blank" rel="noreferrer" alt="link to portfolio">
-                  <FontAwesomeIcon icon={faFolder} size="lg" />
-                </a>
-              </li>
-            </ul>
-          }  
-          <ul className={`menu-cta center-v ${isOpen ? '' : 'mm-hide'}`} onClick={(isOpen ? toggleNav : () => {})}>
-            <li>
-              {authedUser 
-                ? <NavLink to="/auth"><span>Switch User</span></NavLink>
-                : <NavLink to="/login"><span>Sign In</span></NavLink>
+    <AppBar className={`${stickyClass}`} position="static" id="myTopnav" sx={{ background: 'var(--bg-color-primary)' }}>
+        <Container maxWidth="xl">
+          <Toolbar disableGutters>
+            <Box sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} >
+              <Link to="/">
+                <img 
+                  className="app-logo" 
+                  src="https://img.icons8.com/emoji/48/000000/ballot-box-with-ballot.png" 
+                  alt="Voting Ballot Box" 
+                />
+              </Link>
+            </Box>
+            <Typography
+              variant="h6"
+              noWrap
+              component="a"
+              href="/"
+              sx={{
+                mr: 2,
+                display: { xs: 'none', md: 'flex' },
+                fontFamily: 'monospace',
+                fontWeight: 700,
+                color: 'inherit',
+                textDecoration: 'none',
+              }}
+            >
+              Better Bake
+            </Typography>
+
+            <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+              <IconButton
+                size="large"
+                aria-label="account of current user"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                onClick={handleOpenNavMenu}
+                color="inherit"
+              >
+                <MenuIcon />
+              </IconButton>
+              <Menu
+                id="menu-appbar"
+                anchorEl={anchorElNav}
+                anchorOrigin={{
+                  vertical: 'bottom',
+                  horizontal: 'left',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'left',
+                }}
+                open={Boolean(anchorElNav)}
+                onClose={handleCloseNavMenu}
+                sx={{
+                  display: { xs: 'block', md: 'none' },
+                }}
+              >
+                <MenuItem key="dashboard" onClick={handleCloseNavMenu}>
+                  <NavLink activeClassName="active" to="dashboard">
+                    <Typography textAlign="center">Dashboard</Typography>
+                  </NavLink>
+                </MenuItem>
+                <MenuItem key="newPoll" onClick={handleCloseNavMenu}>
+                  <NavLink to="/add">
+                    <Typography textAlign="center">New Poll</Typography>
+                  </NavLink>
+                </MenuItem>
+                <MenuItem key="leaderboard" onClick={handleCloseNavMenu}>
+                  <NavLink to="/leaderboard">
+                    <Typography textAlign="center">Leaderboard</Typography>
+                  </NavLink>
+                </MenuItem>
+
+                {!authedUser &&
+                  <div>
+                    <MenuItem key="github" onClick={handleCloseNavMenu}>
+                      <a href="https://github.com/djbrownbear" target="_blank" rel="noreferrer" alt="link to github">
+                        <FontAwesomeIcon icon={faGithub} size="lg" />
+                      </a>
+                    </MenuItem>
+                    <MenuItem key="linkedIn" onClick={handleCloseNavMenu}>
+                      <a href="https://www.linkedin.com/in/aarontimothybrown/" target="_blank" rel="noreferrer" alt="link to github">
+                        <FontAwesomeIcon icon={faLinkedin} size="lg"/>
+                      </a>
+                    </MenuItem>
+                    <MenuItem key="portfolio" onClick={handleCloseNavMenu}>
+                      <a href="https://aaron.aaronandanita.com" target="_blank" rel="noreferrer" alt="link to portfolio">
+                        <FontAwesomeIcon icon={faFolder} size="lg" />
+                      </a>
+                    </MenuItem>
+                  </div>
+                }  
+              </Menu>
+            </Box>
+
+            <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+                <Button key="dashboard" onClick={handleCloseNavMenu}>
+                  <NavLink activeClassName="active" to="dashboard">
+                    <Typography textAlign="center">Dashboard</Typography>
+                  </NavLink>
+                </Button>
+                <Button key="newPoll" onClick={handleCloseNavMenu}>
+                  <NavLink to="/add">
+                    <Typography textAlign="center">New Poll</Typography>
+                  </NavLink>
+                </Button>
+                <Button key="leaderboard" onClick={handleCloseNavMenu}>
+                  <NavLink to="/leaderboard">
+                    <Typography textAlign="center">Leaderboard</Typography>
+                  </NavLink>
+                </Button>
+
+                {!authedUser &&
+                  <Box>
+                    <Button key="github" onClick={handleCloseNavMenu}>
+                      <a href="https://github.com/djbrownbear" target="_blank" rel="noreferrer" alt="link to github">
+                        <FontAwesomeIcon icon={faGithub} size="lg" />
+                      </a>
+                    </Button>
+                    <Button key="linkedIn" onClick={handleCloseNavMenu}>
+                      <a href="https://www.linkedin.com/in/aarontimothybrown/" target="_blank" rel="noreferrer" alt="link to github">
+                        <FontAwesomeIcon icon={faLinkedin} size="lg"/>
+                      </a>
+                    </Button>
+                    <Button key="portfolio" onClick={handleCloseNavMenu}>
+                      <a href="https://aaron.aaronandanita.com" target="_blank" rel="noreferrer" alt="link to portfolio">
+                        <FontAwesomeIcon icon={faFolder} size="lg" />
+                      </a>
+                    </Button>
+                  </Box>
+                }  
+            </Box>
+            
+            <Box sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }}>
+              <Link to="/">
+                <img 
+                  className="app-logo" 
+                  src="https://img.icons8.com/emoji/48/000000/ballot-box-with-ballot.png" 
+                  alt="Voting Ballot Box" 
+                />
+              </Link>
+            </Box>
+            <Typography
+              variant="h6"
+              noWrap
+              component="a"
+              href="/"
+              sx={{
+                mr: 2,
+                display: { xs: 'flex', md: 'none' },
+                fontFamily: 'monospace',
+                fontWeight: 700,
+                color: 'inherit',
+                textDecoration: 'none',
+              }}
+            >
+              Better Bake
+            </Typography>
+
+            <Box sx={{ flexGrow: 0 }}>
+              {user &&
+                <IconButton
+                  size="large"
+                  aria-label="account of current user"
+                  aria-controls="menu-appbar"
+                  aria-haspopup="true"
+                  onClick={handleOpenUserMenu}
+                  color="inherit"             
+                >
+                  <AvatarInfo 
+                    avatar={user.avatarURL}
+                    name={user.name}
+                    id={user.id}
+                    handleClick={handleClick}
+                  />
+                </IconButton>
               }
-           </li> 
-          </ul>
-          {user &&
-            <AvatarInfo 
-              avatar={user.avatarURL}
-              name={user.name}
-              id={user.id}
-              handleClick={handleClick}
-            />
-          }
-        </div>
-      </div>
-    </nav>
+              <Menu
+                sx={{ mt: '45px' }}
+                id="menu-appbar"
+                anchorEl={anchorElUser}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                open={Boolean(anchorElUser)}
+                onClose={handleCloseUserMenu}              
+              >
+                <MenuItem key="action" onClick={handleCloseUserMenu}>
+                  {authedUser 
+                    ? <NavLink to="/auth"><span>Switch User</span></NavLink>
+                    : <NavLink to="/login"><span>Sign In</span></NavLink>
+                  }
+                </MenuItem> 
+                <MenuItem>
+                  <Typography
+                    noWrap
+                    component="a"
+                    data-testid="logout-button" 
+                    onClick={handleClick}
+                  >
+                    Logout
+                  </Typography>
+                </MenuItem>
+              </Menu>
+            </Box>
+          </Toolbar>
+        </Container>
+    </AppBar>
   );
 }
 
