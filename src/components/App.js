@@ -42,15 +42,13 @@ const App = (props) => {
 
   return (
     <Fragment>
-      <Container maxWidth="xl">
+      <LoadingBar />
+      <Nav /> 
+      <Container maxWidth="xl" sx={{ pt: 6 }}>
         <Favicon 
           url="https://img.icons8.com/emoji/48/000000/ballot-box-with-ballot.png" 
         />
-        {/* <div className="page-container"> */}
-          <LoadingBar />
-          <Nav /> 
           <Container maxWidth="lg">
-          {/* <div className="page-wrapper"> */}
             { props.loading === true ? null : (
               <Routes>
                 <Route path="/login" element={<LoginPage />} />
