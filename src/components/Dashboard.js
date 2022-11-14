@@ -43,9 +43,6 @@ const Dashboard = ({ authedUser, polls }) => {
 
   return (
   <Box>
-    <Typography variant="h3" align="center" className="title">
-      Dashboard
-    </Typography>
     <Box>
       <ToggleButtonGroup
         color="primary"

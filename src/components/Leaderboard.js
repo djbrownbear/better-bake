@@ -14,9 +14,6 @@ const Leaderboard = ({ usersList }) => {
 
   return (
     <Box>
-      <Typography variant="h3" className="title">
-        Leaderboard
-      </Typography>
       <Box maxWidth="sm" sx={{ margin: '0 auto' }}>
         <TableContainer component={Paper}>
           <Table aria-label="leaderboard">

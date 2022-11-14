@@ -63,9 +63,6 @@ const NewPoll = ({ dispatch, id, avatar, name, allOptions }) => {
 
   return (
     <Box>
-      <Typography variant="h3" className="title">
-        New Poll
-      </Typography>
       <Box className="page-wrapper inner">
         <form name="new-poll" className="poll-info wrapper" onSubmit={handleSubmit}>
           <PollHeader 
@@ -147,13 +144,15 @@ const NewPoll = ({ dispatch, id, avatar, name, allOptions }) => {
               </Card>
             </Grid>
           </Grid>
-          <Button 
-            // className="btn btn-submit" 
-            type="submit" 
-            disabled={(optionOneNew === "" || optionTwoNew === "")}
-          >
-            Submit
-          </Button>
+          <Box sx={{ pt: 4 }}>
+            <Button 
+              variant="contained"
+              type="submit" 
+              disabled={(optionOneNew === "" || optionTwoNew === "")}
+            >
+              Submit
+            </Button>
+          </Box>
         </form>
       </Box>
     </Box>
