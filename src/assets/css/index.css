@@ -412,7 +412,7 @@ footer>div>.textBlock:nth-child(2) ul li {
 }
 
 .img-wrapper {
-  width: 500px;
+  /* width: 500px; */
   display: flex;
   justify-content: flex-end;
 }

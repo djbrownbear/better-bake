@@ -3,6 +3,14 @@ import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGithub, faLinkedin } from "@fortawesome/free-brands-svg-icons";
 import { faFolder } from "@fortawesome/free-regular-svg-icons";
+import {
+  Typography,
+  Box,
+  Button,
+  CardContent,
+  CardActions,
+  Container,
+} from "@mui/material";
 
 const LandingPage = ({ dispatch }) => {
   const navigate = useNavigate();
@@ -14,17 +22,17 @@ const LandingPage = ({ dispatch }) => {
   } 
 
   return (
-    <div className="page-wrapper">
+    <Container maxWidth="xl" sx={{ px: 0 }}>
       <section id="one">
         <div className="container no-gutter center-v color-main">
           <div className="column content">
             <div className="img-wrapper">
-              <img                 
+              <img
                 src="https://images.squarespace-cdn.com/content/v1/53db930be4b04ee7c4020290/1559899792825-I5EQCC3M1FMCW8ILW7R6/Benjamina%27s-Floral-Tea-Cake-Series-7.jpg?format=600w"
-                alt="Benjamina's Floral Tea Cake"  
+                alt="Benjamina's Floral Tea Cake"
                 className="img-right"
               />
-              <img 
+              <img
                 src="https://images.squarespace-cdn.com/content/v1/53db930be4b04ee7c4020290/1559899883718-Z3LHPYK96M5GZH882LS8/Kim-Joy-Lavender-%26-Lemon-Fox-Cake.jpg?format=600w"
                 alt="Kim-Joy's Lavender and Lemon Fox Cake"
                 className="img-left"
@@ -32,15 +40,24 @@ const LandingPage = ({ dispatch }) => {
               <div className="circle"></div>
             </div>
             <div className="textBlock">
-              <h1>Settle who had the <span>better bake</span>.</h1>
+              <h1>
+                Settle who had the <span>better bake</span>.
+              </h1>
               <p>
-                Together, we can decide the better bake between contestants from <br/><a href="https://thegreatbritishbakeoff.co.uk/" alt="The Great British Bake Off site">
-                <span>The Great British Bake Off</span>.
+                Together, we can decide the better bake between contestants from{" "}
+                <br />
+                <a
+                  href="https://thegreatbritishbakeoff.co.uk/"
+                  alt="The Great British Bake Off site"
+                >
+                  <span>The Great British Bake Off</span>.
                 </a>
               </p>
               <p>On your marks, get set, vote!</p>
               <div className="center-h">
-                <button className="btn" type="button" onClick={handleClick}>Demo</button>
+                <button className="btn" type="button" onClick={handleClick}>
+                  Demo
+                </button>
               </div>
             </div>
           </div>
@@ -52,10 +69,17 @@ const LandingPage = ({ dispatch }) => {
           <div className="column f-start mw">
             <div className="textBlock">
               <h1>Vote</h1>
-              <p>Cast your vote on the best bakes from user-created polls, including your own polls.</p>
+              <p>
+                Cast your vote on the best bakes from user-created polls,
+                including your own polls.
+              </p>
             </div>
             <div className="img-wrapper col-2">
-              <img src="https://i.imgur.com/wXxGfuV.png" alt="vote for best bake" className="img-screenshot"/>
+              <img
+                src="https://i.imgur.com/wXxGfuV.png"
+                alt="vote for best bake"
+                className="img-screenshot"
+              />
             </div>
           </div>
         </div>
@@ -66,24 +90,37 @@ const LandingPage = ({ dispatch }) => {
           <div className="column f-start mw">
             <div className="textBlock">
               <h1>Leaderboard</h1>
-              <p>View user rankings by the number of polls answered and created.</p>
+              <p>
+                View user rankings by the number of polls answered and created.
+              </p>
             </div>
             <div className="img-wrapper col-2">
-              <img src="https://i.imgur.com/Ftq4FdE.png" alt="vote for best bake" className="img-screenshot" />
+              <img
+                src="https://i.imgur.com/Ftq4FdE.png"
+                alt="vote for best bake"
+                className="img-screenshot"
+              />
             </div>
           </div>
         </div>
       </section>
-      
+
       <section id="four">
         <div className="container no-gutter">
           <div className="column f-start mw">
             <div className="textBlock">
               <h1>Create New Polls</h1>
-              <p>Missing the match up you have been waiting for? Well, wait no longer. Create the poll now for others to vote.</p>
+              <p>
+                Missing the match up you have been waiting for? Well, wait no
+                longer. Create the poll now for others to vote.
+              </p>
             </div>
             <div className="img-wrapper col-2">
-              <img src="https://i.imgur.com/efqscCF.png" alt="vote for best bake" className="img-screenshot" />
+              <img
+                src="https://i.imgur.com/efqscCF.png"
+                alt="vote for best bake"
+                className="img-screenshot"
+              />
             </div>
           </div>
         </div>
@@ -95,24 +132,43 @@ const LandingPage = ({ dispatch }) => {
             <h3>Photo Credits</h3>
             <ul>
               <li>Netflix</li>
-              <li><a href="http://www.tomhovey.co.uk/" alt="Tom Hovey"><span>Tom Hovey</span></a></li>
+              <li>
+                <a href="http://www.tomhovey.co.uk/" alt="Tom Hovey">
+                  <span>Tom Hovey</span>
+                </a>
+              </li>
             </ul>
           </div>
           <div className="textBlock color-main">
             <h3>Social</h3>
             <ul className="menu-social">
               <li>
-                <a href="https://github.com/djbrownbear" target="_blank" rel="noreferrer" alt="link to github">
+                <a
+                  href="https://github.com/djbrownbear"
+                  target="_blank"
+                  rel="noreferrer"
+                  alt="link to github"
+                >
                   <FontAwesomeIcon icon={faGithub} size="lg" />
                 </a>
               </li>
               <li>
-                <a href="https://www.linkedin.com/in/aarontimothybrown/" target="_blank" rel="noreferrer" alt="link to github">
-                  <FontAwesomeIcon icon={faLinkedin} size="lg"/>
+                <a
+                  href="https://www.linkedin.com/in/aarontimothybrown/"
+                  target="_blank"
+                  rel="noreferrer"
+                  alt="link to github"
+                >
+                  <FontAwesomeIcon icon={faLinkedin} size="lg" />
                 </a>
               </li>
               <li>
-                <a href="https://aaron.aaronandanita.com" target="_blank" rel="noreferrer" alt="link to portfolio">
+                <a
+                  href="https://aaron.aaronandanita.com"
+                  target="_blank"
+                  rel="noreferrer"
+                  alt="link to portfolio"
+                >
                   <FontAwesomeIcon icon={faFolder} size="lg" />
                 </a>
               </li>
@@ -120,8 +176,7 @@ const LandingPage = ({ dispatch }) => {
           </div>
         </div>
       </footer>
-
-    </div>
+    </Container>
   );
 };  
 

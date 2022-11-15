@@ -200,7 +200,7 @@ const Nav = ({ dispatch, authedUser, user }) => {
             </Button>
 
             {!authedUser && (
-              <Box>
+              <Box sx={{ flexGrow: 0, ml: "auto" }}>
                 <Button key="github" onClick={handleCloseNavMenu}>
                   <a
                     href="https://github.com/djbrownbear"
@@ -230,6 +230,12 @@ const Nav = ({ dispatch, authedUser, user }) => {
                   >
                     <FontAwesomeIcon icon={faFolder} size="lg" />
                   </a>
+                </Button>
+                <Button key="portfolio" onClick={handleCloseNavMenu}>
+                  <a
+                    href="#/login"
+                    alt="sign in"
+                  >Sign In</a>
                 </Button>
               </Box>
             )}
