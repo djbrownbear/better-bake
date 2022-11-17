@@ -23,6 +23,12 @@
  --bg-color-card: #F3F5F7;
 }
 
+#root{
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
 *,
 *:before,
 *:after {
@@ -138,6 +144,7 @@ footer {
   background: var(--bg-color-primary);
   padding-top: 40px;
   padding-bottom: 20px;
+  margin-top: auto;
 }
 
 footer > div {
@@ -176,10 +183,10 @@ footer>div>.textBlock:nth-child(2) ul li {
   margin: 0 auto;
 }
 
-.column {
+/* .column {
   max-width: 92%;
   margin: 0 auto;
-}
+} */
 
 .container.no-gutter{
   font-family: var(--ff-main);
@@ -419,7 +426,7 @@ footer>div>.textBlock:nth-child(2) ul li {
 
 .img-wrapper img {
   max-width: 250px;
-  z-index: 1;
+  /* z-index: 1; */
   margin: 0 auto;
 }
 

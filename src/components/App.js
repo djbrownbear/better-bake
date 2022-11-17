@@ -6,6 +6,7 @@ import PollPage from './PollPage';
 import Custom404 from './Custom404';
 import LoginAs from './LoginAs';
 import LandingPage from './LandingPage';
+import Footer from './Footer';
 import { useEffect, Fragment } from "react";
 import { handleInitialData } from '../actions/shared';
 import { connect } from 'react-redux';
@@ -27,9 +28,9 @@ function RequireAuth({ children, authedUser }) {
 
 const Layout = () => {
   return (
-    <Container>
+    <Fragment>
       <Outlet />
-    </Container>
+    </Fragment>
   );
 } 
 
@@ -40,70 +41,69 @@ const App = (props) => {
     props.dispatch(handleInitialData());
   }, [props]);
 
+  const location = useLocation();
+
   return (
     <Fragment>
       <LoadingBar />
-      <Nav /> 
-      <Container maxWidth="xl" sx={{ pt: 6 }}>
-        <Favicon 
-          url="https://img.icons8.com/emoji/48/000000/ballot-box-with-ballot.png" 
-        />
-          <Container maxWidth="lg">
-            { props.loading === true ? null : (
-              <Routes>
-                <Route path="/login" element={<LoginPage />} />
-                <Route path="/error" element={<Custom404 />} />        
-                <Route 
-                  path="/"
-                  element={<Layout/>}
-                >
-                  <Route index element={<LandingPage />}/>
-                  <Route path="/welcome" element={<LandingPage />} />
-                  <Route
-                    path="dashboard"
-                    element={
-                      <RequireAuth authedUser={props.authedUser}>
-                        <Dashboard />
-                      </RequireAuth>
-                    } 
-                  />
-                </Route>
-                <Route 
-                  path="/auth"
+      <Nav />
+      <Container maxWidth="xl" sx={{ px: 0 }}>
+        <Favicon url="https://img.icons8.com/emoji/48/000000/ballot-box-with-ballot.png" />
+        <Container maxWidth="lg">
+          {props.loading === true ? null : (
+            <Routes>
+              <Route path="/login" element={<LoginPage />} />
+              <Route path="/error" element={<Custom404 />} />
+              <Route path="/" element={<Layout />}>
+                <Route index element={<LandingPage />} />
+                <Route path="/welcome" element={<LandingPage />} />
+                <Route
+                  path="dashboard"
                   element={
                     <RequireAuth authedUser={props.authedUser}>
-                      <LoginAs />
+                      <Dashboard />
                     </RequireAuth>
                   }
                 />
-                <Route 
-                  path="/add" 
-                  element={
-                    <RequireAuth authedUser={props.authedUser}>
-                      <NewPoll />
-                    </RequireAuth>
-                  } 
-                />
-                <Route 
-                  path="/leaderboard" 
-                  element={
-                    <RequireAuth authedUser={props.authedUser}>
-                      <Leaderboard />
-                    </RequireAuth>
-                  } 
-                />
-                <Route 
-                  path="/questions/:id" 
-                  element={
-                    <RequireAuth authedUser={props.authedUser}>
-                      <PollPage />
-                    </RequireAuth>
-                  } 
-                />   
-              </Routes> 
-            )}
-          </Container>
+              </Route>
+              <Route
+                path="/auth"
+                element={
+                  <RequireAuth authedUser={props.authedUser}>
+                    <LoginAs />
+                  </RequireAuth>
+                }
+              />
+              <Route
+                path="/add"
+                element={
+                  <RequireAuth authedUser={props.authedUser}>
+                    <NewPoll />
+                  </RequireAuth>
+                }
+              />
+              <Route
+                path="/leaderboard"
+                element={
+                  <RequireAuth authedUser={props.authedUser}>
+                    <Leaderboard />
+                  </RequireAuth>
+                }
+              />
+              <Route
+                path="/questions/:id"
+                element={
+                  <RequireAuth authedUser={props.authedUser}>
+                    <PollPage />
+                  </RequireAuth>
+                }
+              />
+            </Routes>
+          )}
+          {console.log(`${location.pathname}`)}
+        </Container>
       </Container>
+      <Footer />
     </Fragment>
   );
 }

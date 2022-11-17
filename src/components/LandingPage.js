@@ -10,7 +10,9 @@ import {
   CardContent,
   CardActions,
   Container,
+  Grid,
 } from "@mui/material";
+import { Fragment } from "react";
 
 const LandingPage = ({ dispatch }) => {
   const navigate = useNavigate();
@@ -22,11 +24,11 @@ const LandingPage = ({ dispatch }) => {
   } 
 
   return (
-    <Container maxWidth="xl" sx={{ px: 0 }}>
+    <Fragment>
       <section id="one">
-        <div className="container no-gutter center-v color-main">
-          <div className="column content">
-            <div className="img-wrapper">
+        <Box className="container no-gutter center-v color-main">
+          <Box className="column content">
+            <Box className="img-wrapper">
               <img
                 src="https://images.squarespace-cdn.com/content/v1/53db930be4b04ee7c4020290/1559899792825-I5EQCC3M1FMCW8ILW7R6/Benjamina%27s-Floral-Tea-Cake-Series-7.jpg?format=600w"
                 alt="Benjamina's Floral Tea Cake"
@@ -37,9 +39,9 @@ const LandingPage = ({ dispatch }) => {
                 alt="Kim-Joy's Lavender and Lemon Fox Cake"
                 className="img-left"
               />
-              <div className="circle"></div>
-            </div>
-            <div className="textBlock">
+              <Box className="circle"></Box>
+            </Box>
+            <Box className="textBlock">
               <h1>
                 Settle who had the <span>better bake</span>.
               </h1>
@@ -54,129 +56,97 @@ const LandingPage = ({ dispatch }) => {
                 </a>
               </p>
               <p>On your marks, get set, vote!</p>
-              <div className="center-h">
+              <Box className="center-h">
                 <button className="btn" type="button" onClick={handleClick}>
                   Demo
                 </button>
-              </div>
-            </div>
-          </div>
-        </div>
+              </Box>
+            </Box>
+          </Box>
+        </Box>
       </section>
 
       <section id="two">
-        <div className="container no-gutter">
-          <div className="column f-start mw">
-            <div className="textBlock">
-              <h1>Vote</h1>
-              <p>
-                Cast your vote on the best bakes from user-created polls,
-                including your own polls.
-              </p>
-            </div>
-            <div className="img-wrapper col-2">
-              <img
-                src="https://i.imgur.com/wXxGfuV.png"
-                alt="vote for best bake"
-                className="img-screenshot"
-              />
-            </div>
-          </div>
-        </div>
+        <Box>
+          <Grid container spacing={0}>
+            <Grid item xs={12} sm={4}>
+              <Box>
+                <Typography variant="h4">Vote</Typography>
+              </Box>
+              <Box className="textBlock">
+                <Typography variant="string" paragraph={true}>
+                  Cast your vote on the best bakes from user-created polls,
+                  including your own polls.
+                </Typography>
+              </Box>
+            </Grid>
+            <Grid item xs={12} sm={8}>
+              <Box className="img-wrapper col-2">
+                <img
+                  src="https://i.imgur.com/wXxGfuV.png"
+                  alt="vote for best bake"
+                  className="img-screenshot"
+                />
+              </Box>
+            </Grid>
+          </Grid>
+        </Box>
       </section>
 
       <section id="three">
-        <div className="container no-gutter color-accent">
-          <div className="column f-start mw">
-            <div className="textBlock">
-              <h1>Leaderboard</h1>
-              <p>
-                View user rankings by the number of polls answered and created.
-              </p>
-            </div>
-            <div className="img-wrapper col-2">
-              <img
-                src="https://i.imgur.com/Ftq4FdE.png"
-                alt="vote for best bake"
-                className="img-screenshot"
-              />
-            </div>
-          </div>
-        </div>
+        <Box className="color-accent">
+          <Grid container spacing={0}>
+            <Grid item xs={12} sm={4}>
+              <Box>
+                <Typography variant="h4">Leaderboard</Typography>
+              </Box>
+              <Box>
+                <Typography variant="string" paragraph={true}>
+                  View user rankings by the number of polls answered and
+                  created.
+                </Typography>
+              </Box>
+            </Grid>
+            <Grid item xs={12} sm={8}>
+              <Box className="img-wrapper col-2">
+                <img
+                  src="https://i.imgur.com/Ftq4FdE.png"
+                  alt="vote for best bake"
+                  className="img-screenshot"
+                />
+              </Box>
+            </Grid>
+          </Grid>
+        </Box>
       </section>
 
       <section id="four">
-        <div className="container no-gutter">
-          <div className="column f-start mw">
-            <div className="textBlock">
-              <h1>Create New Polls</h1>
-              <p>
-                Missing the match up you have been waiting for? Well, wait no
-                longer. Create the poll now for others to vote.
-              </p>
-            </div>
-            <div className="img-wrapper col-2">
-              <img
-                src="https://i.imgur.com/efqscCF.png"
-                alt="vote for best bake"
-                className="img-screenshot"
-              />
-            </div>
-          </div>
-        </div>
+        <Box>
+          <Grid container spacing={0}>
+            <Grid item xs={12} sm={4}>
+              <Box>
+                <Typography variant="h4">Create New Polls</Typography>
+              </Box>
+              <Box>
+                <Typography variant="string" paragraph={true}>
+                  Missing the match up you have been waiting for? Well, wait no
+                  longer. Create the poll now for others to vote.
+                </Typography>
+              </Box>
+            </Grid>
+            <Grid item xs={12} sm={8}>
+              <Box className="img-wrapper col-2">
+                <img
+                  src="https://i.imgur.com/Ftq4FdE.png"
+                  alt="vote for best bake"
+                  className="img-screenshot"
+                />
+              </Box>
+            </Grid>
+          </Grid>
+        </Box>
       </section>
-
-      <footer>
-        <div className="container no-gutter">
-          <div className="textBlock color-main">
-            <h3>Photo Credits</h3>
-            <ul>
-              <li>Netflix</li>
-              <li>
-                <a href="http://www.tomhovey.co.uk/" alt="Tom Hovey">
-                  <span>Tom Hovey</span>
-                </a>
-              </li>
-            </ul>
-          </div>
-          <div className="textBlock color-main">
-            <h3>Social</h3>
-            <ul className="menu-social">
-              <li>
-                <a
-                  href="https://github.com/djbrownbear"
-                  target="_blank"
-                  rel="noreferrer"
-                  alt="link to github"
-                >
-                  <FontAwesomeIcon icon={faGithub} size="lg" />
-                </a>
-              </li>
-              <li>
-                <a
-                  href="https://www.linkedin.com/in/aarontimothybrown/"
-                  target="_blank"
-                  rel="noreferrer"
-                  alt="link to github"
-                >
-                  <FontAwesomeIcon icon={faLinkedin} size="lg" />
-                </a>
-              </li>
-              <li>
-                <a
-                  href="https://aaron.aaronandanita.com"
-                  target="_blank"
-                  rel="noreferrer"
-                  alt="link to portfolio"
-                >
-                  <FontAwesomeIcon icon={faFolder} size="lg" />
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </footer>
-    </Container>
+    </Fragment>
   );
 };  
 

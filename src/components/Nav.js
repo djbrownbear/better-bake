@@ -127,6 +127,7 @@ const Nav = ({ dispatch, authedUser, user }) => {
               onClose={handleCloseNavMenu}
               sx={{
                 display: { xs: "block", md: "none" },
+                background: "var(--bg-color-primary)",
               }}
             >
               <MenuItem key="dashboard" onClick={handleCloseNavMenu}>
@@ -232,10 +233,9 @@ const Nav = ({ dispatch, authedUser, user }) => {
                   </a>
                 </Button>
                 <Button key="portfolio" onClick={handleCloseNavMenu}>
-                  <a
-                    href="#/login"
-                    alt="sign in"
-                  >Sign In</a>
+                  <a href="#/login" alt="sign in">
+                    Sign In
+                  </a>
                 </Button>
               </Box>
             )}
@@ -304,7 +304,10 @@ const Nav = ({ dispatch, authedUser, user }) => {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              <MenuItem key="action" onClick={handleCloseUserMenu}>
+              <MenuItem
+                key="action"
+                onClick={handleCloseUserMenu}
+              >
                 {authedUser ? (
                   <NavLink to="/auth">
                     <span>Switch User</span>
