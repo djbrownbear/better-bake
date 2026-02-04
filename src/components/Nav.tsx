@@ -1,14 +1,27 @@
 import { Link, useNavigate, NavLink } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { connect } from "react-redux";
+import React from 'react';
+import { connect, ConnectedProps } from "react-redux";
 import { logoutAuthedUser } from "../actions/authedUser";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faGithub, faLinkedin,  } from "@fortawesome/free-brands-svg-icons";
+import { faGithub, faLinkedin } from "@fortawesome/free-brands-svg-icons";
 import { faFolder, faXmarkCircle } from "@fortawesome/free-regular-svg-icons";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
+import { RootState } from "../reducers";
 
+const mapStateToProps = ({ authedUser, users }: RootState) => {
+  const user = users[authedUser || ''];
 
-const Nav = ({ dispatch, authedUser, user }) => {
+  return {
+    authedUser,
+    user,
+  };
+}
+
+const connector = connect(mapStateToProps);
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+const Nav: React.FC<PropsFromRedux> = ({ dispatch, authedUser, user }) => {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const [stickyClass, setStickyClass] = useState('');
@@ -28,7 +41,7 @@ const Nav = ({ dispatch, authedUser, user }) => {
     }
   };
 
-  const handleClick = (e) => {
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     toggleNav();
     dispatch(logoutAuthedUser());
@@ -58,7 +71,7 @@ const Nav = ({ dispatch, authedUser, user }) => {
           </div>
           <ul className={`menu-main ${isOpen ? '' : 'mm-hide'}`} onClick={(isOpen ? toggleNav : () => {})}>
             <li>
-              <NavLink activeClassName="active" to="dashboard"><span>Dashboard</span></NavLink>
+              <NavLink to="dashboard"><span>Dashboard</span></NavLink>
             </li>
             <li>
               <NavLink to="/add"><span>New Poll</span></NavLink>
@@ -73,17 +86,17 @@ const Nav = ({ dispatch, authedUser, user }) => {
           {!authedUser &&
             <ul className={`menu-social ${isOpen ? '' : 'mm-hide'}`} onClick={(isOpen ? toggleNav : () => {})}>
               <li>
-                <a href="https://github.com/djbrownbear" target="_blank" rel="noreferrer" alt="link to github">
+                <a href="https://github.com/djbrownbear" target="_blank" rel="noreferrer" title="link to github">
                   <FontAwesomeIcon icon={faGithub} size="lg" />
                 </a>
               </li>
               <li>
-                <a href="https://www.linkedin.com/in/aarontimothybrown/" target="_blank" rel="noreferrer" alt="link to github">
+                <a href="https://www.linkedin.com/in/aarontimothybrown/" target="_blank" rel="noreferrer" title="link to linkedin">
                   <FontAwesomeIcon icon={faLinkedin} size="lg"/>
                 </a>
               </li>
               <li>
-                <a href="https://aaron.aaronandanita.com" target="_blank" rel="noreferrer" alt="link to portfolio">
+                <a href="https://aaron.aaronandanita.com" target="_blank" rel="noreferrer" title="link to portfolio">
                   <FontAwesomeIcon icon={faFolder} size="lg" />
                 </a>
               </li>
@@ -110,13 +123,4 @@ const Nav = ({ dispatch, authedUser, user }) => {
   );
 }
 
-const mapStateToProps = ({ authedUser, users }) => {
-  const user = users[authedUser];
-
-  return {
-    authedUser,
-    user,
-  };
-}
-
-export default connect(mapStateToProps)(Nav);
+export default connector(Nav);

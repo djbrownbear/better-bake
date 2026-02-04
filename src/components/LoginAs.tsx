@@ -1,12 +1,25 @@
-import { connect } from "react-redux";
+import { connect, ConnectedProps } from "react-redux";
+import React from 'react';
 import { setAuthedUser } from "../actions/authedUser";
 import { useNavigate, useLocation } from "react-router-dom";
+import { RootState } from "../reducers";
+import { User } from "../types";
 
-const LoginAs = ({ dispatch, authedUser, usersList}) => {
+const mapStateToProps = ({ users, authedUser }: RootState) => {
+  return {
+    authedUser,
+    usersList: Object.values(users).sort((a,b) => a.id.localeCompare(b.id)),
+  };
+}
+
+const connector = connect(mapStateToProps);
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+const LoginAs: React.FC<PropsFromRedux> = ({ dispatch, authedUser, usersList }) => {
   const navigate = useNavigate();
-  const { state } = useLocation();
+  const { state } = useLocation() as { state?: { path?: string } };
 
-  const handleClick = (e) => {
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     dispatch(setAuthedUser(e.currentTarget.id));
     navigate((state?.path || "/dashboard"));
@@ -24,10 +37,9 @@ const LoginAs = ({ dispatch, authedUser, usersList}) => {
               <img 
                 src={user.avatarURL}
                 alt={`Avatar of ${user.name}`} 
-                focusable="false"
               />
-              <span focusable="false">{user.name}</span>
-              <span focusable="false">{user.id}</span>
+              <span>{user.name}</span>
+              <span>{user.id}</span>
             </button>
           ))}
         </div>
@@ -36,11 +48,4 @@ const LoginAs = ({ dispatch, authedUser, usersList}) => {
   );
 }
 
-const mapStateToProps = ({ users, authedUser }) => {
-  return {
-    authedUser,
-    usersList: Object.values(users).sort((a,b) => b.id - a.id),
-  };
-}
-
-export default connect(mapStateToProps)(LoginAs);
+export default connector(LoginAs);

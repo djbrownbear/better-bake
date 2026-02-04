@@ -5,10 +5,14 @@ import polls from "./polls";
 import bakers from "./bakers";
 import { loadingBarReducer } from "react-redux-loading-bar";
 
-export default combineReducers({
+const rootReducer = combineReducers({
   authedUser,
   users,
   polls,
   bakers,
   loadingBar: loadingBarReducer,
 });
+
+export type RootState = ReturnType<typeof rootReducer>;
+
+export default rootReducer;

@@ -25,7 +25,7 @@ export function savePoll(info: CreatePollInput): Promise<Poll> {
 
 interface SavePollAnswerInput {
   authedUser: string;
-  pollId: string;
+  qid: string;
   answer: 'optionOne' | 'optionTwo';
 }
 

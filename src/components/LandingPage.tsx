@@ -1,13 +1,14 @@
 import { connect } from "react-redux";
+import React from 'react';
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGithub, faLinkedin } from "@fortawesome/free-brands-svg-icons";
 import { faFolder } from "@fortawesome/free-regular-svg-icons";
 
-const LandingPage = ({ dispatch }) => {
+const LandingPage: React.FC = () => {
   const navigate = useNavigate();
 
-  const handleClick = (e) => {
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
     navigate('/login');
@@ -34,7 +35,7 @@ const LandingPage = ({ dispatch }) => {
             <div className="textBlock">
               <h1>Settle who had the <span>better bake</span>.</h1>
               <p>
-                Together, we can decide the better bake between contestants from <br/><a href="https://thegreatbritishbakeoff.co.uk/" alt="The Great British Bake Off site">
+                Together, we can decide the better bake between contestants from <br/><a href="https://thegreatbritishbakeoff.co.uk/" title="The Great British Bake Off site">
                 <span>The Great British Bake Off</span>.
                 </a>
               </p>
@@ -95,24 +96,24 @@ const LandingPage = ({ dispatch }) => {
             <h3>Photo Credits</h3>
             <ul>
               <li>Netflix</li>
-              <li><a href="http://www.tomhovey.co.uk/" alt="Tom Hovey"><span>Tom Hovey</span></a></li>
+              <li><a href="http://www.tomhovey.co.uk/" title="Tom Hovey"><span>Tom Hovey</span></a></li>
             </ul>
           </div>
           <div className="textBlock color-main">
             <h3>Social</h3>
             <ul className="menu-social">
               <li>
-                <a href="https://github.com/djbrownbear" target="_blank" rel="noreferrer" alt="link to github">
+                <a href="https://github.com/djbrownbear" target="_blank" rel="noreferrer" title="link to github">
                   <FontAwesomeIcon icon={faGithub} size="lg" />
                 </a>
               </li>
               <li>
-                <a href="https://www.linkedin.com/in/aarontimothybrown/" target="_blank" rel="noreferrer" alt="link to github">
+                <a href="https://www.linkedin.com/in/aarontimothybrown/" target="_blank" rel="noreferrer" title="link to linkedin">
                   <FontAwesomeIcon icon={faLinkedin} size="lg"/>
                 </a>
               </li>
               <li>
-                <a href="https://aaron.aaronandanita.com" target="_blank" rel="noreferrer" alt="link to portfolio">
+                <a href="https://aaron.aaronandanita.com" target="_blank" rel="noreferrer" title="link to portfolio">
                   <FontAwesomeIcon icon={faFolder} size="lg" />
                 </a>
               </li>

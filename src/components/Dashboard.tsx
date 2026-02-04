@@ -1,30 +1,45 @@
-import { connect } from "react-redux";
+import { connect, ConnectedProps } from "react-redux";
 import { useState } from "react";
+import React from 'react';
 import Poll from "./Poll";
+import { RootState } from "../reducers";
+import { Poll as PollType } from "../types";
 
 const ans = "ANSWERED";
 const unans = "UNANSWERED"; 
 
-const Dashboard = ({ authedUser, polls }) => {
+const mapStateToProps = ({ authedUser, polls }: RootState) => (
+  {
+    authedUser,
+    polls: Object.values(polls).sort(
+      (a, b) => b.timestamp - a.timestamp
+    ),
+  }
+);
+
+const connector = connect(mapStateToProps);
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+const Dashboard: React.FC<PropsFromRedux> = ({ authedUser, polls }) => {
   const [showUnanswered, setShowUnanswered] = useState(true);
   const [showAnswered, setShowAnswered] = useState(false);
 
 
-  const answered = (poll) => (poll.optionOne.votes.includes(authedUser) || poll.optionTwo.votes.includes(authedUser)) ;
-  const unanswered = (poll) => (!poll.optionOne.votes.includes(authedUser) && !poll.optionTwo.votes.includes(authedUser)) ;
+  const answered = (poll: PollType) => (poll.optionOne.votes.includes(authedUser || '') || poll.optionTwo.votes.includes(authedUser || ''));
+  const unanswered = (poll: PollType) => (!poll.optionOne.votes.includes(authedUser || '') && !poll.optionTwo.votes.includes(authedUser || ''));
 
-  const toggleView = (e) => {
+  const toggleView = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
-    const el = document.getElementById(e.target.id);
-    const elOpposite = document.getElementById(e.target.id === ans ? unans : ans);
+    const el = document.getElementById(e.currentTarget.id);
+    const elOpposite = document.getElementById(e.currentTarget.id === ans ? unans : ans);
     
-    const setSelected = (e) => {
-      el.classList.add('selected');
-      elOpposite.classList.remove('selected');
+    const setSelected = () => {
+      el?.classList.add('selected');
+      elOpposite?.classList.remove('selected');
     }
 
-    switch (e.target.id) {
+    switch (e.currentTarget.id) {
       case ans:
         setShowAnswered(showAnswered === false ? true : false);
         setShowUnanswered(showUnanswered === true ? false : true);
@@ -101,13 +116,4 @@ const Dashboard = ({ authedUser, polls }) => {
   );
 };
 
-const mapStateToProps = ({ authedUser, polls }) => (
-  {
-    authedUser,
-    polls: Object.values(polls).sort(
-      (a, b) => b.timestamp - a.timestamp
-    ),
-  }
-);
-
-export default connect(mapStateToProps)(Dashboard);
+export default connector(Dashboard);

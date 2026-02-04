@@ -1,6 +1,25 @@
-import { connect } from "react-redux";
+import { connect, ConnectedProps } from "react-redux";
+import React from 'react';
+import { RootState } from "../reducers";
+import { User } from "../types";
 
-const Leaderboard = ({ usersList }) => {
+const mapStateToProps = ({ users, authedUser }: RootState) => {
+
+  const countAskedAnswered = (x: User) => {
+    const asked = x.questions.length;
+    const answered = Object.keys(x.answers).length;
+    return asked + answered;
+  }
+
+  return {
+    usersList: Object.values(users).sort((a,b) => countAskedAnswered(b) - countAskedAnswered(a)),
+  };
+}
+
+const connector = connect(mapStateToProps);
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+const Leaderboard: React.FC<PropsFromRedux> = ({ usersList }) => {
   const defaultAvatar = "https://img.icons8.com/external-others-inmotus-design/67/000000/external-Avatar-round-icons-others-inmotus-design-5.png";
 
   return (
@@ -45,17 +64,4 @@ const Leaderboard = ({ usersList }) => {
   );
 }
 
-const mapStateToProps = ({ users, authedUser}) => {
-
-  const countAskedAnswered = (x) => {
-    const asked = x.questions.length;
-    const answered = Object.keys(x.answers).length;
-    return asked + answered;
-  }
-
-  return {
-    usersList: Object.values(users).sort((a,b) => countAskedAnswered(b) - countAskedAnswered(a)),
-  };
-}
-
-export default connect(mapStateToProps)(Leaderboard);
+export default connector(Leaderboard);

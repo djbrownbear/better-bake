@@ -1,10 +1,47 @@
-import { connect } from "react-redux";
+import { connect, ConnectedProps } from "react-redux";
 import { useState, useEffect } from "react";
+import React from 'react';
 import { handleAddPoll } from "../actions/polls";
 import { useNavigate } from "react-router-dom";
 import PollHeader from "./PollHeader";
+import { RootState } from "../reducers";
 
-const NewPoll = ({ dispatch, id, avatar, name, allOptions }) => {
+interface BakeOption {
+  text: string;
+  bakeURL: string;
+}
+
+const mapStateToProps = ({ authedUser, users, bakers }: RootState) => {
+  const user = users[authedUser || ''];
+  const name = user?.name || '';
+  const avatar = user?.avatarURL || '';
+
+  // modified based on function from the following source:
+  // https://stackoverflow.com/questions/54857222/find-all-values-by-specific-key-in-a-deep-nested-object
+  function findAllByProp(obj: any, keyToFind: string): BakeOption[] {
+    return Object.entries(obj)
+      .reduce((acc: BakeOption[], [key, value]) => (key === keyToFind)
+        ? acc.concat(obj as BakeOption)
+        : (typeof value === 'object' && value !== null)
+        ? acc.concat(findAllByProp(value, keyToFind))
+        : acc
+      , [])
+  }
+
+  const allOptions = findAllByProp(bakers,'bakeURL');
+
+  return{
+    authedUser,
+    name,
+    avatar,
+    allOptions,
+  };
+}
+
+const connector = connect(mapStateToProps);
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+const NewPoll: React.FC<PropsFromRedux> = ({ dispatch, authedUser, avatar, name, allOptions }) => {
   const navigate = useNavigate();
   const [optionOneNew, setOptionOneNew] = useState(""); 
   const [optionTwoNew, setOptionTwoNew] = useState(""); 
@@ -12,17 +49,19 @@ const NewPoll = ({ dispatch, id, avatar, name, allOptions }) => {
   const [optionTwoImage, setOptionTwoImage] = useState("");
 
   useEffect(() => {
-    setOptionOneNew(allOptions[0].text);
-    setOptionTwoNew(allOptions[1].text);
-    setOptionOneImage(allOptions[0].bakeURL);
-    setOptionTwoImage(allOptions[1].bakeURL);
-    const el = document.querySelector('#optionTwoNew');
-    el.value = allOptions[1].text;
-  }, []);
+    if (allOptions.length >= 2) {
+      setOptionOneNew(allOptions[0].text);
+      setOptionTwoNew(allOptions[1].text);
+      setOptionOneImage(allOptions[0].bakeURL);
+      setOptionTwoImage(allOptions[1].bakeURL);
+      const el = document.querySelector('#optionTwoNew') as HTMLSelectElement;
+      if (el) el.value = allOptions[1].text;
+    }
+  }, [allOptions]);
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     let idx = e.target.options.selectedIndex;
-    let imgURL = e.target.options[idx].dataset.imgurl;
+    let imgURL = e.target.options[idx].dataset.imgurl || '';
 
     if (e.target.id === "optionOneNew") {
       const optionOneNew = e.target.value;
@@ -32,19 +71,19 @@ const NewPoll = ({ dispatch, id, avatar, name, allOptions }) => {
       const optionTwoNew = e.target.value;
       setOptionTwoNew(optionTwoNew);
       setOptionTwoImage(imgURL);
-    };
+    }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    dispatch(handleAddPoll(optionOneNew, optionTwoNew, optionOneImage, optionTwoImage));
+    dispatch(handleAddPoll(optionOneNew, optionTwoNew, optionOneImage, optionTwoImage) as any);
     setOptionOneNew("");
     setOptionTwoNew("");
     setOptionOneImage("");
     setOptionTwoImage("");
 
-    if (!id) {
+    if (!authedUser) {
       navigate("/dashboard");
     }
   };
@@ -74,7 +113,7 @@ const NewPoll = ({ dispatch, id, avatar, name, allOptions }) => {
               </div>
               <select name="optionOneNew" id="optionOneNew" className="new-poll-option" onChange={handleChange}>
                 {allOptions && 
-                  allOptions.map((curOption) => (<option data-imgurl={curOption.bakeURL} value={curOption.text}>{curOption.text}</option>))
+                  allOptions.map((curOption, idx) => (<option key={idx} data-imgurl={curOption.bakeURL} value={curOption.text}>{curOption.text}</option>))
                 }
               </select>
             </div>
@@ -90,7 +129,7 @@ const NewPoll = ({ dispatch, id, avatar, name, allOptions }) => {
               </div>
               <select name="optionTwoNew" id="optionTwoNew" className="new-poll-option" onChange={handleChange}>
                 {allOptions && 
-                  allOptions.map((curOption) => (<option data-imgurl={curOption.bakeURL} value={curOption.text}>{curOption.text}</option>))
+                  allOptions.map((curOption, idx) => (<option key={idx} data-imgurl={curOption.bakeURL} value={curOption.text}>{curOption.text}</option>))
                 }
               </select>
             </div>
@@ -104,32 +143,4 @@ const NewPoll = ({ dispatch, id, avatar, name, allOptions }) => {
   );
 }
 
-const mapStateToProps = ({ dispatch, authedUser, users, bakers }) => {
-  const user = users[authedUser];
-  const name = user.name;
-  const avatar = user.avatarURL;
-
-  // modified based on function from the following source:
-  // https://stackoverflow.com/questions/54857222/find-all-values-by-specific-key-in-a-deep-nested-object
-  function findAllByProp(obj, keyToFind) {
-    return Object.entries(obj)
-      .reduce((acc, [key, value]) => (key === keyToFind)
-        ? acc.concat(obj)
-        : (typeof value === 'object')
-        ? acc.concat(findAllByProp(value, keyToFind))
-        : acc
-      , [])
-  }
-
-  const allOptions = findAllByProp(bakers,'bakeURL');
-
-  return{
-    dispatch,
-    authedUser,
-    name,
-    avatar,
-    allOptions,
-  };
-}
-
-export default connect(mapStateToProps)(NewPoll);
+export default connector(NewPoll);

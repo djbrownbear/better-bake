@@ -1,4 +1,6 @@
-const logger = (store) => (next) => (action) => {
+import { Middleware } from 'redux';
+
+const logger: Middleware = (store) => (next) => (action) => {
   console.group(action.type);
   console.log("The action: ", action);
   const returnValue = next(action);

@@ -1,44 +1,52 @@
 import { useState, useRef, useEffect } from "react";
-import { connect } from "react-redux";
+import { connect, ConnectedProps } from "react-redux";
 import { Navigate, useLocation } from "react-router-dom";
 import { setAuthedUser } from "../actions/authedUser";
+import { RootState } from "../reducers";
 
-const LoginPage = ({ dispatch, users }) => {
-  const { state } = useLocation();
+const mapStateToProps = ({ users }: RootState) => {
+  return {
+    users,
+  };
+}
+
+const connector = connect(mapStateToProps);
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+const LoginPage: React.FC<PropsFromRedux> = ({ dispatch, users }) => {
+  const { state } = useLocation() as { state?: { path?: string } };
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
   const [errorUserPwd, setErrorUserPwd] = useState(false);
-  const usernameRef = useRef();
-  const passwordRef = useRef();
+  const usernameRef = useRef<HTMLInputElement>(null);
+  const passwordRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    usernameRef.current = undefined;
-    passwordRef.current = undefined;
+    if (usernameRef.current) usernameRef.current.value = '';
+    if (passwordRef.current) passwordRef.current.value = '';
   },[])
 
-  const handleChange = (e) => {
-    if (e.target.id === "pwd") {
-      passwordRef.current = e.target.value;
-    } else if (e.target.id ==="username") {
-      usernameRef.current = e.target.value;
-    }
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // Input values are automatically stored in refs
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
-    const user = users[usernameRef.current];
+    const username = usernameRef.current?.value;
+    const password = passwordRef.current?.value;
+    const user = users[username || ''];
 
-    if (user && user.password === passwordRef.current ){
+    if (user && user.password === password ){
       setSuccess(true);
       setError(false);
       setErrorUserPwd(false);
       dispatch(setAuthedUser(user.id));
-    } else if ( !usernameRef.current || !passwordRef.current) {
+    } else if ( !username || !password) {
       setError(true);
       setSuccess(false);
       setErrorUserPwd(false);
-    } else if (!user || user.password !== passwordRef.current ){
+    } else if (!user || user.password !== password ){
       setErrorUserPwd(true);
       setError(false);
       setSuccess(false);
@@ -49,14 +57,14 @@ const LoginPage = ({ dispatch, users }) => {
     }
   }
 
-  const handleDemoLogin = (e) => {
+  const handleDemoLogin = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
     // NOT for production use
     // choose a random user to login as a demo user
     const demoUser = Object.keys(users)[Math.floor(Math.random() * (Object.keys(users).length))];
-    usernameRef.current = demoUser;
-    passwordRef.current = users[demoUser].password;
+    if (usernameRef.current) usernameRef.current.value = demoUser;
+    if (passwordRef.current) passwordRef.current.value = users[demoUser].password;
     handleSubmit(e);
   }
 
@@ -116,10 +124,4 @@ const LoginPage = ({ dispatch, users }) => {
   );
 };  
 
-const mapStateToProps = ({ users }) => {
-  return{
-    users,
-  };
-}
-
-export default connect(mapStateToProps)(LoginPage);
+export default connector(LoginPage);
