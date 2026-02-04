@@ -8,23 +8,29 @@ import LoginAs from './LoginAs';
 import LandingPage from './LandingPage';
 import { useEffect, Fragment } from "react";
 import { handleInitialData } from '../actions/shared';
-import { connect } from 'react-redux';
+import { connect, ConnectedProps } from 'react-redux';
 import LoadingBar from 'react-redux-loading-bar';
 import NewPoll from './NewPoll';
 import Nav from './Nav';
 import { Routes, Route, Navigate, useLocation, Outlet } from 'react-router-dom';
 import Favicon from "react-favicon";
+import { RootState } from '../reducers';
+
+interface RequireAuthProps {
+  children: React.ReactNode;
+  authedUser: string | null;
+}
 
 // Source for RequireAuth: https://ui.dev/react-router-protected-routes-authentication
-function RequireAuth({ children, authedUser }) {
+function RequireAuth({ children, authedUser }: RequireAuthProps) {
   const location = useLocation();
 
   return authedUser
-    ? ( children )
+    ? ( <>{children}</> )
     : ( <Navigate to="/login" replace state={{ path: location.pathname }} /> );
 }
 
-const Layout = () => {
+const Layout: React.FC = () => {
   return (
     <div>
       <Outlet />
@@ -32,11 +38,18 @@ const Layout = () => {
   );
 } 
 
+const mapStateToProps = ({ authedUser, polls }: RootState) => ({
+  authedUser,
+  loading: Object.keys(polls).length === 0,
+});
 
-const App = (props) => {
+const connector = connect(mapStateToProps);
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+const App: React.FC<PropsFromRedux> = (props) => {
 
   useEffect(() => {
-    props.dispatch(handleInitialData());
+    props.dispatch(handleInitialData() as any);
   }, [props]);
 
   return (
@@ -109,9 +122,4 @@ const App = (props) => {
   );
 }
 
-const mapStateToProps = ({ authedUser, polls }) => ({
-  authedUser,
-  loading: polls === null,
-});
-
-export default connect(mapStateToProps)(App);
+export default connector(App);

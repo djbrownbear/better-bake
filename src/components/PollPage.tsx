@@ -1,36 +1,60 @@
-import { connect } from "react-redux";
+import { connect, ConnectedProps } from "react-redux";
+import React from 'react';
 import { handleAddAnswer } from "../actions/polls";
 import { formatPoll, formatPercent } from "../utils/helpers";
 import PollHeader from "./PollHeader";
-import { useLocation, useNavigate, useParams, Navigate } from "react-router-dom";
+import { useParams, Navigate } from "react-router-dom";
+import { RootState } from "../reducers";
 
-const withRouter = (Component) => {
-  const ComponentWithRouterProp = (props) => {
-    let location = useLocation();
-    let navigate = useNavigate();
-    let params = useParams();
-    return <Component {...props} router={{ location, navigate, params }} />;
+const mapStateToProps = ({ authedUser, users, polls, bakers }: RootState, ownProps: { id: string }) => {
+  const id = ownProps.id;
+  const poll = polls[id];
+  
+  if (!poll) {
+    return {
+      authedUser,
+      poll: null,
+      bakerOne: '',
+      bakerTwo: '',
+    };
+  }
+  
+  const bOneSeason = poll.optionOne.season;
+  const bTwoSeason = poll.optionTwo.season;
+  const bOneEpisode = poll.optionOne.episode;
+  const bTwoEpisode = poll.optionTwo.episode;
+  const bakerOne = bOneSeason ? bakers[bOneSeason].baker[poll.optionOne.baker].episodes[bOneEpisode].bakeURL : poll.optionOne.imgURL;
+  const bakerTwo = bTwoSeason ? bakers[bTwoSeason].baker[poll.optionTwo.baker].episodes[bTwoEpisode].bakeURL : poll.optionTwo.imgURL;
+
+  return {
+    authedUser,
+    poll: formatPoll(poll, users[poll.author], authedUser || ''),
+    bakerOne,
+    bakerTwo,
   };
-
-  return ComponentWithRouterProp;
 };
 
-const PollPage = (props) => {
+const connector = connect(mapStateToProps);
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+const PollPage: React.FC<PropsFromRedux> = (props) => {
 
   if (!props.poll || !props.authedUser) {
     return <Navigate to="/error"/>;
   }
 
-  const handleVote = (e) => {
+  const handleVote = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
     const { dispatch, poll, authedUser } = props;
 
+    if (!authedUser) return;
+
     dispatch(handleAddAnswer({
       qid: poll.id,
-      answer: e.target.id,
+      answer: e.currentTarget.id as 'optionOne' | 'optionTwo',
       authedUser: authedUser,
-     })
+     }) as any
     );
   }
 
@@ -54,10 +78,8 @@ const PollPage = (props) => {
   const hasVotedOptionOne = optionOneVotes.includes(authedUser);
   const hasVotedOptionTwo = optionTwoVotes.includes(authedUser);
 
- 
-
-  function getVotePercentage(val) {
-    let result;
+  function getVotePercentage(val: 'optionOne' | 'optionTwo'): string {
+    let result: number;
     if (val === "optionOne") {
       result = (optionOneVotes.length / allVotesCount);
       return formatPercent(result);
@@ -65,21 +87,15 @@ const PollPage = (props) => {
       result = (optionTwoVotes.length / allVotesCount)
       return formatPercent(result);
     } else {
-      return;
+      return '';
     }
-  };
+  }
 
-  const winLose = (a, b) => {    
-    switch(typeof a === 'number') {
-      case (a === b):
-        return "tie";
-      case (a > b):
-        return "winning";
-      case (a < b):
-        return "losing";
-      default:
-        return "";
-    };
+  const winLose = (a: number, b: number): string => {    
+    if (a === b) return "tie";
+    if (a > b) return "winning";
+    if (a < b) return "losing";
+    return "";
   };
  
   return (
@@ -137,25 +153,12 @@ const PollPage = (props) => {
   )
 };
 
-const mapStateToProps = ({ authedUser, users, polls, bakers }, props) => {
-  const { id } = props.router.params;
-  const poll = polls[id];
-  const bOneSeason = poll.optionOne.season;
-  const bTwoSeason = poll.optionTwo.season;
-  const bOneEpisode = poll.optionOne.episode;
-  const bTwoEpisode = poll.optionTwo.episode;
-  const bakerOne = bOneSeason ? bakers[bOneSeason].baker[poll.optionOne.baker].episodes[bOneEpisode].bakeURL : poll.optionOne.imgURL;
-  const bakerTwo = bTwoSeason ? bakers[bTwoSeason].baker[poll.optionTwo.baker].episodes[bTwoEpisode].bakeURL : poll.optionTwo.imgURL;
+const ConnectedPollPage = connector(PollPage);
 
-
-  return {
-    authedUser,
-    poll: poll
-      ? formatPoll(poll, users[poll.author], authedUser)
-      : null, 
-    bakerOne,
-    bakerTwo,
-  };
+// Wrapper component to get params from URL
+const PollPageWrapper: React.FC = () => {
+  const { id } = useParams<{ id: string }>();
+  return <ConnectedPollPage id={id || ''} />;
 };
 
-export default withRouter(connect(mapStateToProps)(PollPage));
+export default PollPageWrapper;
