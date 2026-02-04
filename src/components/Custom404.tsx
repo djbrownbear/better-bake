@@ -1,6 +1,7 @@
 import { connect } from "react-redux";
+import React from 'react';
 
-const Custom404 = () => {
+const Custom404: React.FC = () => {
   return (
     <div className="page-wrapper inner">
       <h1>Error Encountered</h1>
