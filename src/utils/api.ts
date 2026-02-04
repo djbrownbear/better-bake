@@ -5,8 +5,9 @@ import {
   _saveQuestionAnswer,
   _getBakers,
 } from './_DATA.js';
+import { InitialData, Poll, CreatePollInput } from '../types';
 
-export function getInitialData () {
+export function getInitialData(): Promise<InitialData> {
   return Promise.all([
     _getUsers(),
     _getQuestions(),
@@ -15,13 +16,19 @@ export function getInitialData () {
     users,
     polls,
     bakers
-  }))
+  }));
 }
 
-export function savePoll (info) {
+export function savePoll(info: CreatePollInput): Promise<Poll> {
   return _saveQuestion(info);
 }
 
-export function savePollAnswer (info) {
+interface SavePollAnswerInput {
+  authedUser: string;
+  qid: string;
+  answer: 'optionOne' | 'optionTwo';
+}
+
+export function savePollAnswer(info: SavePollAnswerInput): Promise<void> {
   return _saveQuestionAnswer(info);
 }
