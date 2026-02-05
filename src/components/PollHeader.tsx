@@ -13,9 +13,9 @@ const PollHeader: React.FC<PollHeaderProps> = ({ avatar, name, timestamp }) => {
   return (
     <div className="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
       {/* Header Section with Gradient */}
-      <div className="bg-gradient-to-r from-amber-50 via-white to-amber-50 p-8 border-b border-gray-100">
+      <div className="bg-linear-to-r from-primary-50 via-white to-primary-50 p-8 border-b border-gray-100">
         <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-center text-gray-900 leading-tight tracking-tight">
-          Who Had The <span className="text-amber-700">Better</span> Bake?
+          Who Had The <span className="text-primary">Better</span> Bake?
         </h2>
       </div>
       
@@ -28,7 +28,7 @@ const PollHeader: React.FC<PollHeaderProps> = ({ avatar, name, timestamp }) => {
               src={avatar ? avatar : defaultAvatar} 
               alt="" 
               aria-hidden="true"
-              className="w-16 h-16 rounded-full object-cover border-4 border-amber-200 shadow-md ring-2 ring-amber-100" 
+              className="w-16 h-16 rounded-full object-cover border-4 border-primary-200 shadow-md ring-2 ring-primary-100" 
             />
             <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-green-500 border-2 border-white rounded-full"></div>
           </div>
@@ -36,7 +36,7 @@ const PollHeader: React.FC<PollHeaderProps> = ({ avatar, name, timestamp }) => {
           {/* Author Name with Icon */}
           <div className="text-center sm:text-left">
             <div className="flex items-center gap-2 justify-center sm:justify-start mb-1.5">
-              <svg className="w-4 h-4 text-amber-600" fill="currentColor" viewBox="0 0 20 20">
+              <svg className="w-4 h-4 text-primary-600" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
               </svg>
               <span className="text-xs uppercase tracking-widest font-bold text-gray-500 leading-none">

@@ -62,9 +62,9 @@ const Poll: React.FC<PollProps> = ({ id }) => {
 
       {/* Card Content */}
       <div className="flex-1 flex flex-col items-center justify-center p-6">
-        <div className="w-16 h-16 rounded-full bg-gradient-to-br from-amber-100 to-amber-200 flex items-center justify-center mb-4">
+        <div className="w-16 h-16 rounded-full bg-linear-to-br from-primary-100 to-primary-200 flex items-center justify-center mb-4">
           <svg 
-            className="w-8 h-8 text-amber-700" 
+            className="w-8 h-8 text-primary" 
             fill="none" 
             stroke="currentColor" 
             viewBox="0 0 24 24"
@@ -83,7 +83,7 @@ const Poll: React.FC<PollProps> = ({ id }) => {
       {/* Action Button */}
       <div className="p-4 border-t border-gray-100 bg-gray-50">
         <button
-          className="w-full py-2.5 px-4 bg-amber-700 hover:bg-amber-800 text-white font-semibold rounded-lg transition-all focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 active:scale-[0.98]" 
+          className="w-full py-2.5 px-4 bg-primary hover:bg-primary-hover text-white font-semibold rounded-lg transition-all focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 active:scale-[0.98]" 
           onClick={(e) => toPoll(e, pollId)}
           aria-label={`View poll by ${name}`}
         >
