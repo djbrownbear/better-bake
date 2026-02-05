@@ -11,8 +11,12 @@ export async function bakersRoutes(fastify: FastifyInstance): Promise<void> {
   fastify.get('/', getBakers);
 
   // GET /api/bakers/:id - Get single baker
-  fastify.get('/:id', getBaker);
+  fastify.get<{ Params: { id: string } }>('/:id', getBaker);
 
   // POST /api/bakers - Create new baker (protected - admin only in future)
-  fastify.post('/', { preHandler: [authenticateToken] }, create);
+  fastify.post<{ Body: { id: string; name: string; series: string } }>(
+    '/',
+    { preHandler: [authenticateToken] },
+    create
+  );
 }

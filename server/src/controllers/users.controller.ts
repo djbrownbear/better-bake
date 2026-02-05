@@ -12,7 +12,7 @@ interface UserParams {
 }
 
 export async function getUsers(
-  request: FastifyRequest,
+  _request: FastifyRequest,
   reply: FastifyReply
 ): Promise<void> {
   try {
@@ -43,7 +43,7 @@ export async function getUser(
 }
 
 export async function getLeaderboardData(
-  request: FastifyRequest,
+  _request: FastifyRequest,
   reply: FastifyReply
 ): Promise<void> {
   try {
