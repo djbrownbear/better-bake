@@ -2,6 +2,7 @@ import { Link, useNavigate, NavLink } from "react-router-dom";
 import { useState, useEffect } from "react";
 import React from 'react';
 import { logoutAuthedUser } from "../reducers/authedUser";
+import { apiClient } from "../utils/apiClient";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGithub, faLinkedin } from "@fortawesome/free-brands-svg-icons";
 import { faFolder, faXmarkCircle } from "@fortawesome/free-regular-svg-icons";
@@ -34,6 +35,10 @@ const Nav: React.FC = () => {
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     toggleNav();
+    
+    // Clear API token on logout
+    apiClient.clearToken();
+    
     dispatch(logoutAuthedUser());
     navigate("/");
   }

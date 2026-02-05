@@ -30,8 +30,25 @@ const PollPage: React.FC<PollPageProps> = ({ id }) => {
     const bTwoSeason = pollData.optionTwo.season;
     const bOneEpisode = pollData.optionOne.episode;
     const bTwoEpisode = pollData.optionTwo.episode;
-    const bakerOne = bOneSeason ? state.bakers[bOneSeason].baker[pollData.optionOne.baker].episodes[bOneEpisode].bakeURL : pollData.optionOne.imgURL;
-    const bakerTwo = bTwoSeason ? state.bakers[bTwoSeason].baker[pollData.optionTwo.baker].episodes[bTwoEpisode].bakeURL : pollData.optionTwo.imgURL;
+    
+    // Handle both mock data (nested structure) and real API (simple structure)
+    let bakerOne = '';
+    let bakerTwo = '';
+    
+    // Check if bakers have the complex nested structure (mock data)
+    if (bOneSeason && state.bakers[bOneSeason]?.baker) {
+      bakerOne = state.bakers[bOneSeason].baker[pollData.optionOne.baker]?.episodes?.[bOneEpisode]?.bakeURL || pollData.optionOne.imgURL || '';
+    } else {
+      // Real API or fallback to imgURL
+      bakerOne = pollData.optionOne.imgURL || '';
+    }
+    
+    if (bTwoSeason && state.bakers[bTwoSeason]?.baker) {
+      bakerTwo = state.bakers[bTwoSeason].baker[pollData.optionTwo.baker]?.episodes?.[bTwoEpisode]?.bakeURL || pollData.optionTwo.imgURL || '';
+    } else {
+      // Real API or fallback to imgURL
+      bakerTwo = pollData.optionTwo.imgURL || '';
+    }
 
     return {
       authedUser: state.authedUser,
