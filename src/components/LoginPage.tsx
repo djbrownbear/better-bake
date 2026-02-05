@@ -70,7 +70,7 @@ const LoginPage: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-primary flex items-center justify-center p-4">
+    <div className="min-h-screen bg-linear-to-br from-primary-100 via-primary-50 to-white flex items-center justify-center p-4">
       <div className="w-full max-w-md">
         {success && (
           <Navigate to={(state?.path || "/dashboard")} /> // if successful, take user to homepage or page prior to login
@@ -99,7 +99,7 @@ const LoginPage: React.FC = () => {
         <form className="bg-white rounded-lg shadow-xl p-8" onSubmit={handleSubmit} aria-label="Sign in form">
           <div className="space-y-6">
             <div className="text-center mb-8">
-              <span className="text-3xl font-bold text-amber-700">Better Bake</span>
+              <span className="text-3xl font-bold text-primary">Better Bake</span>
               <h1 className="text-2xl font-semibold mt-2">Sign In</h1>
             </div>
             <div>
@@ -116,7 +116,7 @@ const LoginPage: React.FC = () => {
                 required
                 aria-required="true"
                 aria-invalid={error || errorUserPwd}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
               />
             </div>
             <div>
@@ -133,13 +133,13 @@ const LoginPage: React.FC = () => {
                 required
                 aria-required="true"
                 aria-invalid={error || errorUserPwd}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
               />
             </div>
             <div className="flex gap-4">
               <button 
                 data-testid="submit-button" 
-                className="flex-1 bg-amber-700 hover:bg-amber-800 text-white font-bold py-3 px-6 rounded-lg shadow-lg transition-all active:scale-95 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-amber-700 disabled:active:scale-100" 
+                className="flex-1 bg-primary hover:bg-primary-hover text-white font-bold py-3 px-6 rounded-lg shadow-lg transition-all active:scale-95 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-primary disabled:active:scale-100" 
                 type="submit"
                 disabled={isLoading}
               >

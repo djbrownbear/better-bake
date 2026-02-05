@@ -44,7 +44,7 @@ class ErrorBoundary extends Component<Props, State> {
       }
 
       return (
-        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-amber-50 to-yellow-100 px-4">
+        <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-primary-50 to-yellow-100 px-4">
           <div className="max-w-2xl w-full bg-white rounded-2xl shadow-2xl p-8 text-center">
             <div className="mb-6">
               <svg
@@ -81,7 +81,7 @@ class ErrorBoundary extends Component<Props, State> {
             <div className="mt-8 space-x-4">
               <button
                 onClick={this.handleReset}
-                className="px-6 py-3 bg-amber-700 text-white font-semibold rounded-lg hover:bg-amber-800 transition-colors focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2"
+                className="px-6 py-3 bg-primary text-white font-semibold rounded-lg hover:bg-primary-hover transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
               >
                 Try Again
               </button>

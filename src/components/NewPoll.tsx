@@ -97,13 +97,13 @@ const NewPoll: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-amber-50 via-white to-gray-50">
+    <div className="min-h-screen bg-linear-to-b from-primary-50 via-white to-gray-50">
       {/* Page Header */}
-      <div className="bg-gradient-to-r from-amber-600 via-amber-500 to-amber-600 py-12 shadow-lg relative overflow-hidden">
+      <div className="bg-linear-to-r from-primary-600 via-primary-500 to-primary-600 py-12 shadow-lg relative overflow-hidden">
         {/* Decorative elements */}
         <div className="absolute inset-0 bg-grid-white/10 [mask-image:linear-gradient(0deg,transparent,black)]"></div>
         <div className="absolute top-0 right-0 w-96 h-96 bg-white/5 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-0 left-0 w-72 h-72 bg-amber-700/20 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-0 left-0 w-72 h-72 bg-primary-300/30 rounded-full blur-3xl"></div>
         
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center space-y-3">
@@ -113,7 +113,7 @@ const NewPoll: React.FC = () => {
             <h1 className="text-4xl md:text-5xl font-bold text-white drop-shadow-lg">
               Create New Poll
             </h1>
-            <p className="text-amber-100 text-lg max-w-2xl mx-auto">
+            <p className="text-primary-100 text-lg max-w-2xl mx-auto">
               Design your own "Who Baked It Better" matchup and let the community vote!
             </p>
           </div>
@@ -126,10 +126,10 @@ const NewPoll: React.FC = () => {
           <div 
             role="alert" 
             aria-live="polite" 
-            className="bg-gradient-to-r from-green-500 to-emerald-600 text-white p-4 rounded-xl shadow-2xl max-w-md"
+            className="bg-linear-to-r from-green-500 to-emerald-600 text-white p-4 rounded-xl shadow-2xl max-w-md"
           >
             <div className="flex items-center gap-3">
-              <div className="flex-shrink-0 w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
+              <div className="shrink-0 w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
                 <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                 </svg>
@@ -163,8 +163,8 @@ const NewPoll: React.FC = () => {
           {/* Poll Options Grid */}
           <div className="grid md:grid-cols-2 gap-8 mb-8">
             {/* Option One Card */}
-            <div className="bg-white rounded-2xl shadow-lg overflow-hidden border-2 border-gray-100 hover:border-amber-300 transition-all hover:shadow-xl">
-              <div className="bg-gradient-to-br from-amber-100 to-amber-50 p-6 border-b border-amber-200">
+            <div className="bg-white rounded-2xl shadow-lg overflow-hidden border-2 border-gray-100 hover:border-primary-300 transition-all hover:shadow-xl">
+              <div className="bg-linear-to-br from-primary-100 to-primary-50 p-6 border-b border-primary-200">
                 <label htmlFor="optionOneNew" className="flex items-center justify-center gap-2 text-xl font-bold text-gray-900">
                   <span className="text-2xl">🥇</span>
                   Option One
@@ -179,7 +179,7 @@ const NewPoll: React.FC = () => {
                     src={optionOneImage} 
                     alt={`${optionOneNew}`} 
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                  <div className="absolute inset-0 bg-linear-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                 </div>
                 
                 {/* Select Dropdown */}
@@ -187,7 +187,7 @@ const NewPoll: React.FC = () => {
                   <select 
                     name="optionOneNew" 
                     id="optionOneNew" 
-                    className="w-full p-4 pr-10 text-base font-medium border-2 border-gray-300 rounded-xl bg-white focus:border-amber-500 focus:outline-none focus:ring-4 focus:ring-amber-500/20 disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 appearance-none cursor-pointer hover:border-amber-400 transition-all" 
+                    className="w-full p-4 pr-10 text-base font-medium border-2 border-gray-300 rounded-xl bg-white focus:border-primary-500 focus:outline-none focus:ring-4 focus:ring-primary-500/20 disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 appearance-none cursor-pointer hover:border-primary-400 transition-all" 
                     onChange={handleChange}
                     disabled={isSubmitting}
                     aria-label="Select first poll option"
@@ -207,8 +207,8 @@ const NewPoll: React.FC = () => {
             </div>
 
             {/* Option Two Card */}
-            <div className="bg-white rounded-2xl shadow-lg overflow-hidden border-2 border-gray-100 hover:border-amber-300 transition-all hover:shadow-xl">
-              <div className="bg-gradient-to-br from-amber-100 to-amber-50 p-6 border-b border-amber-200">
+            <div className="bg-white rounded-2xl shadow-lg overflow-hidden border-2 border-gray-100 hover:border-primary-300 transition-all hover:shadow-xl">
+              <div className="bg-linear-to-br from-primary-100 to-primary-50 p-6 border-b border-primary-200">
                 <label htmlFor="optionTwoNew" className="flex items-center justify-center gap-2 text-xl font-bold text-gray-900">
                   <span className="text-2xl">🥈</span>
                   Option Two
@@ -223,7 +223,7 @@ const NewPoll: React.FC = () => {
                     src={optionTwoImage} 
                     alt={`${optionTwoNew}`} 
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                  <div className="absolute inset-0 bg-linear-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                 </div>
                 
                 {/* Select Dropdown */}
@@ -231,7 +231,7 @@ const NewPoll: React.FC = () => {
                   <select 
                     name="optionTwoNew" 
                     id="optionTwoNew" 
-                    className="w-full p-4 pr-10 text-base font-medium border-2 border-gray-300 rounded-xl bg-white focus:border-amber-500 focus:outline-none focus:ring-4 focus:ring-amber-500/20 disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 appearance-none cursor-pointer hover:border-amber-400 transition-all" 
+                    className="w-full p-4 pr-10 text-base font-medium border-2 border-gray-300 rounded-xl bg-white focus:border-primary-500 focus:outline-none focus:ring-4 focus:ring-primary-500/20 disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 appearance-none cursor-pointer hover:border-primary-400 transition-all" 
                     onChange={handleChange}
                     disabled={isSubmitting}
                     aria-label="Select second poll option"
@@ -254,13 +254,13 @@ const NewPoll: React.FC = () => {
           {/* Submit Button Section */}
           <div className="flex flex-col items-center gap-4 mt-8">
             <button 
-              className="relative group w-full max-w-md py-4 px-8 border-none bg-gradient-to-r from-amber-600 via-amber-500 to-amber-600 hover:from-amber-700 hover:via-amber-600 hover:to-amber-700 disabled:from-gray-300 disabled:via-gray-300 disabled:to-gray-300 disabled:cursor-not-allowed text-white font-bold text-lg rounded-xl shadow-lg hover:shadow-xl transition-all cursor-pointer focus:outline-none focus:ring-4 focus:ring-amber-500 focus:ring-offset-2 active:scale-95 disabled:active:scale-100 overflow-hidden" 
+              className="relative group w-full max-w-md py-4 px-8 border-none bg-linear-to-r from-primary-600 via-primary-500 to-primary-600 hover:from-primary hover:via-primary-600 hover:to-primary disabled:from-gray-300 disabled:via-gray-300 disabled:to-gray-300 disabled:cursor-not-allowed text-white font-bold text-lg rounded-xl shadow-lg hover:shadow-xl transition-all cursor-pointer focus:outline-none focus:ring-4 focus:ring-primary-500 focus:ring-offset-2 active:scale-95 disabled:active:scale-100 overflow-hidden" 
               type="submit" 
               disabled={optionOneNew === "" || optionTwoNew === "" || isSubmitting}
               aria-label="Create poll"
             >
               {/* Animated background on hover */}
-              <div className="absolute inset-0 bg-gradient-to-r from-amber-700 to-amber-900 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+              <div className="absolute inset-0 bg-linear-to-r from-primary to-primary-900 opacity-0 group-hover:opacity-100 transition-opacity"></div>
               
               <span className="relative z-10 flex items-center justify-center gap-3">
                 {isSubmitting ? (

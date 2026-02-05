@@ -142,7 +142,7 @@ const PollPage: React.FC<PollPageProps> = ({ id }) => {
               )}
               <button
                 id="optionOne"
-                className="w-32 py-2.5 px-4 border-none bg-secondary hover:bg-amber-200 disabled:bg-gray-300 disabled:cursor-not-allowed text-gray-900 font-semibold rounded-lg transition-all cursor-pointer focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 active:scale-95 disabled:active:scale-100" 
+                className="w-32 py-2.5 px-4 border-none bg-primary hover:bg-primary-hover disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-semibold rounded-lg transition-all cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 active:scale-95 disabled:active:scale-100" 
                 onClick={(e) => handleVote(e)}
                 type="button"
                 disabled={hasVoted || isVoting}
@@ -170,7 +170,7 @@ const PollPage: React.FC<PollPageProps> = ({ id }) => {
               )}
               <button
                 id="optionTwo"
-                className="w-32 py-2.5 px-4 border-none bg-secondary hover:bg-amber-200 disabled:bg-gray-300 disabled:cursor-not-allowed text-gray-900 font-semibold rounded-lg transition-all cursor-pointer focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 active:scale-95 disabled:active:scale-100" 
+                className="w-32 py-2.5 px-4 border-none bg-primary hover:bg-primary-hover disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-semibold rounded-lg transition-all cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 active:scale-95 disabled:active:scale-100" 
                 onClick={(e) => handleVote(e)}
                 type="button"
                 disabled={hasVoted || isVoting}

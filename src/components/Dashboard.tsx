@@ -28,8 +28,8 @@ const Dashboard: React.FC = () => {
 
   return (
   <div>
-    <div className="bg-secondary py-8">
-      <h1 className="text-4xl font-bold text-center">Dashboard</h1>
+    <div className="bg-linear-to-r from-primary-600 via-primary-500 to-primary-600 py-8">
+      <h1 className="text-4xl text-white font-bold text-center">Dashboard</h1>
     </div>
     <div className="max-w-[65em] mx-auto mb-40 px-4 py-8">
       {/* Button Group Toggle */}
@@ -83,7 +83,7 @@ const Dashboard: React.FC = () => {
           role="tabpanel" 
           id="unanswered-polls"
         >
-          <header className="bg-gradient-to-r from-gray-800 to-gray-900 px-6 py-4">
+          <header className="bg-linear-to-r from-primary-600 via-primary-500 to-primary-600 px-6 py-4">
             <h2 className="text-2xl font-bold text-white">Unanswered Polls</h2>
           </header>
           
@@ -121,7 +121,7 @@ const Dashboard: React.FC = () => {
           role="tabpanel" 
           id="answered-polls"
         >
-          <header className="bg-gradient-to-r from-gray-800 to-gray-900 px-6 py-4">
+          <header className="bg-linear-to-r from-primary-600 via-primary-500 to-primary-600 px-6 py-4">
             <h2 className="text-2xl font-bold text-white">Answered Polls</h2>
           </header>
           

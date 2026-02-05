@@ -96,10 +96,10 @@ const Nav: React.FC = () => {
                   to="dashboard" 
                   className={({ isActive }) => `
                     text-white font-medium transition-all px-3 py-2 rounded
-                    focus:outline-none focus:ring-2 focus:ring-secondary
+                    focus:outline-none focus:ring-2 focus:ring-primary-400
                     ${isActive 
-                      ? 'text-secondary font-semibold' 
-                      : 'hover:text-secondary'
+                      ? 'text-primary-400 font-semibold' 
+                      : 'hover:text-primary-300'
                     }
                   `}
                 >
@@ -111,10 +111,10 @@ const Nav: React.FC = () => {
                   to="/add" 
                   className={({ isActive }) => `
                     text-white font-medium transition-all px-3 py-2 rounded
-                    focus:outline-none focus:ring-2 focus:ring-secondary
+                    focus:outline-none focus:ring-2 focus:ring-primary-400
                     ${isActive 
-                      ? 'text-secondary font-semibold' 
-                      : 'hover:text-secondary'
+                      ? 'text-primary-400 font-semibold' 
+                      : 'hover:text-primary-300'
                     }
                   `}
                 >
@@ -126,10 +126,10 @@ const Nav: React.FC = () => {
                   to="/leaderboard" 
                   className={({ isActive }) => `
                     text-white font-medium transition-all px-3 py-2 rounded
-                    focus:outline-none focus:ring-2 focus:ring-secondary
+                    focus:outline-none focus:ring-2 focus:ring-primary-400
                     ${isActive 
-                      ? 'text-secondary font-semibold' 
-                      : 'hover:text-secondary'
+                      ? 'text-primary-400 font-semibold' 
+                      : 'hover:text-primary-300'
                     }
                   `}
                 >
@@ -154,7 +154,7 @@ const Nav: React.FC = () => {
                 </div>
                 <button 
                   data-testid="logout-button" 
-                  className="px-4 py-1.5 bg-secondary text-gray-900 font-semibold text-sm rounded transition-all hover:bg-amber-200 focus:outline-none focus:ring-2 focus:ring-secondary active:scale-95" 
+                  className="px-4 py-1.5 bg-primary text-white font-semibold text-sm rounded transition-all hover:bg-primary-hover focus:outline-none focus:ring-2 focus:ring-primary-500 active:scale-95" 
                   type="button" 
                   onClick={handleClick}
                 >
@@ -194,7 +194,7 @@ const Nav: React.FC = () => {
                 </div>
                 <NavLink 
                   to="/login" 
-                  className="px-4 py-1.5 bg-secondary text-gray-900 font-semibold text-sm rounded transition-all hover:bg-amber-200 focus:outline-none focus:ring-2 focus:ring-secondary active:scale-95 no-underline"
+                  className="px-4 py-1.5 bg-primary text-white font-semibold text-sm rounded transition-all hover:bg-primary-200 focus:outline-none focus:ring-2 focus:ring-secondary active:scale-95 no-underline"
                 >
                   Sign In
                 </NavLink>
@@ -254,7 +254,7 @@ const Nav: React.FC = () => {
                     className={({ isActive }) => `
                       block px-6 py-3 text-white font-medium transition-colors
                       ${isActive 
-                        ? 'bg-gray-800 text-secondary border-l-4 border-secondary' 
+                        ? 'bg-gray-800 text-primary-400 border-l-4 border-primary-400' 
                         : 'hover:bg-gray-800'
                       }
                     `}
@@ -269,7 +269,7 @@ const Nav: React.FC = () => {
                     className={({ isActive }) => `
                       block px-6 py-3 text-white font-medium transition-colors
                       ${isActive 
-                        ? 'bg-gray-800 text-secondary border-l-4 border-secondary' 
+                        ? 'bg-gray-800 text-primary-400 border-l-4 border-primary-400' 
                         : 'hover:bg-gray-800'
                       }
                     `}
@@ -284,7 +284,7 @@ const Nav: React.FC = () => {
                     className={({ isActive }) => `
                       block px-6 py-3 text-white font-medium transition-colors
                       ${isActive 
-                        ? 'bg-gray-800 text-secondary border-l-4 border-secondary' 
+                        ? 'bg-gray-800 text-primary-400 border-l-4 border-primary-400' 
                         : 'hover:bg-gray-800'
                       }
                     `}
@@ -320,7 +320,7 @@ const Nav: React.FC = () => {
                   </NavLink>
                   <button 
                     data-testid="logout-button" 
-                    className="w-full px-4 py-2 bg-secondary text-gray-900 font-semibold rounded transition-all hover:bg-amber-200 active:scale-95" 
+                    className="w-full px-4 py-2 bg-primary text-white font-semibold rounded transition-all hover:bg-primary-hover active:scale-95" 
                     type="button" 
                     onClick={handleClick}
                   >
@@ -332,7 +332,7 @@ const Nav: React.FC = () => {
                   <NavLink 
                     to="/login" 
                     onClick={closeNav}
-                    className="block w-full px-4 py-2 text-center bg-secondary text-gray-900 font-semibold rounded transition-all hover:bg-amber-200 active:scale-95 no-underline"
+                    className="block w-full px-4 py-2 text-center bg-primary text-white font-semibold rounded transition-all hover:bg-primary-hover active:scale-95 no-underline"
                   >
                     Sign In
                   </NavLink>
