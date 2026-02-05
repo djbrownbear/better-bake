@@ -1,0 +1,71 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String   // bcrypt hashed
+  name      String
+  avatarURL String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  polls     Poll[]   @relation("AuthorPolls")
+  votes     Vote[]
+
+  @@index([email])
+}
+
+model Poll {
+  id        String   @id @default(cuid())
+  authorId  String
+  author    User     @relation("AuthorPolls", fields: [authorId], references: [id], onDelete: Cascade)
+  
+  optionOneText    String
+  optionOneBaker   String
+  optionOneSeason  String
+  optionOneEpisode String
+  
+  optionTwoText    String
+  optionTwoBaker   String
+  optionTwoSeason  String
+  optionTwoEpisode String
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  votes     Vote[]
+  
+  @@index([authorId])
+  @@index([createdAt(sort: Desc)])
+}
+
+model Vote {
+  id        String   @id @default(cuid())
+  userId    String
+  pollId    String
+  option    String   // "optionOne" or "optionTwo"
+  createdAt DateTime @default(now())
+  
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  poll Poll @relation(fields: [pollId], references: [id], onDelete: Cascade)
+  
+  @@unique([userId, pollId]) // User can only vote once per poll
+  @@index([pollId])
+  @@index([userId])
+}
+
+model Baker {
+  id     String @id
+  name   String
+  series String
+  
+  @@index([series])
+}
