@@ -1,0 +1,417 @@
+﻿{
+  "info": {
+    "name": "Better Bake API",
+    "description": "Complete API collection for Better Bake backend",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{jwt_token}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:3001",
+      "type": "string"
+    },
+    {
+      "key": "jwt_token",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"test@aaronandanita.com\",\n  \"password\": \"Password123!\",\n  \"name\": \"Test User\",\n  \"avatarURL\": \"https://api.dicebear.com/7.x/avataaars/svg?seed=test\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/auth/register",
+              "host": ["{{base_url}}"],
+              "path": ["api", "auth", "register"]
+            }
+          }
+        },
+        {
+          "name": "Login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.collectionVariables.set(\"jwt_token\", jsonData.token);",
+                  "    console.log(\"JWT token saved to collection variable\");",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"test@aaronandanita.com\",\n  \"password\": \"Password123!\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/auth/login",
+              "host": ["{{base_url}}"],
+              "path": ["api", "auth", "login"]
+            }
+          }
+        },
+        {
+          "name": "Get Current User",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{jwt_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/auth/me",
+              "host": ["{{base_url}}"],
+              "path": ["api", "auth", "me"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Polls",
+      "item": [
+        {
+          "name": "Get All Polls",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/polls",
+              "host": ["{{base_url}}"],
+              "path": ["api", "polls"]
+            }
+          }
+        },
+        {
+          "name": "Get Poll by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/polls/:id",
+              "host": ["{{base_url}}"],
+              "path": ["api", "polls", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "poll-id-here"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Poll",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{jwt_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"optionOneText\": \"Paul Hollywood's technical bakes\",\n  \"optionOneBaker\": \"paul-hollywood\",\n  \"optionOneSeason\": \"1\",\n  \"optionOneEpisode\": \"1\",\n  \"optionTwoText\": \"Mary Berry's showstoppers\",\n  \"optionTwoBaker\": \"mary-berry\",\n  \"optionTwoSeason\": \"1\",\n  \"optionTwoEpisode\": \"2\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/polls",
+              "host": ["{{base_url}}"],
+              "path": ["api", "polls"]
+            }
+          }
+        },
+        {
+          "name": "Vote on Poll",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{jwt_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"option\": \"optionOne\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/polls/:id/vote",
+              "host": ["{{base_url}}"],
+              "path": ["api", "polls", ":id", "vote"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "poll-id-here"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Answered Polls",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{jwt_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/polls/answered",
+              "host": ["{{base_url}}"],
+              "path": ["api", "polls", "answered"]
+            }
+          }
+        },
+        {
+          "name": "Get Unanswered Polls",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{jwt_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/polls/unanswered",
+              "host": ["{{base_url}}"],
+              "path": ["api", "polls", "unanswered"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Users",
+      "item": [
+        {
+          "name": "Get All Users",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/users",
+              "host": ["{{base_url}}"],
+              "path": ["api", "users"]
+            }
+          }
+        },
+        {
+          "name": "Get User by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/users/:id",
+              "host": ["{{base_url}}"],
+              "path": ["api", "users", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "user-id-here"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Leaderboard",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/users/leaderboard",
+              "host": ["{{base_url}}"],
+              "path": ["api", "users", "leaderboard"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Bakers",
+      "item": [
+        {
+          "name": "Get All Bakers",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/bakers",
+              "host": ["{{base_url}}"],
+              "path": ["api", "bakers"]
+            }
+          }
+        },
+        {
+          "name": "Get Baker by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/bakers/:id",
+              "host": ["{{base_url}}"],
+              "path": ["api", "bakers", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "paul-hollywood"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Baker",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{jwt_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": \"paul-hollywood\",\n  \"name\": \"Paul Hollywood\",\n  \"series\": \"1-13\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/bakers",
+              "host": ["{{base_url}}"],
+              "path": ["api", "bakers"]
+            }
+          }
+        },
+        {
+          "name": "Create Baker - Mary Berry",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{jwt_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": \"mary-berry\",\n  \"name\": \"Mary Berry\",\n  \"series\": \"1-7\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/bakers",
+              "host": ["{{base_url}}"],
+              "path": ["api", "bakers"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/health",
+          "host": ["{{base_url}}"],
+          "path": ["health"]
+        }
+      }
+    }
+  ]
+}

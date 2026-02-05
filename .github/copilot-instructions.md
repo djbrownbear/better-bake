@@ -753,22 +753,46 @@ const dataLoader = USE_MOCK_API
   - [ ] Test with screen reader (NVDA/JAWS)
   - [ ] Cross-browser testing (Chrome, Firefox, Safari, Edge)
 
-**Infrastructure Upgrade** (Phase 2.5):
+**Infrastructure Upgrade** (Phase 2.5 - COMPLETED):
 - [x] Migrate from Create React App to Vite
 - [x] Implement code splitting with `React.lazy`
 - [x] Add error boundaries
 - [x] Optimize bundle size (manual chunks for vendors)
-- [x] Upgrade to Tailwind CSS v4
+- [x] Build time improvement: 20s → 3.77s (85% faster)
+- [x] Upgrade to Tailwind CSS v4 (prep for Phase 2.6)
 
-**Backend**:
-- [ ] Initialize backend project with TypeScript
-- [ ] Design and create database schema
-- [ ] Implement authentication (JWT + bcrypt)
-- [ ] Create API endpoints matching frontend needs
-- [ ] Add input validation (Zod, Yup)
-- [ ] Write API tests
-- [ ] Deploy backend to Railway/Render
-- [ ] Set up environment variables
+**Accessibility & Theme Optimization** (Phase 2.6 - COMPLETED):
+- [x] Upgrade Tailwind CSS v3.4.1 → v4.1.18
+- [x] Migrate to CSS-first @theme configuration
+- [x] Remove tailwind.config.js and postcss.config.js
+- [x] Convert vite.config.ts → vite.config.mts (ESM compatibility)
+- [x] Implement complete color scale (50-900) with semantic aliases
+- [x] Fix visual regressions (light background gradients)
+- [x] Improve color contrast for WCAG 2.1 AA compliance
+- [x] Replace hardcoded amber-* colors with theme variables
+- [x] Update 28 gradient utilities (bg-gradient-to-* → bg-linear-to-*)
+- [x] Update 10 flex utilities (flex-shrink-0 → shrink-0)
+- [x] Achieve Lighthouse accessibility: 100/100
+- [x] Create COLOR-AUDIT-PLAN.md documentation
+- [x] Build verification: 0 errors, minimal warnings
+
+**Backend** (Phase 3 - COMPLETED):
+- [x] Initialize backend project with TypeScript
+- [x] Design and create database schema (Prisma)
+- [x] Implement authentication (JWT + bcrypt)
+- [x] Set up project structure (Fastify + Prisma)
+- [x] Create authentication endpoints (register, login, me)
+- [x] Test authentication flow (registration, login, protected routes)
+- [x] Create API endpoints for polls (6 endpoints)
+- [x] Create API endpoints for users (3 endpoints)
+- [x] Create API endpoints for bakers (3 endpoints)
+- [x] Add input validation (Zod)
+- [x] Test all endpoints via Postman
+- [x] Fix database connection pool configuration
+- [x] Create Postman collection for testing
+- [ ] Write API tests (unit + integration)
+- [ ] Deploy backend to Railway
+- [ ] Set up environment variables in Railway
 
 **Integration**:
 - [ ] Create API client with token management
