@@ -1,20 +1,18 @@
+import { createAsyncThunk } from '@reduxjs/toolkit';
 import { getInitialData } from "../utils/api";
-import { receiveUsers } from "./users";
-import { receivePolls } from "./polls";
-import { receiveBakers } from "./bakers";
+import { receiveUsers } from "../reducers/users";
+import { receivePolls } from "../reducers/polls";
+import { receiveBakers } from "../reducers/bakers";
 import { showLoading, hideLoading } from "react-redux-loading-bar";
-import { ThunkAction } from 'redux-thunk';
-import { AnyAction } from 'redux';
-import { RootState } from '../types';
 
-export function handleInitialData(): ThunkAction<Promise<void>, RootState, unknown, AnyAction> {
-  return (dispatch) => {
+export const handleInitialData = createAsyncThunk(
+  'shared/fetchInitialData',
+  async (_, { dispatch }) => {
     dispatch(showLoading());
-    return getInitialData().then(({users, polls, bakers}) => {
-      dispatch(receiveUsers(users));
-      dispatch(receivePolls(polls));
-      dispatch(receiveBakers(bakers));
-      dispatch(hideLoading());
-    });
-  };
-}
+    const { users, polls, bakers } = await getInitialData();
+    dispatch(receiveUsers(users));
+    dispatch(receivePolls(polls));
+    dispatch(receiveBakers(bakers));
+    dispatch(hideLoading());
+  }
+);

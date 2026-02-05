@@ -1,26 +1,17 @@
-import { connect, ConnectedProps } from "react-redux";
 import { useState } from "react";
 import React from 'react';
 import Poll from "./Poll";
-import { RootState } from "../reducers";
 import { Poll as PollType } from "../types";
+import { useAppSelector } from "../store/hooks";
 
 const ans = "ANSWERED";
 const unans = "UNANSWERED"; 
 
-const mapStateToProps = ({ authedUser, polls }: RootState) => (
-  {
-    authedUser,
-    polls: Object.values(polls).sort(
-      (a, b) => b.timestamp - a.timestamp
-    ),
-  }
-);
-
-const connector = connect(mapStateToProps);
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-const Dashboard: React.FC<PropsFromRedux> = ({ authedUser, polls }) => {
+const Dashboard: React.FC = () => {
+  const authedUser = useAppSelector(state => state.authedUser);
+  const polls = useAppSelector(state => 
+    Object.values(state.polls).sort((a, b) => b.timestamp - a.timestamp)
+  );
   const [showUnanswered, setShowUnanswered] = useState(true);
   const [showAnswered, setShowAnswered] = useState(false);
 
@@ -57,15 +48,15 @@ const Dashboard: React.FC<PropsFromRedux> = ({ authedUser, polls }) => {
 
   return (
   <div>
-    <div className="title">
-      <h1>Dashboard</h1>
+    <div className="bg-secondary py-8">
+      <h1 className="text-4xl font-bold text-center">Dashboard</h1>
     </div>
-    <div className="page-wrapper inner">
-      <div className="toggle-container">
+    <div className="max-w-[65em] mx-auto mb-40 px-4 py-8">
+      <div className="flex bg-gray-900 text-white justify-center items-center h-[42px] max-w-[380px] rounded-full py-0 px-1.5 mx-auto">
         <button
           id={unans}
           type="button"
-          className="btn btn-togglePollView"
+          className={`w-1/2 m-0 rounded-full py-2.5 px-4 font-semibold border-none transition-all cursor-pointer ${showUnanswered ? 'bg-secondary text-gray-900 z-[2]' : 'bg-gray-900 text-white z-0 hover:bg-gray-800'}`}
           onClick={toggleView}
           disabled={showUnanswered ? true : false}
         >
@@ -74,7 +65,7 @@ const Dashboard: React.FC<PropsFromRedux> = ({ authedUser, polls }) => {
         <button
           id={ans}
           type="button"
-          className="btn btn-togglePollView"
+          className={`w-1/2 m-0 rounded-full py-2.5 px-4 font-semibold border-none transition-all cursor-pointer ${showAnswered ? 'bg-secondary text-gray-900 z-[2]' : 'bg-gray-900 text-white z-0 hover:bg-gray-800'}`}
           onClick={toggleView}
           disabled={showAnswered ? true : false}
         >
@@ -82,14 +73,14 @@ const Dashboard: React.FC<PropsFromRedux> = ({ authedUser, polls }) => {
         </button>
       </div>
       {showUnanswered && 
-        <div className="polls-wrapper">
-          <h2>Unanswered Polls</h2>
-          <ul className="polls-flex">
+        <div className="p-0 my-5 mx-auto flex w-full border border-gray-900 flex-col">
+          <h2 className="bg-gray-900 text-white m-0 py-4 text-center text-2xl font-bold">Unanswered Polls</h2>
+          <ul className="mx-2.5 my-0 py-2.5 px-5 flex flex-wrap justify-between items-center">
             {polls
               .filter(unanswered)
               .map(
                 (poll) => (
-                <li key={poll.id} className="poll-item">
+                <li key={poll.id} className="w-[31.5%] p-0.5 m-1.5 shadow-md">
                   <Poll id={poll.id} />
                 </li>
             ))}
@@ -97,14 +88,14 @@ const Dashboard: React.FC<PropsFromRedux> = ({ authedUser, polls }) => {
         </div>
       }
       {showAnswered && 
-        <div className="polls-wrapper">
-          <h2>Answered Polls</h2>
-          <ul className="polls-flex">
+        <div className="p-0 my-5 mx-auto flex w-full border border-gray-900 flex-col">
+          <h2 className="bg-gray-900 text-white m-0 py-4 text-center text-2xl font-bold">Answered Polls</h2>
+          <ul className="mx-2.5 my-0 py-2.5 px-5 flex flex-wrap justify-between items-center">
             {polls
               .filter(answered)
               .map(
                 (poll) => (
-                <li key={poll.id} className="poll-item">
+                <li key={poll.id} className="w-[31.5%] p-0.5 m-1.5 shadow-md">
                   <Poll id={poll.id} />
                 </li>
             ))}
@@ -116,4 +107,4 @@ const Dashboard: React.FC<PropsFromRedux> = ({ authedUser, polls }) => {
   );
 };
 
-export default connector(Dashboard);
+export default Dashboard;

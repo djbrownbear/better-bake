@@ -8,22 +8,21 @@ import LoginAs from './LoginAs';
 import LandingPage from './LandingPage';
 import { useEffect, Fragment } from "react";
 import { handleInitialData } from '../actions/shared';
-import { connect, ConnectedProps } from 'react-redux';
 import LoadingBar from 'react-redux-loading-bar';
 import NewPoll from './NewPoll';
 import Nav from './Nav';
 import { Routes, Route, Navigate, useLocation, Outlet } from 'react-router-dom';
 import Favicon from "react-favicon";
-import { RootState } from '../reducers';
+import { useAppSelector, useAppDispatch } from '../store/hooks';
 
 interface RequireAuthProps {
   children: React.ReactNode;
-  authedUser: string | null;
 }
 
 // Source for RequireAuth: https://ui.dev/react-router-protected-routes-authentication
-function RequireAuth({ children, authedUser }: RequireAuthProps) {
+function RequireAuth({ children }: RequireAuthProps) {
   const location = useLocation();
+  const authedUser = useAppSelector(state => state.authedUser);
 
   return authedUser
     ? ( <>{children}</> )
@@ -38,19 +37,13 @@ const Layout: React.FC = () => {
   );
 } 
 
-const mapStateToProps = ({ authedUser, polls }: RootState) => ({
-  authedUser,
-  loading: Object.keys(polls).length === 0,
-});
-
-const connector = connect(mapStateToProps);
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-const App: React.FC<PropsFromRedux> = (props) => {
+const App: React.FC = () => {
+  const dispatch = useAppDispatch();
+  const loading = useAppSelector(state => Object.keys(state.polls).length === 0);
 
   useEffect(() => {
-    props.dispatch(handleInitialData() as any);
-  }, [props]);
+    dispatch(handleInitialData());
+  }, [dispatch]);
 
   return (
     <Fragment>
@@ -62,7 +55,7 @@ const App: React.FC<PropsFromRedux> = (props) => {
           <LoadingBar />
           <Nav /> 
           <div className="page-wrapper">
-            { props.loading === true ? null : (
+            { loading === true ? null : (
               <Routes>
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/error" element={<Custom404 />} />        
@@ -75,7 +68,7 @@ const App: React.FC<PropsFromRedux> = (props) => {
                   <Route
                     path="dashboard"
                     element={
-                      <RequireAuth authedUser={props.authedUser}>
+                      <RequireAuth>
                         <Dashboard />
                       </RequireAuth>
                     } 
@@ -84,7 +77,7 @@ const App: React.FC<PropsFromRedux> = (props) => {
                 <Route 
                   path="/auth"
                   element={
-                    <RequireAuth authedUser={props.authedUser}>
+                    <RequireAuth>
                       <LoginAs />
                     </RequireAuth>
                   }
@@ -92,7 +85,7 @@ const App: React.FC<PropsFromRedux> = (props) => {
                 <Route 
                   path="/add" 
                   element={
-                    <RequireAuth authedUser={props.authedUser}>
+                    <RequireAuth>
                       <NewPoll />
                     </RequireAuth>
                   } 
@@ -100,7 +93,7 @@ const App: React.FC<PropsFromRedux> = (props) => {
                 <Route 
                   path="/leaderboard" 
                   element={
-                    <RequireAuth authedUser={props.authedUser}>
+                    <RequireAuth>
                       <Leaderboard />
                     </RequireAuth>
                   } 
@@ -108,7 +101,7 @@ const App: React.FC<PropsFromRedux> = (props) => {
                 <Route 
                   path="/questions/:id" 
                   element={
-                    <RequireAuth authedUser={props.authedUser}>
+                    <RequireAuth>
                       <PollPage />
                     </RequireAuth>
                   } 
@@ -122,4 +115,4 @@ const App: React.FC<PropsFromRedux> = (props) => {
   );
 }
 
-export default connector(App);
+export default App;
