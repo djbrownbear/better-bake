@@ -793,9 +793,13 @@ const dataLoader = USE_MOCK_API
 - [ ] Write API tests (unit + integration)
 - [ ] Add rate limiting (prevent brute force attacks)
 - [ ] Implement request throttling
+- [x] Create deployment configurations (Railway, Vercel)
+- [x] Add production scripts to package.json
+- [x] Create deployment documentation (guides, checklists)
 - [ ] Deploy backend to Railway
 - [ ] Set up environment variables in Railway
 - [ ] Configure HTTPS in production
+- [ ] Deploy frontend to Vercel
 
 **Integration**:
 - [x] Create API client with token management
