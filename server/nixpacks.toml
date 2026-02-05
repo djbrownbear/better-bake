@@ -1,7 +1,7 @@
 buildImage = 'ghcr.io/railwayapp/nixpacks:latest'
 
-[phases.setup]
-nixpkgsArchive = '51ad838b03a05b1de6f9f2a0fffecee64a9788ee'
+[phase.name]
+nixpkgsArchive = 'e4f44407a7a9a5561cd6b589a6d27e7a8f91a720'
 
 [phases.install]
 cmds = ['npm ci']
