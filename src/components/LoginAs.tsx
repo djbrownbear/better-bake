@@ -1,23 +1,15 @@
-import { connect, ConnectedProps } from "react-redux";
 import React from 'react';
-import { setAuthedUser } from "../actions/authedUser";
+import { setAuthedUser } from "../reducers/authedUser";
 import { useNavigate, useLocation } from "react-router-dom";
-import { RootState } from "../reducers";
-import { User } from "../types";
+import { useAppSelector, useAppDispatch } from "../store/hooks";
 
-const mapStateToProps = ({ users, authedUser }: RootState) => {
-  return {
-    authedUser,
-    usersList: Object.values(users).sort((a,b) => a.id.localeCompare(b.id)),
-  };
-}
-
-const connector = connect(mapStateToProps);
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-const LoginAs: React.FC<PropsFromRedux> = ({ dispatch, authedUser, usersList }) => {
+const LoginAs: React.FC = () => {
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { state } = useLocation() as { state?: { path?: string } };
+  const usersList = useAppSelector(state => 
+    Object.values(state.users).sort((a, b) => a.id.localeCompare(b.id))
+  );
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -27,19 +19,22 @@ const LoginAs: React.FC<PropsFromRedux> = ({ dispatch, authedUser, usersList }) 
 
   return (
     <div>
-      <div className="title">
-        <h1>Switch User</h1>
+      <div className="bg-primary py-8">
+        <h1 className="text-4xl font-bold text-center">Switch User</h1>
       </div>
-      <div className="page-wrapper inner">
-        <div className="userlist">
+      <div className="container mx-auto px-4 py-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-6xl mx-auto">
           {usersList.map((user) => (  
-            <button key={user.id} id={user.id} type="button" className="btn btn-userlist" onClick={handleClick}>
+            <button key={user.id} id={user.id} type="button" className="flex items-center gap-4 p-4 bg-white hover:bg-gray-50 border-2 border-gray-200 hover:border-amber-500 rounded-lg shadow-md transition-all" onClick={handleClick}>
               <img 
                 src={user.avatarURL}
                 alt={`Avatar of ${user.name}`} 
+                className="w-16 h-16 rounded-full object-cover"
               />
-              <span>{user.name}</span>
-              <span>{user.id}</span>
+              <div className="flex flex-col items-start">
+                <span className="font-bold text-lg">{user.name}</span>
+                <span className="text-sm text-gray-600">{user.id}</span>
+              </div>
             </button>
           ))}
         </div>
@@ -48,4 +43,4 @@ const LoginAs: React.FC<PropsFromRedux> = ({ dispatch, authedUser, usersList }) 
   );
 }
 
-export default connector(LoginAs);
+export default LoginAs;

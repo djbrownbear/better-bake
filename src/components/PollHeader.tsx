@@ -1,4 +1,3 @@
-import { connect } from "react-redux";
 import React from 'react';
 import { formatDate } from "../utils/helpers";
 
@@ -23,4 +22,4 @@ const PollHeader: React.FC<PollHeaderProps> = ({ avatar, name, timestamp }) => {
   );
 }
 
-export default connect()(PollHeader);
+export default PollHeader;

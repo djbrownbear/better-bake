@@ -1,4 +1,3 @@
-import { connect } from "react-redux";
 import React from 'react';
 
 const Custom404: React.FC = () => {
@@ -10,6 +9,4 @@ const Custom404: React.FC = () => {
   );
 }
 
-const mapStateToProps = () => ({});
-
-export default connect(mapStateToProps)(Custom404);
+export default Custom404;

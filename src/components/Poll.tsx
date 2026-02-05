@@ -1,66 +1,50 @@
-import { connect, ConnectedProps } from "react-redux";
 import React from 'react';
 import { formatPoll, formatDate } from "../utils/helpers";
 import { useNavigate } from "react-router-dom";
-import { RootState } from "../reducers";
+import { useAppSelector } from "../store/hooks";
 
-interface OwnProps {
+interface PollProps {
   id: string;
 }
 
-const mapStateToProps = ({ authedUser, users, polls }: RootState, { id }: OwnProps) => {
-  const poll = polls[id];
-  
-  if (!poll) {
-    return {
-      authedUser,
-      poll: null,
-      pollAvatar: '',
-    };
-  }
-  
-  const pollAvatar = users[poll.author].avatarURL;
-
-  return {
-    authedUser,
-    poll: formatPoll(poll, users[poll.author], authedUser || ''),
-    pollAvatar,
-  };
-};
-
-const connector = connect(mapStateToProps);
-type PropsFromRedux = ConnectedProps<typeof connector>;
-type Props = PropsFromRedux & OwnProps;
-
-const Poll: React.FC<Props> = (props) => {
+const Poll: React.FC<PollProps> = ({ id }) => {
   const navigate = useNavigate();
+  const poll = useAppSelector(state => {
+    const pollData = state.polls[id];
+    if (!pollData) return null;
+    return formatPoll(pollData, state.users[pollData.author], state.authedUser || '');
+  });
+  const pollAvatar = useAppSelector(state => {
+    const pollData = state.polls[id];
+    if (!pollData) return '';
+    return state.users[pollData.author].avatarURL;
+  });
 
   const toPoll = (e: React.MouseEvent<HTMLButtonElement>, id: string) => {
     e.preventDefault();
-
     navigate(`/questions/${id}`);
   }
 
-  if (props.poll === null) {
+  if (poll === null) {
     return <p>This poll does not exist</p>;
   }
 
   const {
-    id,
+    id: pollId,
     name,
     timestamp,
-  } = props.poll;
+  } = poll;
 
   return (
-    <div className="polls">
-      <div className="avatar-wrapper poll">
-        <img src={props.pollAvatar} alt={`img of ${ name }`}/>
-        <span>{ name }</span>
+    <div className="m-0 p-0.5 flex flex-col justify-center items-center w-full bg-[#F3F5F7]">
+      <div className="flex flex-row justify-center my-1.5 mx-auto font-bold w-full">
+        <img src={pollAvatar} alt={`img of ${ name }`} className="h-[50px] px-1"/>
+        <span className="mx-1 w-fit my-1.5">{ name }</span>
       </div>
-      <span>{ formatDate(timestamp) }</span>
+      <span className="my-1.5">{ formatDate(timestamp) }</span>
       <button
-        className="btn btn-show-poll" 
-        onClick={(e) => toPoll(e, id) }
+        className="w-[100px] my-1.5 py-2.5 px-4 border-none bg-secondary hover:bg-amber-200 text-gray-900 font-semibold rounded-lg transition-all cursor-pointer" 
+        onClick={(e) => toPoll(e, pollId) }
       >
         Show
       </button>
@@ -68,4 +52,4 @@ const Poll: React.FC<Props> = (props) => {
   )
 };
 
-export default connector(Poll);
+export default Poll;

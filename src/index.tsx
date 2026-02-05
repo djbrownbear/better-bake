@@ -1,18 +1,25 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
-import { createStore } from "redux";
-// import { store } from './app/store';
+import { configureStore } from '@reduxjs/toolkit';
 import App from './components/App';
 import reportWebVitals from './reportWebVitals';
 import './assets/css/index.css';
 import reducer from './reducers';
-import middleware from './middleware';
 import { HashRouter as Router } from 'react-router-dom';
+import logger from './middleware/logger';
 
-const store = createStore(reducer, middleware);
+const store = configureStore({
+  reducer,
+  middleware: (getDefaultMiddleware) =>
+    process.env.NODE_ENV !== 'production'
+      ? getDefaultMiddleware().concat(logger)
+      : getDefaultMiddleware(),
+});
 
-const container = document.getElementById('root');
+export type AppDispatch = typeof store.dispatch;
+
+const container = document.getElementById('root')!;
 const root = createRoot(container);
 
 root.render(

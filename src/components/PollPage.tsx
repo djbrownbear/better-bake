@@ -1,52 +1,50 @@
-import { connect, ConnectedProps } from "react-redux";
 import React from 'react';
 import { handleAddAnswer } from "../actions/polls";
 import { formatPoll, formatPercent } from "../utils/helpers";
 import PollHeader from "./PollHeader";
 import { useParams, Navigate } from "react-router-dom";
-import { RootState } from "../reducers";
+import { useAppSelector, useAppDispatch } from "../store/hooks";
 
-const mapStateToProps = ({ authedUser, users, polls, bakers }: RootState, ownProps: { id: string }) => {
-  const id = ownProps.id;
-  const poll = polls[id];
+interface PollPageProps {
+  id: string;
+}
+
+const PollPage: React.FC<PollPageProps> = ({ id }) => {
+  const dispatch = useAppDispatch();
   
-  if (!poll) {
+  const { poll, bakerOne, bakerTwo, authedUser } = useAppSelector(state => {
+    const pollData = state.polls[id];
+    
+    if (!pollData) {
+      return {
+        authedUser: state.authedUser,
+        poll: null,
+        bakerOne: '',
+        bakerTwo: '',
+      };
+    }
+    
+    const bOneSeason = pollData.optionOne.season;
+    const bTwoSeason = pollData.optionTwo.season;
+    const bOneEpisode = pollData.optionOne.episode;
+    const bTwoEpisode = pollData.optionTwo.episode;
+    const bakerOne = bOneSeason ? state.bakers[bOneSeason].baker[pollData.optionOne.baker].episodes[bOneEpisode].bakeURL : pollData.optionOne.imgURL;
+    const bakerTwo = bTwoSeason ? state.bakers[bTwoSeason].baker[pollData.optionTwo.baker].episodes[bTwoEpisode].bakeURL : pollData.optionTwo.imgURL;
+
     return {
-      authedUser,
-      poll: null,
-      bakerOne: '',
-      bakerTwo: '',
+      authedUser: state.authedUser,
+      poll: formatPoll(pollData, state.users[pollData.author], state.authedUser || ''),
+      bakerOne,
+      bakerTwo,
     };
-  }
-  
-  const bOneSeason = poll.optionOne.season;
-  const bTwoSeason = poll.optionTwo.season;
-  const bOneEpisode = poll.optionOne.episode;
-  const bTwoEpisode = poll.optionTwo.episode;
-  const bakerOne = bOneSeason ? bakers[bOneSeason].baker[poll.optionOne.baker].episodes[bOneEpisode].bakeURL : poll.optionOne.imgURL;
-  const bakerTwo = bTwoSeason ? bakers[bTwoSeason].baker[poll.optionTwo.baker].episodes[bTwoEpisode].bakeURL : poll.optionTwo.imgURL;
+  });
 
-  return {
-    authedUser,
-    poll: formatPoll(poll, users[poll.author], authedUser || ''),
-    bakerOne,
-    bakerTwo,
-  };
-};
-
-const connector = connect(mapStateToProps);
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-const PollPage: React.FC<PropsFromRedux> = (props) => {
-
-  if (!props.poll || !props.authedUser) {
+  if (!poll || !authedUser) {
     return <Navigate to="/error"/>;
   }
 
   const handleVote = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-
-    const { dispatch, poll, authedUser } = props;
 
     if (!authedUser) return;
 
@@ -54,7 +52,7 @@ const PollPage: React.FC<PropsFromRedux> = (props) => {
       qid: poll.id,
       answer: e.currentTarget.id as 'optionOne' | 'optionTwo',
       authedUser: authedUser,
-     }) as any
+     })
     );
   }
 
@@ -64,9 +62,8 @@ const PollPage: React.FC<PropsFromRedux> = (props) => {
     optionOne,
     optionTwo,
     timestamp,
-    authedUser,
     hasVoted,
-  } = props.poll
+  } = poll
 
   const optionOneVotes = optionOne.votes;
   const optionOneText = optionOne.text;
@@ -99,20 +96,20 @@ const PollPage: React.FC<PropsFromRedux> = (props) => {
   };
  
   return (
-      <div className="page-wrapper inner">
+      <div className="max-w-[65em] mx-auto mb-40 px-4 py-8">
         <PollHeader 
           avatar={avatar}
           name={name}
           timestamp={timestamp}
         />
-        <div className="poll-info">
-          <div className={"poll-option " + (hasVotedOptionOne ? "vote-choice": "")}>
-            <div className="poll-option-wrapper-inner center-h ">
-              <img className="poll-option-img" src={ props.bakerOne } alt={`${optionOneText}`} />
-              <h3 className="center-v">{optionOneText}</h3>
+        <div className="flex flex-row justify-between gap-8 w-full mt-8">
+          <div className={"flex-1 p-6 rounded-lg border-2 " + (hasVotedOptionOne ? "border-green-500 bg-green-50": "border-gray-300")}>
+            <div className="flex flex-col items-center justify-center">
+              <img className="w-full h-auto max-h-96 object-contain mb-4" src={ bakerOne } alt={`${optionOneText}`} />
+              <h3 className="text-2xl font-bold text-center my-4">{optionOneText}</h3>
               <button
                 id="optionOne"
-                className="btn btn-vote" 
+                className="w-32 py-2.5 px-4 border-none bg-secondary hover:bg-amber-200 disabled:bg-gray-300 disabled:cursor-not-allowed text-gray-900 font-semibold rounded-lg transition-all cursor-pointer" 
                 onClick={(e) => handleVote(e)}
                 type="button"
                 disabled={hasVoted ? true : false }
@@ -120,20 +117,20 @@ const PollPage: React.FC<PropsFromRedux> = (props) => {
                 Vote
               </button>
               { hasVoted &&
-                <p className={"poll-details " + (winLose(optionOneVotes.length, optionTwoVotes.length))}>
+                <p className={"flex flex-col items-center mt-4 text-lg font-semibold " + (winLose(optionOneVotes.length, optionTwoVotes.length) === "winning" ? "text-green-600" : winLose(optionOneVotes.length, optionTwoVotes.length) === "losing" ? "text-red-600" : "text-gray-600")}>
                   <span>{`${optionOneVotes.length} out of ${allVotesCount} votes`}</span>
                   <span>{getVotePercentage("optionOne")}</span>
                 </p>
               }
             </div>
           </div>
-          <div className={"poll-option " + (hasVotedOptionTwo ? "vote-choice": "")}>
-            <div className="poll-option-wrapper-inner center-h ">
-              <img className="poll-option-img" src={ props.bakerTwo } alt={`${optionTwoText}`} />
-              <h3 className="center-v">{optionTwoText}</h3>
+          <div className={"flex-1 p-6 rounded-lg border-2 " + (hasVotedOptionTwo ? "border-green-500 bg-green-50": "border-gray-300")}>
+            <div className="flex flex-col items-center justify-center">
+              <img className="w-full h-auto max-h-96 object-contain mb-4" src={ bakerTwo } alt={`${optionTwoText}`} />
+              <h3 className="text-2xl font-bold text-center my-4">{optionTwoText}</h3>
               <button
                 id="optionTwo"
-                className="btn btn-vote" 
+                className="w-32 py-2.5 px-4 border-none bg-secondary hover:bg-amber-200 disabled:bg-gray-300 disabled:cursor-not-allowed text-gray-900 font-semibold rounded-lg transition-all cursor-pointer" 
                 onClick={(e) => handleVote(e)}
                 type="button"
                 disabled={hasVoted ? true : false }
@@ -141,7 +138,7 @@ const PollPage: React.FC<PropsFromRedux> = (props) => {
                 Vote
               </button>
               { hasVoted &&
-                <p className={"poll-details " + (winLose(optionTwoVotes.length, optionOneVotes.length))}>
+                <p className={"flex flex-col items-center mt-4 text-lg font-semibold " + (winLose(optionTwoVotes.length, optionOneVotes.length) === "winning" ? "text-green-600" : winLose(optionTwoVotes.length, optionOneVotes.length) === "losing" ? "text-red-600" : "text-gray-600")}>
                   <span>{`${optionTwoVotes.length} out of ${allVotesCount} votes`}</span>
                   <span>{getVotePercentage("optionTwo")}</span>
                 </p>
@@ -153,12 +150,10 @@ const PollPage: React.FC<PropsFromRedux> = (props) => {
   )
 };
 
-const ConnectedPollPage = connector(PollPage);
-
 // Wrapper component to get params from URL
 const PollPageWrapper: React.FC = () => {
   const { id } = useParams<{ id: string }>();
-  return <ConnectedPollPage id={id || ''} />;
+  return <PollPage id={id || ''} />;
 };
 
 export default PollPageWrapper;

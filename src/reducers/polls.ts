@@ -1,55 +1,24 @@
-import { ADD_POLL, ADD_ANSWER, RECEIVE_POLLS } from "../actions/polls";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Poll, PollAnswer } from '../types';
-
-interface ReceivePollsAction {
-  type: typeof RECEIVE_POLLS;
-  polls: Record<string, Poll>;
-}
-
-interface AddPollAction {
-  type: typeof ADD_POLL;
-  poll: Poll;
-}
-
-interface AddAnswerAction {
-  type: typeof ADD_ANSWER;
-  qid: string;
-  answer: PollAnswer;
-  authedUser: string;
-}
-
-type PollsAction = ReceivePollsAction | AddPollAction | AddAnswerAction;
 
 type PollsState = Record<string, Poll>;
 
-export default function polls(state: PollsState = {}, action: PollsAction): PollsState {
-  switch (action.type) {
-    case RECEIVE_POLLS:
-      return {
-        ...state,
-        ...action.polls,
-      };
-    case ADD_POLL:
-      const { poll } = action;
-      return {
-        ...state,
-        [poll.id]: poll,
-      };
-    case ADD_ANSWER: {
-      const { qid, answer, authedUser } = action;
+const pollsSlice = createSlice({
+  name: 'polls',
+  initialState: {} as PollsState,
+  reducers: {
+    receivePolls: (state, action: PayloadAction<Record<string, Poll>>) => {
+      return { ...state, ...action.payload };
+    },
+    addPoll: (state, action: PayloadAction<Poll>) => {
+      state[action.payload.id] = action.payload;
+    },
+    addAnswer: (state, action: PayloadAction<{ qid: string; answer: PollAnswer; authedUser: string }>) => {
+      const { qid, answer, authedUser } = action.payload;
+      state[qid][answer].votes.push(authedUser);
+    },
+  },
+});
 
-      return {
-        ...state,
-        [qid]: {
-          ...state[qid],
-          [answer]: {
-            ...state[qid][answer],
-            votes: state[qid][answer].votes.concat([authedUser]),
-          },
-        },
-      };
-    }
-    default:
-      return state;
-  }
-}
+export const { receivePolls, addPoll, addAnswer } = pollsSlice.actions;
+export default pollsSlice.reducer;
