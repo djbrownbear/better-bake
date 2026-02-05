@@ -38,77 +38,339 @@ const Nav: React.FC = () => {
     navigate("/");
   }
 
-  const toggleNav = () => setIsOpen(!isOpen); 
+  const toggleNav = () => setIsOpen(!isOpen);
+  
+  const closeNav = () => setIsOpen(false);
+
+  // Close mobile menu on escape key
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && isOpen) {
+        closeNav();
+      }
+    };
+    
+    document.addEventListener('keydown', handleEscape);
+    return () => document.removeEventListener('keydown', handleEscape);
+  }, [isOpen]);
+
+  // Prevent body scroll when mobile menu is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isOpen]);
 
   return (
-    <nav className={`w-full bg-gray-900 border-b border-gray-700 flex justify-center items-center py-2 px-4 ${stickyClass === 'sticky-nav' ? 'fixed top-0 left-0 z-50' : ''} ${isOpen ? 'responsive' : ''}`} id="myTopnav">
-      <div className="flex w-full max-w-7xl justify-between items-center">
-        <div className="ml-2 w-fit">
-          <Link to="/" className="flex items-center text-white no-underline hover:no-underline">
-            <img 
-              className="h-9 px-1" 
-              src="https://img.icons8.com/emoji/48/000000/ballot-box-with-ballot.png" 
-              alt="Voting Ballot Box" 
-            />
-            <span className="block w-32 font-['Lilita_One'] text-xl font-normal">Better Bake</span>
-          </Link>
-        </div>
-        <div className={`flex justify-between ${isOpen ? 'fixed right-0 top-0 w-full h-full bg-gray-900 flex-col overflow-y-auto transition-all duration-300 z-[500]' : 'flex-auto mr-auto'}`}>    
-          <div className={`${isOpen ? 'block' : 'hidden'}`}>
-            <button className="float-left ml-2.5 mt-2.5 bg-transparent border-none text-white" type="button" onClick={toggleNav}>
-              <FontAwesomeIcon icon={faXmarkCircle} size="2x" />
-            </button>
-          </div>
-          <ul className={`flex flex-row justify-start items-center p-1.5 mx-auto ${isOpen ? 'flex-col items-start w-full' : ''}`} onClick={(isOpen ? toggleNav : () => {})}>
-            <li className={`list-none px-2.5 ${isOpen ? 'border-b border-white m-0 w-full py-2.5' : 'py-0'}`}>
-              <NavLink to="dashboard" className={({ isActive }) => `pb-2 text-white no-underline transition-all duration-400 ${isActive ? 'font-semibold border-b-2 border-secondary' : 'hover:underline hover:text-secondary hover:font-semibold'}`}><span>Dashboard</span></NavLink>
-            </li>
-            <li className={`list-none px-2.5 ${isOpen ? 'border-b border-white m-0 w-full py-2.5' : 'py-0'}`}>
-              <NavLink to="/add" className={({ isActive }) => `pb-2 text-white no-underline transition-all duration-400 ${isActive ? 'font-semibold border-b-2 border-secondary' : 'hover:underline hover:text-secondary hover:font-semibold'}`}><span>New Poll</span></NavLink>
-            </li>
-            <li className={`list-none px-2.5 ${isOpen ? 'border-b border-white m-0 w-full py-2.5' : 'py-0'}`}>
-              <NavLink to="/leaderboard" className={({ isActive }) => `pb-2 text-white no-underline transition-all duration-400 ${isActive ? 'font-semibold border-b-2 border-secondary' : 'hover:underline hover:text-secondary hover:font-semibold'}`}><span>Leaderboard</span></NavLink>
-            </li>
-          </ul>
-          <button className={`float-right ml-auto bg-transparent border-none text-white pr-2.5 ${isOpen ? 'hidden' : 'md:hidden'}`} type="button" onClick={toggleNav}>
-              <FontAwesomeIcon icon={faBars} size="lg" /> 
-          </button>
-          {!authedUser &&
-            <ul className={`flex flex-row justify-start items-center ${isOpen ? 'flex-col items-start text-left m-0 pl-0 block' : 'ml-auto justify-end'}`} onClick={(isOpen ? toggleNav : () => {})}>
-              <li className={`list-none p-2.5 ${isOpen ? 'pt-0' : ''}`}>
-                <a href="https://github.com/djbrownbear" target="_blank" rel="noreferrer" title="link to github" className="text-white hover:text-gray-300">
-                  <FontAwesomeIcon icon={faGithub} size="lg" />
-                </a>
+    <nav 
+      className={`w-full bg-gray-900 border-b border-gray-700 ${stickyClass === 'sticky-nav' ? 'fixed top-0 left-0 z-50' : ''}`}
+      role="navigation"
+      aria-label="Main navigation"
+    >
+      <div className="flex w-full max-w-7xl mx-auto justify-between items-center px-4 py-3">
+        {/* Logo */}
+        <Link 
+          to="/" 
+          className="flex items-center gap-2 text-white no-underline hover:opacity-80 transition-opacity focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2 focus:ring-offset-gray-900 rounded"
+        >
+          <img 
+            className="h-9" 
+            src="https://img.icons8.com/emoji/48/000000/ballot-box-with-ballot.png" 
+            alt="" 
+            aria-hidden="true"
+          />
+          <span className="font-['Lilita_One'] text-xl">Better Bake</span>
+        </Link>
+
+        {/* Desktop Navigation */}
+        <div className="hidden md:flex items-center gap-6">
+          <nav aria-label="Primary">
+            <ul className="flex items-center gap-6">
+              <li>
+                <NavLink 
+                  to="dashboard" 
+                  className={({ isActive }) => `
+                    text-white font-medium transition-all px-3 py-2 rounded
+                    focus:outline-none focus:ring-2 focus:ring-secondary
+                    ${isActive 
+                      ? 'text-secondary font-semibold' 
+                      : 'hover:text-secondary'
+                    }
+                  `}
+                >
+                  Dashboard
+                </NavLink>
               </li>
-              <li className="list-none p-2.5">
-                <a href="https://www.linkedin.com/in/aarontimothybrown/" target="_blank" rel="noreferrer" title="link to linkedin" className="text-white hover:text-gray-300">
-                  <FontAwesomeIcon icon={faLinkedin} size="lg"/>
-                </a>
+              <li>
+                <NavLink 
+                  to="/add" 
+                  className={({ isActive }) => `
+                    text-white font-medium transition-all px-3 py-2 rounded
+                    focus:outline-none focus:ring-2 focus:ring-secondary
+                    ${isActive 
+                      ? 'text-secondary font-semibold' 
+                      : 'hover:text-secondary'
+                    }
+                  `}
+                >
+                  New Poll
+                </NavLink>
               </li>
-              <li className="list-none p-2.5">
-                <a href="https://aaron.aaronandanita.com" target="_blank" rel="noreferrer" title="link to portfolio" className="text-white hover:text-gray-300">
-                  <FontAwesomeIcon icon={faFolder} size="lg" />
-                </a>
+              <li>
+                <NavLink 
+                  to="/leaderboard" 
+                  className={({ isActive }) => `
+                    text-white font-medium transition-all px-3 py-2 rounded
+                    focus:outline-none focus:ring-2 focus:ring-secondary
+                    ${isActive 
+                      ? 'text-secondary font-semibold' 
+                      : 'hover:text-secondary'
+                    }
+                  `}
+                >
+                  Leaderboard
+                </NavLink>
               </li>
             </ul>
-          }  
-          <ul className={`flex flex-col justify-center items-center ${isOpen ? '' : 'hidden md:flex'}`} onClick={(isOpen ? toggleNav : () => {})}>
-            <li className="list-none p-2.5">
-              {authedUser 
-                ? <NavLink to="/auth" className={({ isActive }) => `pb-2 text-white no-underline transition-all duration-400 ${isActive ? 'font-semibold border-b-2 border-secondary' : 'hover:underline hover:text-secondary hover:font-semibold'}`}><span>Switch User</span></NavLink>
-                : <NavLink to="/login" className={({ isActive }) => `pb-2 text-white no-underline transition-all duration-400 ${isActive ? 'font-semibold border-b-2 border-secondary' : 'hover:underline hover:text-secondary hover:font-semibold'}`}><span>Sign In</span></NavLink>
-              }
-           </li> 
-          </ul>
-          {user &&
-            <div className={`text-white flex-row justify-evenly px-2.5 ${isOpen ? 'inline-flex self-start py-0.5 ml-0' : 'flex'}`}>
-                <img src={user.avatarURL} alt={`Avatar of ${user.name}`} className="h-9" />
-                <span className="px-1.5 text-left">{user.id}</span>
-                <button data-testid="logout-button" className="mt-0 py-2.5 px-1.5 bg-secondary text-gray-900 uppercase border-none transition-all duration-700 rounded hover:bg-amber-200" type="button" onClick={handleClick}>Logout</button>
-            </div>
-          }
+          </nav>
+
+          {/* Desktop Right Side */}
+          <div className="flex items-center gap-4 border-l border-gray-700 pl-6">
+            {authedUser && user ? (
+              <>
+                <div className="flex items-center gap-2">
+                  <img 
+                    src={user.avatarURL} 
+                    alt="" 
+                    aria-hidden="true"
+                    className="h-8 w-8 rounded-full object-cover border border-gray-600" 
+                  />
+                  <span className="text-white text-sm">{user.id}</span>
+                </div>
+                <button 
+                  data-testid="logout-button" 
+                  className="px-4 py-1.5 bg-secondary text-gray-900 font-semibold text-sm rounded transition-all hover:bg-amber-200 focus:outline-none focus:ring-2 focus:ring-secondary active:scale-95" 
+                  type="button" 
+                  onClick={handleClick}
+                >
+                  Logout
+                </button>
+              </>
+            ) : (
+              <>
+                <div className="flex items-center gap-4">
+                  <a 
+                    href="https://github.com/djbrownbear" 
+                    target="_blank" 
+                    rel="noreferrer" 
+                    className="text-white hover:text-secondary transition-colors focus:outline-none focus:ring-2 focus:ring-secondary rounded"
+                    aria-label="Visit GitHub profile"
+                  >
+                    <FontAwesomeIcon icon={faGithub} size="lg" />
+                  </a>
+                  <a 
+                    href="https://www.linkedin.com/in/aarontimothybrown/" 
+                    target="_blank" 
+                    rel="noreferrer" 
+                    className="text-white hover:text-secondary transition-colors focus:outline-none focus:ring-2 focus:ring-secondary rounded"
+                    aria-label="Visit LinkedIn profile"
+                  >
+                    <FontAwesomeIcon icon={faLinkedin} size="lg"/>
+                  </a>
+                  <a 
+                    href="https://aaron.aaronandanita.com" 
+                    target="_blank" 
+                    rel="noreferrer" 
+                    className="text-white hover:text-secondary transition-colors focus:outline-none focus:ring-2 focus:ring-secondary rounded"
+                    aria-label="Visit portfolio website"
+                  >
+                    <FontAwesomeIcon icon={faFolder} size="lg" />
+                  </a>
+                </div>
+                <NavLink 
+                  to="/login" 
+                  className="px-4 py-1.5 bg-secondary text-gray-900 font-semibold text-sm rounded transition-all hover:bg-amber-200 focus:outline-none focus:ring-2 focus:ring-secondary active:scale-95 no-underline"
+                >
+                  Sign In
+                </NavLink>
+              </>
+            )}
+          </div>
         </div>
+
+        {/* Mobile Menu Button */}
+        <button 
+          className="md:hidden p-2 text-white focus:outline-none focus:ring-2 focus:ring-secondary rounded" 
+          type="button" 
+          onClick={toggleNav}
+          aria-label={isOpen ? "Close navigation menu" : "Open navigation menu"}
+          aria-expanded={isOpen}
+          aria-controls="mobile-menu"
+        >
+          <FontAwesomeIcon icon={isOpen ? faXmarkCircle : faBars} size="lg" /> 
+        </button>
       </div>
+
+      {/* Mobile Menu Overlay */}
+      {isOpen && (
+        <>
+          <div 
+            className="fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden"
+            onClick={closeNav}
+            aria-hidden="true"
+          />
+          <div 
+            id="mobile-menu"
+            className="fixed top-0 right-0 bottom-0 w-4/5 max-w-sm bg-gray-900 z-50 md:hidden overflow-y-auto shadow-xl"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Mobile navigation menu"
+          >
+            {/* Mobile Menu Header */}
+            <div className="flex justify-between items-center p-4 border-b border-gray-700">
+              <span className="text-white font-['Lilita_One'] text-lg">Menu</span>
+              <button 
+                className="p-2 text-white focus:outline-none focus:ring-2 focus:ring-secondary rounded" 
+                type="button" 
+                onClick={closeNav}
+                aria-label="Close navigation menu"
+              >
+                <FontAwesomeIcon icon={faXmarkCircle} size="lg" />
+              </button>
+            </div>
+
+            {/* Mobile Navigation Links */}
+            <nav aria-label="Mobile primary navigation" className="py-4">
+              <ul className="space-y-1">
+                <li>
+                  <NavLink 
+                    to="dashboard" 
+                    onClick={closeNav}
+                    className={({ isActive }) => `
+                      block px-6 py-3 text-white font-medium transition-colors
+                      ${isActive 
+                        ? 'bg-gray-800 text-secondary border-l-4 border-secondary' 
+                        : 'hover:bg-gray-800'
+                      }
+                    `}
+                  >
+                    Dashboard
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink 
+                    to="/add" 
+                    onClick={closeNav}
+                    className={({ isActive }) => `
+                      block px-6 py-3 text-white font-medium transition-colors
+                      ${isActive 
+                        ? 'bg-gray-800 text-secondary border-l-4 border-secondary' 
+                        : 'hover:bg-gray-800'
+                      }
+                    `}
+                  >
+                    New Poll
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink 
+                    to="/leaderboard" 
+                    onClick={closeNav}
+                    className={({ isActive }) => `
+                      block px-6 py-3 text-white font-medium transition-colors
+                      ${isActive 
+                        ? 'bg-gray-800 text-secondary border-l-4 border-secondary' 
+                        : 'hover:bg-gray-800'
+                      }
+                    `}
+                  >
+                    Leaderboard
+                  </NavLink>
+                </li>
+              </ul>
+            </nav>
+
+            {/* Mobile User Section */}
+            <div className="border-t border-gray-700 p-4">
+              {authedUser && user ? (
+                <div className="space-y-4">
+                  <div className="flex items-center gap-3 p-3 bg-gray-800 rounded">
+                    <img 
+                      src={user.avatarURL} 
+                      alt="" 
+                      aria-hidden="true"
+                      className="h-10 w-10 rounded-full object-cover border-2 border-gray-600" 
+                    />
+                    <div className="flex-1">
+                      <div className="text-white font-medium">{user.name}</div>
+                      <div className="text-gray-400 text-sm">{user.id}</div>
+                    </div>
+                  </div>
+                  <NavLink 
+                    to="/auth" 
+                    onClick={closeNav}
+                    className="block w-full px-4 py-2 text-center bg-gray-800 text-white font-medium rounded hover:bg-gray-700 transition-colors"
+                  >
+                    Switch User
+                  </NavLink>
+                  <button 
+                    data-testid="logout-button" 
+                    className="w-full px-4 py-2 bg-secondary text-gray-900 font-semibold rounded transition-all hover:bg-amber-200 active:scale-95" 
+                    type="button" 
+                    onClick={handleClick}
+                  >
+                    Logout
+                  </button>
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  <NavLink 
+                    to="/login" 
+                    onClick={closeNav}
+                    className="block w-full px-4 py-2 text-center bg-secondary text-gray-900 font-semibold rounded transition-all hover:bg-amber-200 active:scale-95 no-underline"
+                  >
+                    Sign In
+                  </NavLink>
+                  <div className="flex justify-center gap-6 pt-2">
+                    <a 
+                      href="https://github.com/djbrownbear" 
+                      target="_blank" 
+                      rel="noreferrer" 
+                      className="text-white hover:text-secondary transition-colors"
+                      aria-label="Visit GitHub profile"
+                    >
+                      <FontAwesomeIcon icon={faGithub} size="lg" />
+                    </a>
+                    <a 
+                      href="https://www.linkedin.com/in/aarontimothybrown/" 
+                      target="_blank" 
+                      rel="noreferrer" 
+                      className="text-white hover:text-secondary transition-colors"
+                      aria-label="Visit LinkedIn profile"
+                    >
+                      <FontAwesomeIcon icon={faLinkedin} size="lg"/>
+                    </a>
+                    <a 
+                      href="https://aaron.aaronandanita.com" 
+                      target="_blank" 
+                      rel="noreferrer" 
+                      className="text-white hover:text-secondary transition-colors"
+                      aria-label="Visit portfolio website"
+                    >
+                      <FontAwesomeIcon icon={faFolder} size="lg" />
+                    </a>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </>
+      )}
     </nav>
   );
 }

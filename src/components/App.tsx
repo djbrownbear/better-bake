@@ -47,6 +47,12 @@ const App: React.FC = () => {
 
   return (
     <Fragment>
+      <a 
+        href="#main-content" 
+        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[1000] focus:bg-amber-700 focus:text-white focus:px-4 focus:py-2 focus:rounded focus:font-semibold focus:outline-none focus:ring-2 focus:ring-amber-500"
+      >
+        Skip to main content
+      </a>
       <div className="App">
         <Favicon 
           url="https://img.icons8.com/emoji/48/000000/ballot-box-with-ballot.png" 
@@ -54,8 +60,18 @@ const App: React.FC = () => {
         <div className="page-container">
           <LoadingBar />
           <Nav /> 
-          <div className="page-wrapper">
-            { loading === true ? null : (
+          <main id="main-content" className="page-wrapper" role="main">
+            { loading === true ? (
+              <div className="flex items-center justify-center min-h-[50vh]" role="status" aria-live="polite">
+                <div className="text-center">
+                  <svg className="animate-spin h-12 w-12 mx-auto text-amber-700 mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  </svg>
+                  <p className="text-lg text-gray-600 font-semibold">Loading polls...</p>
+                </div>
+              </div>
+            ) : (
               <Routes>
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/error" element={<Custom404 />} />        
@@ -108,7 +124,7 @@ const App: React.FC = () => {
                 />   
               </Routes> 
             )}
-          </div>
+          </main>
         </div>
       </div>
     </Fragment>
