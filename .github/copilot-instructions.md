@@ -798,9 +798,15 @@ const dataLoader = USE_MOCK_API
 - [ ] Configure HTTPS in production
 
 **Integration**:
-- [ ] Create API client with token management
-- [ ] Update Redux thunks to call real API
-- [ ] Handle loading/error states properly
-- [ ] Add retry logic for failed requests
-- [ ] Test with both mock and real API
+- [x] Create API client with token management
+- [x] Update Redux thunks to call real API
+- [x] Handle loading/error states properly
+- [x] Add retry logic for failed requests
+- [x] Test with both mock and real API
+- [x] Update LoginPage for real authentication
+- [x] Update logout to clear JWT token
+- [x] Fix data structure compatibility (baker images)
+- [x] Add registration flow for new users
+- [x] Disable Demo button when using real API
+- [x] Add Toast notification component
 - [ ] Remove `_DATA.js` when complete
