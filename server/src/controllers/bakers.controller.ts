@@ -21,7 +21,7 @@ interface CreateBakerBody {
 }
 
 export async function getBakers(
-  request: FastifyRequest,
+  _request: FastifyRequest,
   reply: FastifyReply
 ): Promise<void> {
   try {

@@ -40,7 +40,7 @@ export async function getLeaderboard(): Promise<LeaderboardEntry[]> {
     },
   });
 
-  const leaderboard = users.map((user) => ({
+  const leaderboard = users.map((user: any) => ({
     userId: user.id,
     name: user.name,
     avatarURL: user.avatarURL,
@@ -50,7 +50,7 @@ export async function getLeaderboard(): Promise<LeaderboardEntry[]> {
   }));
 
   // Sort by score descending
-  leaderboard.sort((a, b) => b.score - a.score);
+  leaderboard.sort((a: any, b: any) => b.score - a.score);
 
   return leaderboard;
 }

@@ -35,7 +35,7 @@ interface PollParams {
 }
 
 export async function getPolls(
-  request: FastifyRequest,
+  _request: FastifyRequest,
   reply: FastifyReply
 ): Promise<void> {
   try {

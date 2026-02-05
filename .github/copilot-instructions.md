@@ -643,6 +643,56 @@ const dataLoader = USE_MOCK_API
 2. **Backend**: Railway.app (free tier, PostgreSQL included)
 3. **Auth**: NextAuth.js or Clerk for managed authentication
 
+#### Railway Deployment Configuration
+
+**Pre-Deploy Command Strategy:**
+Railway executes commands between building and deploying your application, ideal for database migrations. Pre-deploy commands run in your private network with environment variables and fail-safe deployment (non-zero exit stops deployment).
+
+**Configuration:**
+1. **Dockerfile** - Simplified CMD (migrations handled separately):
+```dockerfile
+FROM node:22.12-slim
+WORKDIR /app
+RUN apt-get update -y && apt-get install -y openssl
+COPY package*.json ./
+COPY prisma ./prisma
+RUN npm ci
+COPY . .
+RUN npm run build
+CMD ["npm", "start"]
+```
+
+2. **Railway Pre-Deploy Command** (set in project settings):
+```bash
+npm run prisma:migrate:deploy
+```
+
+3. **Optional: Database Seeding** (one-time or as needed):
+```bash
+npm run prisma:migrate:deploy && npm run prisma:seed
+```
+
+**Key Points:**
+- Pre-deploy commands execute in temporary container with private network access
+- Deployment aborts if command exits with non-zero status
+- Filesystem changes are not persisted (use start command for volume operations)
+- Migrations complete successfully before application starts serving traffic
+- Clean separation: Build → Migrate → Deploy phases
+
+**Prisma 7 Compatibility:**
+Seed script requires adapter-based initialization:
+```typescript
+import 'dotenv/config';
+import { PrismaClient } from '@prisma/client';
+import { PrismaPg } from '@prisma/adapter-pg';
+
+const adapter = new PrismaPg({
+  connectionString: process.env.DATABASE_URL!,
+});
+
+const prisma = new PrismaClient({ adapter });
+```
+
 ### Migration Checklist
 
 **TypeScript** (Phase 1 - COMPLETED):
@@ -793,9 +843,13 @@ const dataLoader = USE_MOCK_API
 - [ ] Write API tests (unit + integration)
 - [ ] Add rate limiting (prevent brute force attacks)
 - [ ] Implement request throttling
+- [x] Create deployment configurations (Railway, Vercel)
+- [x] Add production scripts to package.json
+- [x] Create deployment documentation (guides, checklists)
 - [ ] Deploy backend to Railway
 - [ ] Set up environment variables in Railway
 - [ ] Configure HTTPS in production
+- [ ] Deploy frontend to Vercel
 
 **Integration**:
 - [x] Create API client with token management

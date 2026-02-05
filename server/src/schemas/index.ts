@@ -27,7 +27,7 @@ export const createPollSchema = z.object({
 
 export const voteSchema = z.object({
   option: z.enum(['optionOne', 'optionTwo'], {
-    errorMap: () => ({ message: 'Option must be either optionOne or optionTwo' }),
+    message: 'Option must be either optionOne or optionTwo',
   }),
 });
 

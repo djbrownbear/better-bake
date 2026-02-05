@@ -14,13 +14,27 @@ export async function pollsRoutes(fastify: FastifyInstance): Promise<void> {
   fastify.get('/', getPolls);
 
   // GET /api/polls/:id - Get single poll
-  fastify.get('/:id', getPoll);
+  fastify.get<{ Params: { id: string } }>('/:id', getPoll);
 
   // POST /api/polls - Create new poll (protected)
-  fastify.post('/', { preHandler: [authenticateToken] }, create);
+  fastify.post<{
+    Body: {
+      optionOneText: string;
+      optionOneBaker: string;
+      optionOneSeason: string;
+      optionOneEpisode: string;
+      optionTwoText: string;
+      optionTwoBaker: string;
+      optionTwoSeason: string;
+      optionTwoEpisode: string;
+    };
+  }>('/', { preHandler: [authenticateToken] }, create);
 
   // POST /api/polls/:id/vote - Vote on poll (protected)
-  fastify.post('/:id/vote', { preHandler: [authenticateToken] }, vote);
+  fastify.post<{
+    Params: { id: string };
+    Body: { option: 'optionOne' | 'optionTwo' };
+  }>('/:id/vote', { preHandler: [authenticateToken] }, vote);
 
   // GET /api/polls/answered - Get user's answered polls (protected)
   fastify.get('/answered', { preHandler: [authenticateToken] }, getAnsweredPolls);
