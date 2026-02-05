@@ -1,13 +1,11 @@
-buildImage = 'ghcr.io/railwayapp/nixpacks:latest'
-
-[phase.name]
-nixpkgsArchive = 'e4f44407a7a9a5561cd6b589a6d27e7a8f91a720'
+[phases.setup]
+nixPkgs = ['nodejs_22']
 
 [phases.install]
 cmds = ['npm ci']
 
 [phases.build]
-cmds = ['npm run build']
+cmds = ['npx prisma generate', 'npm run build']
 
 [start]
 cmd = 'npm start'
