@@ -1,8 +1,11 @@
 import { useState, useRef, useEffect } from "react";
 import React from 'react';
-import { Navigate, useLocation } from "react-router-dom";
+import { Navigate, useLocation, Link } from "react-router-dom";
 import { setAuthedUser } from "../reducers/authedUser";
+import { receiveUsers } from "../reducers/users";
 import { useAppSelector, useAppDispatch } from "../store/hooks";
+import { apiClient } from "../utils/apiClient";
+import { config } from "../config";
 
 const LoginPage: React.FC = () => {
   const { state } = useLocation() as { state?: { path?: string } };
@@ -24,38 +27,68 @@ const LoginPage: React.FC = () => {
     // Input values are automatically stored in refs
   }
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLButtonElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     setIsLoading(true);
 
-    // Simulate async operation for better UX
-    setTimeout(() => {
+    try {
       const username = usernameRef.current?.value;
       const password = passwordRef.current?.value;
-      const user = users[username || ''];
 
-      if (user && user.password === password ){
-        setSuccess(true);
-        setError(false);
-        setErrorUserPwd(false);
-        dispatch(setAuthedUser(user.id));
-      } else if ( !username || !password) {
+      if (!username || !password) {
         setError(true);
         setSuccess(false);
         setErrorUserPwd(false);
         setIsLoading(false);
-      } else if (!user || user.password !== password ){
-        setErrorUserPwd(true);
-        setError(false);
-        setSuccess(false);
-        setIsLoading(false);
-      } else {
-        setErrorUserPwd(false);
-        setError(false);
-        setSuccess(false);
-        setIsLoading(false);
+        return;
       }
-    }, 300);
+
+      if (config.USE_REAL_API) {
+        // Real API: use email/password authentication
+        try {
+          const response = await apiClient.login(username, password);
+          
+          // Transform API user to match frontend User type
+          const user = apiClient.transformApiUser(response.user);
+          
+          // Update Redux state with user data and auth
+          dispatch(receiveUsers({ [user.id]: user }));
+          dispatch(setAuthedUser(user.id));
+          setSuccess(true);
+          setError(false);
+          setErrorUserPwd(false);
+        } catch (error: any) {
+          console.error('Login error:', error);
+          setErrorUserPwd(true);
+          setError(false);
+          setSuccess(false);
+          setIsLoading(false);
+        }
+      } else {
+        // Mock API: simulate async operation
+        setTimeout(() => {
+          const user = users[username];
+
+          if (user && user.password === password) {
+            setSuccess(true);
+            setError(false);
+            setErrorUserPwd(false);
+            dispatch(setAuthedUser(user.id));
+          } else if (!user || user.password !== password) {
+            setErrorUserPwd(true);
+            setError(false);
+            setSuccess(false);
+            setIsLoading(false);
+          }
+        }, 300);
+      }
+    } catch (error) {
+      console.error('Unexpected login error:', error);
+      setErrorUserPwd(true);
+      setError(false);
+      setSuccess(false);
+      setIsLoading(false);
+    }
   }
 
   const handleDemoLogin = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -103,13 +136,15 @@ const LoginPage: React.FC = () => {
               <h1 className="text-2xl font-semibold mt-2">Sign In</h1>
             </div>
             <div>
-              <label htmlFor="username" className="sr-only">Username</label>
+              <label htmlFor="username" className="sr-only">
+                {config.USE_REAL_API ? 'Email' : 'Username'}
+              </label>
               <input 
                 data-testid="username-input"
-                type="text" 
+                type={config.USE_REAL_API ? "email" : "text"}
                 id="username" 
                 name="username" 
-                placeholder="Username" 
+                placeholder={config.USE_REAL_API ? "Email" : "Username"}
                 ref={usernameRef}
                 onChange={handleChange}
                 disabled={isLoading}
@@ -160,11 +195,24 @@ const LoginPage: React.FC = () => {
                 className="flex-1 bg-gray-600 hover:bg-gray-700 text-white font-bold py-3 px-6 rounded-lg shadow-lg transition-all active:scale-95 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-gray-600 disabled:active:scale-100" 
                 type="button" 
                 onClick={handleDemoLogin}
-                disabled={isLoading}
+                disabled={isLoading || config.USE_REAL_API}
+                title={config.USE_REAL_API ? "Demo mode not available with real API" : "Login with random user"}
               >
                 {isLoading ? 'Loading...' : 'Demo'}
               </button>
             </div>
+            
+            {config.USE_REAL_API && (
+              <div className="text-center text-sm text-gray-600">
+                Don't have an account?{' '}
+                <Link 
+                  to="/register"
+                  className="text-primary-600 hover:text-primary-700 font-semibold"
+                >
+                  Create one
+                </Link>
+              </div>
+            )}
           </div>
         </form>
       </div>

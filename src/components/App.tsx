@@ -8,6 +8,7 @@ import ErrorBoundary from './ErrorBoundary';
 
 // Lazy load components for code splitting
 const LoginPage = lazy(() => import('./LoginPage'));
+const RegisterPage = lazy(() => import('./RegisterPage'));
 const Dashboard = lazy(() => import('./Dashboard'));
 const Leaderboard = lazy(() => import('./Leaderboard'));
 const PollPage = lazy(() => import('./PollPage'));
@@ -85,6 +86,7 @@ const App: React.FC = () => {
                 <Suspense fallback={<LoadingSpinner />}>
                   <Routes>
                   <Route path="/login" element={<LoginPage />} />
+                  <Route path="/register" element={<RegisterPage />} />
                   <Route path="/error" element={<Custom404 />} />        
                   <Route 
                   path="/"
