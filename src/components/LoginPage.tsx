@@ -11,6 +11,7 @@ const LoginPage: React.FC = () => {
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
   const [errorUserPwd, setErrorUserPwd] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const usernameRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
 
@@ -25,29 +26,36 @@ const LoginPage: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
+    setIsLoading(true);
 
-    const username = usernameRef.current?.value;
-    const password = passwordRef.current?.value;
-    const user = users[username || ''];
+    // Simulate async operation for better UX
+    setTimeout(() => {
+      const username = usernameRef.current?.value;
+      const password = passwordRef.current?.value;
+      const user = users[username || ''];
 
-    if (user && user.password === password ){
-      setSuccess(true);
-      setError(false);
-      setErrorUserPwd(false);
-      dispatch(setAuthedUser(user.id));
-    } else if ( !username || !password) {
-      setError(true);
-      setSuccess(false);
-      setErrorUserPwd(false);
-    } else if (!user || user.password !== password ){
-      setErrorUserPwd(true);
-      setError(false);
-      setSuccess(false);
-    } else {
-      setErrorUserPwd(false);
-      setError(false);
-      setSuccess(false);
-    }
+      if (user && user.password === password ){
+        setSuccess(true);
+        setError(false);
+        setErrorUserPwd(false);
+        dispatch(setAuthedUser(user.id));
+      } else if ( !username || !password) {
+        setError(true);
+        setSuccess(false);
+        setErrorUserPwd(false);
+        setIsLoading(false);
+      } else if (!user || user.password !== password ){
+        setErrorUserPwd(true);
+        setError(false);
+        setSuccess(false);
+        setIsLoading(false);
+      } else {
+        setErrorUserPwd(false);
+        setError(false);
+        setSuccess(false);
+        setIsLoading(false);
+      }
+    }, 300);
   }
 
   const handleDemoLogin = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -69,18 +77,33 @@ const LoginPage: React.FC = () => {
           )
         }
         {error &&
-            <h1 data-testid="error-header" className="text-red-600 text-center mb-4 font-bold">Error: Please ensure all fields are filled out.</h1>
+            <div 
+              role="alert" 
+              aria-live="assertive" 
+              data-testid="error-header" 
+              className="text-red-600 bg-red-50 border border-red-200 rounded-lg text-center p-4 mb-4 font-semibold"
+            >
+              Error: Please ensure all fields are filled out.
+            </div>
         }
         {errorUserPwd &&
-            <h1 data-testid="errorUserPwd-header" className="text-red-600 text-center mb-4 font-bold">Error: Incorrect username or password. Please try again.</h1>
+            <div 
+              role="alert" 
+              aria-live="assertive" 
+              data-testid="errorUserPwd-header" 
+              className="text-red-600 bg-red-50 border border-red-200 rounded-lg text-center p-4 mb-4 font-semibold"
+            >
+              Error: Incorrect username or password. Please try again.
+            </div>
         }
-        <form className="bg-white rounded-lg shadow-xl p-8" onSubmit={handleSubmit}>
+        <form className="bg-white rounded-lg shadow-xl p-8" onSubmit={handleSubmit} aria-label="Sign in form">
           <div className="space-y-6">
             <div className="text-center mb-8">
               <span className="text-3xl font-bold text-amber-700">Better Bake</span>
-              <h2 className="text-2xl font-semibold mt-2">Sign In</h2>
+              <h1 className="text-2xl font-semibold mt-2">Sign In</h1>
             </div>
             <div>
+              <label htmlFor="username" className="sr-only">Username</label>
               <input 
                 data-testid="username-input"
                 type="text" 
@@ -89,10 +112,15 @@ const LoginPage: React.FC = () => {
                 placeholder="Username" 
                 ref={usernameRef}
                 onChange={handleChange}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                disabled={isLoading}
+                required
+                aria-required="true"
+                aria-invalid={error || errorUserPwd}
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
               />
             </div>
             <div>
+              <label htmlFor="pwd" className="sr-only">Password</label>
               <input 
                 data-testid="password-input"
                 type="password" 
@@ -101,12 +129,41 @@ const LoginPage: React.FC = () => {
                 placeholder="Password" 
                 ref={passwordRef}
                 onChange={handleChange}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                disabled={isLoading}
+                required
+                aria-required="true"
+                aria-invalid={error || errorUserPwd}
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
               />
             </div>
             <div className="flex gap-4">
-              <button data-testid="submit-button" className="flex-1 bg-amber-700 hover:bg-amber-800 text-white font-bold py-3 px-6 rounded-lg shadow-lg transition-colors" type="submit">Submit</button>
-              <button data-testid="demo-button" className="flex-1 bg-gray-600 hover:bg-gray-700 text-white font-bold py-3 px-6 rounded-lg shadow-lg transition-colors" type="button" onClick={handleDemoLogin}>Demo</button>
+              <button 
+                data-testid="submit-button" 
+                className="flex-1 bg-amber-700 hover:bg-amber-800 text-white font-bold py-3 px-6 rounded-lg shadow-lg transition-all active:scale-95 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-amber-700 disabled:active:scale-100" 
+                type="submit"
+                disabled={isLoading}
+              >
+                {isLoading ? (
+                  <span className="flex items-center justify-center">
+                    <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    Signing in...
+                  </span>
+                ) : (
+                  'Submit'
+                )}
+              </button>
+              <button 
+                data-testid="demo-button" 
+                className="flex-1 bg-gray-600 hover:bg-gray-700 text-white font-bold py-3 px-6 rounded-lg shadow-lg transition-all active:scale-95 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-gray-600 disabled:active:scale-100" 
+                type="button" 
+                onClick={handleDemoLogin}
+                disabled={isLoading}
+              >
+                {isLoading ? 'Loading...' : 'Demo'}
+              </button>
             </div>
           </div>
         </form>

@@ -26,7 +26,11 @@ const Poll: React.FC<PollProps> = ({ id }) => {
   }
 
   if (poll === null) {
-    return <p>This poll does not exist</p>;
+    return (
+      <div className="bg-white rounded-lg border border-gray-200 p-6 text-center">
+        <p className="text-gray-500">Poll not found</p>
+      </div>
+    );
   }
 
   const {
@@ -36,19 +40,57 @@ const Poll: React.FC<PollProps> = ({ id }) => {
   } = poll;
 
   return (
-    <div className="m-0 p-0.5 flex flex-col justify-center items-center w-full bg-[#F3F5F7]">
-      <div className="flex flex-row justify-center my-1.5 mx-auto font-bold w-full">
-        <img src={pollAvatar} alt={`img of ${ name }`} className="h-[50px] px-1"/>
-        <span className="mx-1 w-fit my-1.5">{ name }</span>
+    <article className="bg-white rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-shadow overflow-hidden h-full flex flex-col">
+      {/* Author Info */}
+      <div className="flex items-center gap-3 p-4 border-b border-gray-100 bg-gray-50">
+        <img 
+          src={pollAvatar} 
+          alt="" 
+          aria-hidden="true"
+          className="w-12 h-12 rounded-full object-cover border-2 border-white shadow-sm"
+        />
+        <div className="flex-1 min-w-0">
+          <p className="text-sm font-semibold text-gray-900 truncate">{name}</p>
+          <time 
+            className="text-xs text-gray-500" 
+            dateTime={new Date(timestamp).toISOString()}
+          >
+            {formatDate(timestamp)}
+          </time>
+        </div>
       </div>
-      <span className="my-1.5">{ formatDate(timestamp) }</span>
-      <button
-        className="w-[100px] my-1.5 py-2.5 px-4 border-none bg-secondary hover:bg-amber-200 text-gray-900 font-semibold rounded-lg transition-all cursor-pointer" 
-        onClick={(e) => toPoll(e, pollId) }
-      >
-        Show
-      </button>
-    </div>
+
+      {/* Card Content */}
+      <div className="flex-1 flex flex-col items-center justify-center p-6">
+        <div className="w-16 h-16 rounded-full bg-gradient-to-br from-amber-100 to-amber-200 flex items-center justify-center mb-4">
+          <svg 
+            className="w-8 h-8 text-amber-700" 
+            fill="none" 
+            stroke="currentColor" 
+            viewBox="0 0 24 24"
+          >
+            <path 
+              strokeLinecap="round" 
+              strokeLinejoin="round" 
+              strokeWidth={2} 
+              d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" 
+            />
+          </svg>
+        </div>
+        <p className="text-gray-600 text-sm font-medium mb-4">Who Baked It Better?</p>
+      </div>
+
+      {/* Action Button */}
+      <div className="p-4 border-t border-gray-100 bg-gray-50">
+        <button
+          className="w-full py-2.5 px-4 bg-amber-700 hover:bg-amber-800 text-white font-semibold rounded-lg transition-all focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 active:scale-[0.98]" 
+          onClick={(e) => toPoll(e, pollId)}
+          aria-label={`View poll by ${name}`}
+        >
+          View Poll
+        </button>
+      </div>
+    </article>
   )
 };
 
