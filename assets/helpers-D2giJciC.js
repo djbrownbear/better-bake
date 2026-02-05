@@ -1,0 +1,2 @@
+function p(t){const n=new Date(t),o=n.toLocaleTimeString("en-US");return o.substr(0,5)+o.slice(-2)+" | "+n.toLocaleDateString()}function v(t,n,o){const{id:s,optionOne:e,optionTwo:a,timestamp:i}=t,{name:c,avatarURL:r}=n,l=e.votes,m=a.votes,u=l.concat(m).includes(o);return{name:c,id:s,timestamp:i,avatar:r,optionOne:e,optionTwo:a,authedUser:o,hasVoted:u}}function V(t){return t.toLocaleString(void 0,{style:"percent",minimumFractionDigits:2})}export{p as a,V as b,v as f};
+//# sourceMappingURL=helpers-D2giJciC.js.map
