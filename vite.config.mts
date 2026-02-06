@@ -6,7 +6,7 @@ import tailwindcss from '@tailwindcss/vite';
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react(), viteTsconfigPaths(), tailwindcss()],
-  base: '/better-bake/',
+  base: '/',
   server: {
     port: 3000,
     open: true,
