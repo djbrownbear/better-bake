@@ -16,4 +16,5 @@ COPY . .
 
 RUN npm run build
 
-CMD ["npm", "start"]
+# Run migrations and start server
+CMD ["sh", "-c", "npx prisma migrate deploy && npm start"]
