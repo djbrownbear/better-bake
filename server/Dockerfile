@@ -16,5 +16,5 @@ COPY . .
 
 RUN npm run build
 
-# Run migrations and start server
-CMD ["sh", "-c", "npx prisma migrate deploy && npm start"]
+# Start server (migrations handled by Railway pre-deploy command)
+CMD ["npm", "start"]
