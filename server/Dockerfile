@@ -21,10 +21,5 @@ COPY . .
 # Build TypeScript (Prisma Client must be generated first)
 RUN npm run build
 
-# Debug: List generated files
-RUN ls -la node_modules/.prisma/ || echo "No .prisma directory"
-RUN ls -la node_modules/@prisma/ || echo "No @prisma directory"
-RUN ls -la dist/ || echo "No dist directory"
-
 # Start server (migrations handled by Railway pre-deploy command)
 CMD ["npm", "start"]
