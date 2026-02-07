@@ -134,7 +134,7 @@ export async function getUserAnsweredPolls(userId: string): Promise<PollWithVote
     },
   });
 
-  return votes.map((vote) => vote.poll) as PollWithVotes[];
+  return votes.map((vote: { poll: any }) => vote.poll) as PollWithVotes[];
 }
 
 export async function getUserUnansweredPolls(userId: string): Promise<PollWithVotes[]> {
@@ -144,7 +144,7 @@ export async function getUserUnansweredPolls(userId: string): Promise<PollWithVo
     select: { pollId: true },
   });
 
-  const votedIds = votedPollIds.map((v) => v.pollId);
+  const votedIds = votedPollIds.map((v: { pollId: string }) => v.pollId);
 
   // Get polls user hasn't voted on
   const polls = await prisma.poll.findMany({

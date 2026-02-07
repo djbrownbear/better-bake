@@ -9,13 +9,16 @@ RUN apt-get update -y && apt-get install -y openssl
 COPY package*.json ./
 COPY prisma ./prisma
 
+# Install dependencies
 RUN npm ci
 
+# Generate Prisma Client (must be before build)
 RUN npx prisma generate
 
 # Copy the rest of the application
 COPY . .
 
+# Build TypeScript (Prisma Client must be generated first)
 RUN npm run build
 
 # Start server (migrations handled by Railway pre-deploy command)
