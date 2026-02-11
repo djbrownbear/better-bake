@@ -56,10 +56,27 @@ const Layout: React.FC = () => {
 const App: React.FC = () => {
   const dispatch = useAppDispatch();
   const loading = useAppSelector(state => Object.keys(state.polls).length === 0);
+  const [initError, setInitError] = React.useState<string | null>(null);
 
   useEffect(() => {
-    dispatch(handleInitialData());
+    dispatch(handleInitialData())
+      .unwrap()
+      .catch((error) => {
+        console.error('Failed to initialize app:', error);
+        setInitError(error);
+      });
   }, [dispatch]);
+
+  if (loading && !initError) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-linear-to-br from-primary-50 to-white">
+        <div className="text-center">
+          <div className="inline-block animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-primary mb-4"></div>
+          <p className="text-xl text-gray-700 font-semibold">Loading Better Bake...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <ErrorBoundary>
