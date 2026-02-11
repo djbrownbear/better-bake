@@ -44,9 +44,13 @@ const NewPoll: React.FC = () => {
     try {
       await dispatch(handleAddPoll({ 
         optionOneText, 
+        optionOneBaker,
+        optionOneSeason,
+        optionOneEpisode,
         optionTwoText, 
-        optionOneImage: optionOneBaker,
-        optionTwoImage: optionTwoBaker 
+        optionTwoBaker,
+        optionTwoSeason,
+        optionTwoEpisode,
       }));
       
       // Reset form

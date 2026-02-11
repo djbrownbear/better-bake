@@ -115,35 +115,13 @@ export const makeSelectPollPageData = (pollId: string) =>
         };
       }
 
-      const bOneSeason = pollData.optionOne.season;
-      const bTwoSeason = pollData.optionTwo.season;
-      const bOneEpisode = pollData.optionOne.episode;
-      const bTwoEpisode = pollData.optionTwo.episode;
-
-      // Handle both mock data (nested structure) and real API (simple structure)
-      let bakerOne = '';
-      let bakerTwo = '';
-
-      // Check if bakers have the complex nested structure (mock data)
-      if (bOneSeason && bakers[bOneSeason]?.baker) {
-        bakerOne =
-          bakers[bOneSeason].baker[pollData.optionOne.baker]?.episodes?.[bOneEpisode]?.bakeURL ||
-          pollData.optionOne.imgURL ||
-          '';
-      } else {
-        // Real API or fallback to imgURL
-        bakerOne = pollData.optionOne.imgURL || '';
-      }
-
-      if (bTwoSeason && bakers[bTwoSeason]?.baker) {
-        bakerTwo =
-          bakers[bTwoSeason].baker[pollData.optionTwo.baker]?.episodes?.[bTwoEpisode]?.bakeURL ||
-          pollData.optionTwo.imgURL ||
-          '';
-      } else {
-        // Real API or fallback to imgURL
-        bakerTwo = pollData.optionTwo.imgURL || '';
-      }
+      // Get baker images from baker IDs
+      // Bakers are keyed by baker ID, not season
+      const bakerOneId = pollData.optionOne.baker;
+      const bakerTwoId = pollData.optionTwo.baker;
+      
+      const bakerOne = bakers[bakerOneId]?.imgURL || '';
+      const bakerTwo = bakers[bakerTwoId]?.imgURL || '';
 
       return {
         authedUser,

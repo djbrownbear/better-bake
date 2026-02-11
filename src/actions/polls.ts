@@ -10,26 +10,34 @@ export const handleAddPoll = createAsyncThunk(
   async (
     {
       optionOneText,
+      optionOneBaker,
+      optionOneSeason,
+      optionOneEpisode,
       optionTwoText,
-      optionOneImage,
-      optionTwoImage,
+      optionTwoBaker,
+      optionTwoSeason,
+      optionTwoEpisode,
     }: {
       optionOneText: string;
+      optionOneBaker: string;
+      optionOneSeason: string;
+      optionOneEpisode: string;
       optionTwoText: string;
-      optionOneImage: string;
-      optionTwoImage: string;
+      optionTwoBaker: string;
+      optionTwoSeason: string;
+      optionTwoEpisode: string;
     },
     { dispatch, getState }
   ) => {
     const apiPoll = await apiClient.createPoll({
       optionOneText,
-      optionOneBaker: optionOneImage,
-      optionOneSeason: '1',
-      optionOneEpisode: '1',
+      optionOneBaker,
+      optionOneSeason,
+      optionOneEpisode,
       optionTwoText,
-      optionTwoBaker: optionTwoImage,
-      optionTwoSeason: '1',
-      optionTwoEpisode: '1',
+      optionTwoBaker,
+      optionTwoSeason,
+      optionTwoEpisode,
     });
     const poll = apiClient.transformApiPoll(apiPoll);
 

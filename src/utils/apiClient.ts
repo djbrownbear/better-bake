@@ -66,6 +66,8 @@ class ApiClient {
   setToken(token: string): void {
     this.token = token;
     localStorage.setItem('authToken', token);
+    // Clear cache when token changes to prevent serving cached data from previous user
+    this.clearCache();
   }
 
   clearToken(): void {
@@ -97,6 +99,11 @@ class ApiClient {
     // Return cached data if still valid
     if (cached && now - cached.timestamp < ttl) {
       return cached.data;
+    }
+
+    // Delete expired entry to prevent unbounded cache growth
+    if (cached) {
+      this.cache.delete(cacheKey);
     }
 
     // Fetch fresh data
@@ -138,9 +145,17 @@ class ApiClient {
     this.cache.clear();
   }
 
+  /**
+   * Make HTTP request with exponential backoff retry logic
+   * @param endpoint - API endpoint
+   * @param options - Fetch options
+   * @param retryCount - Current retry attempt (internal use)
+   * @returns Promise with response data
+   */
   private async request<T>(
     endpoint: string,
-    options?: RequestInit
+    options?: RequestInit,
+    retryCount: number = 0
   ): Promise<T> {
     const headers: HeadersInit = {
       'Content-Type': 'application/json',
@@ -148,17 +163,43 @@ class ApiClient {
       ...options?.headers,
     };
 
-    const response = await fetch(`${API_BASE_URL}${endpoint}`, {
-      ...options,
-      headers,
-    });
+    const maxRetries = 3;
+    const isMutation = options?.method && ['POST', 'PUT', 'PATCH', 'DELETE'].includes(options.method);
 
-    if (!response.ok) {
-      const error = await response.json().catch(() => ({ error: 'Request failed' }));
-      throw new Error(error.error || `HTTP ${response.status}`);
+    try {
+      const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+        ...options,
+        headers,
+      });
+
+      // Handle non-ok responses
+      if (!response.ok) {
+        const error = await response.json().catch(() => ({ error: 'Request failed' }));
+        const errorMessage = error.error || `HTTP ${response.status}`;
+
+        // Retry on 5xx errors (server errors) if not a mutation
+        if (response.status >= 500 && !isMutation && retryCount < maxRetries) {
+          const delay = Math.pow(2, retryCount) * 1000; // Exponential backoff: 1s, 2s, 4s
+          console.warn(`Request failed with ${response.status}, retrying in ${delay}ms... (attempt ${retryCount + 1}/${maxRetries})`);
+          await new Promise(resolve => setTimeout(resolve, delay));
+          return this.request<T>(endpoint, options, retryCount + 1);
+        }
+
+        // Don't retry on 4xx errors (client errors) - fail fast
+        throw new Error(errorMessage);
+      }
+
+      return response.json();
+    } catch (error) {
+      // Retry on network errors if not a mutation
+      if (!isMutation && retryCount < maxRetries && error instanceof TypeError) {
+        const delay = Math.pow(2, retryCount) * 1000;
+        console.warn(`Network error, retrying in ${delay}ms... (attempt ${retryCount + 1}/${maxRetries})`);
+        await new Promise(resolve => setTimeout(resolve, delay));
+        return this.request<T>(endpoint, options, retryCount + 1);
+      }
+      throw error;
     }
-
-    return response.json();
   }
 
   // Authentication endpoints
