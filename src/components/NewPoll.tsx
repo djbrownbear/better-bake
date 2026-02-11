@@ -73,7 +73,11 @@ const NewPoll: React.FC = () => {
   const isFormValid = optionOneText.trim() !== "" && 
                       optionTwoText.trim() !== "" && 
                       optionOneBaker !== "" && 
-                      optionTwoBaker !== "";
+                      optionTwoBaker !== "" &&
+                      optionOneSeason.trim() !== "" &&
+                      optionOneEpisode.trim() !== "" &&
+                      optionTwoSeason.trim() !== "" &&
+                      optionTwoEpisode.trim() !== "";
 
   return (
     <div className="min-h-screen bg-linear-to-b from-primary-50 via-white to-gray-50">
