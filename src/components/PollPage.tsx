@@ -17,7 +17,9 @@ const PollPage: React.FC<PollPageProps> = ({ id }) => {
   
   // Create memoized selector for this specific poll
   const selectPollPageData = useMemo(() => makeSelectPollPageData(id), [id]);
-  const { poll, bakerOne, bakerTwo, authedUser } = useAppSelector(selectPollPageData);
+  const { poll, bakerOne: bakerOneFromStore, bakerTwo: bakerTwoFromStore, authedUser } = useAppSelector(selectPollPageData);
+  const bakerOne = bakerOneFromStore || undefined;
+  const bakerTwo = bakerTwoFromStore || undefined;
 
   if (!poll || !authedUser) {
     return <Navigate to="/error"/>;
