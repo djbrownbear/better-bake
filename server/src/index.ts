@@ -15,7 +15,7 @@ const fastify = Fastify({
   logger: {
     level: serverConfig.nodeEnv === 'development' ? 'info' : 'error',
   },
-  trustProxy: true, // Enable when behind reverse proxy/load balancer
+  trustProxy: serverConfig.trustProxy, // Only enable in production or when explicitly set
 });
 
 // Register CORS

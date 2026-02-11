@@ -2,7 +2,6 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { apiClient } from "../utils/apiClient";
 import { addPoll, addAnswer } from "../reducers/polls";
 import { addAnswerToUser, addPollToUser } from "../reducers/users";
-import { RootState } from '../reducers';
 import { PollAnswer } from '../types';
 
 export const handleAddPoll = createAsyncThunk(
@@ -27,7 +26,7 @@ export const handleAddPoll = createAsyncThunk(
       optionTwoSeason: string;
       optionTwoEpisode: string;
     },
-    { dispatch, getState }
+    { dispatch }
   ) => {
     const apiPoll = await apiClient.createPoll({
       optionOneText,

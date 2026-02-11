@@ -4,7 +4,6 @@ import { Navigate, useLocation, Link } from "react-router-dom";
 import { setAuthedUser } from "../reducers/authedUser";
 import { useAppSelector, useAppDispatch } from "../store/hooks";
 import { apiClient } from "../utils/apiClient";
-import { config } from "../config";
 
 const LoginPage: React.FC = () => {
   const { state } = useLocation() as { state?: { path?: string } };

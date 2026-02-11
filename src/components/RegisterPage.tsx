@@ -5,7 +5,6 @@ import { setAuthedUser } from "../reducers/authedUser";
 import { receiveUsers } from "../reducers/users";
 import { useAppDispatch } from "../store/hooks";
 import { apiClient } from "../utils/apiClient";
-import { config } from "../config";
 
 const RegisterPage: React.FC = () => {
   const { state } = useLocation() as { state?: { path?: string } };
