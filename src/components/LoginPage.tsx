@@ -2,7 +2,6 @@ import { useState, useRef, useEffect } from "react";
 import React from 'react';
 import { Navigate, useLocation, Link } from "react-router-dom";
 import { setAuthedUser } from "../reducers/authedUser";
-import { receiveUsers } from "../reducers/users";
 import { useAppSelector, useAppDispatch } from "../store/hooks";
 import { apiClient } from "../utils/apiClient";
 import { config } from "../config";
@@ -43,44 +42,20 @@ const LoginPage: React.FC = () => {
         return;
       }
 
-      if (config.USE_REAL_API) {
-        // Real API: use email/password authentication
-        try {
-          const response = await apiClient.login(username, password);
-          
-          // Transform API user to match frontend User type
-          const user = apiClient.transformApiUser(response.user);
-          
-          // Update Redux state with user data and auth
-          dispatch(receiveUsers({ [user.id]: user }));
-          dispatch(setAuthedUser(user.id));
-          setSuccess(true);
-          setError(false);
-          setErrorUserPwd(false);
-        } catch (error: any) {
-          console.error('Login error:', error);
-          setErrorUserPwd(true);
-          setError(false);
-          setSuccess(false);
-          setIsLoading(false);
-        }
-      } else {
-        // Mock API: simulate async operation
-        setTimeout(() => {
-          const user = users[username];
-
-          if (user && user.password === password) {
-            setSuccess(true);
-            setError(false);
-            setErrorUserPwd(false);
-            dispatch(setAuthedUser(user.id));
-          } else if (!user || user.password !== password) {
-            setErrorUserPwd(true);
-            setError(false);
-            setSuccess(false);
-            setIsLoading(false);
-          }
-        }, 300);
+      try {
+        const response = await apiClient.login(username, password);
+        
+        // Set authenticated user (don't overwrite user data already in state)
+        dispatch(setAuthedUser(response.user.id));
+        setSuccess(true);
+        setError(false);
+        setErrorUserPwd(false);
+      } catch (error: any) {
+        console.error('Login error:', error);
+        setErrorUserPwd(true);
+        setError(false);
+        setSuccess(false);
+        setIsLoading(false);
       }
     } catch (error) {
       console.error('Unexpected login error:', error);
@@ -106,9 +81,9 @@ const LoginPage: React.FC = () => {
     <div className="min-h-screen bg-linear-to-br from-primary-100 via-primary-50 to-white flex items-center justify-center p-4">
       <div className="w-full max-w-md">
         {success && (
-          <Navigate to={(state?.path || "/dashboard")} /> // if successful, take user to homepage or page prior to login
-          )
-        }
+          <Navigate to={(state?.path || "/dashboard")} /> 
+        )}
+        {/* if successful, take user to homepage or page prior to login */}
         {error &&
             <div 
               role="alert" 
@@ -137,14 +112,14 @@ const LoginPage: React.FC = () => {
             </div>
             <div>
               <label htmlFor="username" className="sr-only">
-                {config.USE_REAL_API ? 'Email' : 'Username'}
+                Email
               </label>
               <input 
                 data-testid="username-input"
-                type={config.USE_REAL_API ? "email" : "text"}
+                type="email"
                 id="username" 
                 name="username" 
-                placeholder={config.USE_REAL_API ? "Email" : "Username"}
+                placeholder="Email"
                 ref={usernameRef}
                 onChange={handleChange}
                 disabled={isLoading}
@@ -195,24 +170,22 @@ const LoginPage: React.FC = () => {
                 className="flex-1 bg-gray-600 hover:bg-gray-700 text-white font-bold py-3 px-6 rounded-lg shadow-lg transition-all active:scale-95 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-gray-600 disabled:active:scale-100" 
                 type="button" 
                 onClick={handleDemoLogin}
-                disabled={isLoading || config.USE_REAL_API}
-                title={config.USE_REAL_API ? "Demo mode not available with real API" : "Login with random user"}
+                disabled={true}
+                title="Demo mode not available"
               >
-                {isLoading ? 'Loading...' : 'Demo'}
+                Demo
               </button>
             </div>
             
-            {config.USE_REAL_API && (
-              <div className="text-center text-sm text-gray-600">
-                Don't have an account?{' '}
-                <Link 
-                  to="/register"
-                  className="text-primary-600 hover:text-primary-700 font-semibold"
-                >
-                  Create one
-                </Link>
-              </div>
-            )}
+            <div className="text-center text-sm text-gray-600">
+              Don't have an account?{' '}
+              <Link 
+                to="/register"
+                className="text-primary-600 hover:text-primary-700 font-semibold"
+              >
+                Create one
+              </Link>
+            </div>
           </div>
         </form>
       </div>

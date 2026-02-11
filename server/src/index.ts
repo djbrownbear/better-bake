@@ -1,6 +1,7 @@
 ﻿import 'dotenv/config';
 import Fastify from 'fastify';
 import cors from '@fastify/cors';
+import rateLimit from '@fastify/rate-limit';
 import { connectDatabase, disconnectDatabase } from './config/database.js';
 import { registerAuthPlugin } from './middleware/auth.middleware.js';
 import { errorHandler } from './middleware/error.middleware.js';
@@ -20,6 +21,17 @@ const fastify = Fastify({
 await fastify.register(cors, {
   origin: corsOrigins,
   credentials: true,
+});
+
+// Register rate limiting
+await fastify.register(rateLimit, {
+  global: true,
+  max: 100,        // 100 requests
+  timeWindow: '15 minutes',
+  errorResponseBuilder: () => ({
+    error: 'Too many requests. Please try again later.',
+    statusCode: 429,
+  }),
 });
 
 // Register JWT plugin

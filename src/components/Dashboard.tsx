@@ -3,12 +3,11 @@ import React from 'react';
 import Poll from "./Poll";
 import { Poll as PollType } from "../types";
 import { useAppSelector } from "../store/hooks";
+import { selectSortedPolls } from "../selectors/polls";
 
 const Dashboard: React.FC = () => {
   const authedUser = useAppSelector(state => state.authedUser);
-  const polls = useAppSelector(state => 
-    Object.values(state.polls).sort((a, b) => b.timestamp - a.timestamp)
-  );
+  const polls = useAppSelector(selectSortedPolls);
   const [showUnanswered, setShowUnanswered] = useState(true);
   const [showAnswered, setShowAnswered] = useState(false);
 

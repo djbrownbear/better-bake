@@ -1,10 +1,14 @@
 import 'dotenv/config';
 import Fastify from 'fastify';
 import cors from '@fastify/cors';
+import rateLimit from '@fastify/rate-limit';
 import { connectDatabase, disconnectDatabase } from './config/database.js';
 import { registerAuthPlugin } from './middleware/auth.middleware.js';
 import { errorHandler } from './middleware/error.middleware.js';
 import { authRoutes } from './routes/auth.routes.js';
+import { pollsRoutes } from './routes/polls.routes.js';
+import { usersRoutes } from './routes/users.routes.js';
+import { bakersRoutes } from './routes/bakers.routes.js';
 import { serverConfig, corsOrigins } from './config/env.js';
 const fastify = Fastify({
     logger: {
@@ -16,6 +20,16 @@ await fastify.register(cors, {
     origin: corsOrigins,
     credentials: true,
 });
+// Register rate limiting
+await fastify.register(rateLimit, {
+    global: true,
+    max: 100, // 100 requests
+    timeWindow: '15 minutes',
+    errorResponseBuilder: () => ({
+        error: 'Too many requests. Please try again later.',
+        statusCode: 429,
+    }),
+});
 // Register JWT plugin
 registerAuthPlugin(fastify);
 // Register error handler
@@ -26,10 +40,9 @@ fastify.get('/health', async () => {
 });
 // Register routes
 fastify.register(authRoutes, { prefix: '/api/auth' });
-// TODO: Add more routes here:
-// fastify.register(pollsRoutes, { prefix: '/api/polls' });
-// fastify.register(usersRoutes, { prefix: '/api/users' });
-// fastify.register(bakersRoutes, { prefix: '/api/bakers' });
+fastify.register(pollsRoutes, { prefix: '/api/polls' });
+fastify.register(usersRoutes, { prefix: '/api/users' });
+fastify.register(bakersRoutes, { prefix: '/api/bakers' });
 // Start server
 const start = async () => {
     try {

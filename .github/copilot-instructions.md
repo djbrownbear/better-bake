@@ -1,20 +1,22 @@
 # Better Bake - AI Coding Agent Instructions
 
 ## Project Overview
-"Better Bake" is a React + Redux polling app for voting on "Who Baked It Better" questions. Users login, view/answer polls, create polls, and see leaderboard rankings. The app uses a fake in-memory database (`_DATA.js`) and is deployed to GitHub Pages.
+"Better Bake" is a React + Redux polling app for voting on "Who Baked It Better" questions. Users login, view/answer polls, create polls, and see leaderboard rankings. The app uses a Fastify backend with PostgreSQL database (via Prisma ORM) and includes a mock in-memory database (`_DATA.js`) for development/fallback. The frontend is deployed to Vercel and the backend to Railway.
 
 ## Architecture
 
 ### State Management - Redux Pattern
 - **Store setup**: `src/index.js` creates store with `createStore(reducer, middleware)`
 - **Middleware**: Custom logger (`middleware/logger.js`) logs every action and state change
-- **Reducers**: Combined in `reducers/index.js` - `authedUser`, `users`, `polls`, `bakers`, `loadingBar`
+- **Reducers**: Combined in `reducers/index.js` - `authedUser`, `users`, `polls`, `bakers`, `apiHealth`, `loadingBar`
 - **Actions pattern**: All async actions follow the "thunk" pattern, return functions with `(dispatch, getState)`
+- **API Health Tracking**: `apiHealth` slice tracks whether app is using mock data fallback and stores last API error
 
 ### Key Data Flow
 1. **Initialization**: `handleInitialData()` in `actions/shared.js` orchestrates loading users, polls, and bakers
-2. **Data source**: `utils/_DATA.js` is the fake backend - all CRUD operations go through `utils/api.js`
-3. **Optimistic updates**: Actions dispatch to multiple reducers (e.g., `handleAddPoll` updates both `polls` and `users` state)
+2. **Data source**: Real API (`utils/apiClient.ts`) connects to Fastify backend; falls back to `utils/_DATA.js` if API fails
+3. **API Feature Flag**: `config.USE_REAL_API` toggles between real and mock data sources
+4. **Optimistic updates**: Actions dispatch to multiple reducers (e.g., `handleAddPoll` updates both `polls` and `users` state)
 
 ### Routing & Authentication
 - **Router**: Uses `HashRouter` (not `BrowserRouter`) for GitHub Pages compatibility
@@ -85,6 +87,13 @@ Separate reducer/state for baker metadata (Great British Bake Off contestants), 
 3. **Error handling**: Invalid poll IDs navigate to `/error` (Custom404 component)
 4. **Poll creation**: `NewPoll.js` passes 4 params to `handleAddPoll`: `(optionOneText, optionTwoText, optionOneImage, optionTwoImage)`
 5. **Authentication**: Passwords stored in plain text (not production-ready, educational project)
+6. **Empty Database Resilience**: Multi-layer defense strategy
+   - API client detects empty database and throws descriptive error with seed command
+   - `handleInitialData` automatically falls back to mock data if real API fails
+   - `apiHealth` Redux slice tracks API status and last error
+   - LandingPage shows warning banner when using fallback data
+   - Users can retry loading via banner or page reload
+   - Production-friendly logging: keeps errors/warnings, removes verbose debug logs
 
 ## File Organization
 - `actions/` - One file per reducer, plus `shared.js` for initialization
@@ -680,18 +689,27 @@ npm run prisma:migrate:deploy && npm run prisma:seed
 - Clean separation: Build → Migrate → Deploy phases
 
 **Prisma 7 Compatibility:**
-Seed script requires adapter-based initialization:
+Seed script requires adapter-based initialization and includes complete initial data:
 ```typescript
 import 'dotenv/config';
 import { PrismaClient } from '@prisma/client';
 import { PrismaPg } from '@prisma/adapter-pg';
+import pg from 'pg';
+import bcrypt from 'bcrypt';
 
-const adapter = new PrismaPg({
-  connectionString: process.env.DATABASE_URL!,
+const pool = new pg.Pool({
+  connectionString: process.env.DATABASE_URL,
 });
 
+const adapter = new PrismaPg(pool);
 const prisma = new PrismaClient({ adapter });
 ```
+
+**Seed Data Included:**
+- 30 GBBO bakers (series 1-10 finalists)
+- 4 initial users (aaronb, anitab, lennyc, maddiem) with hashed passwords
+- 6 initial polls with voting history
+- Proper vote relationships for leaderboard functionality
 
 ### Migration Checklist
 
@@ -841,8 +859,8 @@ const prisma = new PrismaClient({ adapter });
 - [x] Fix database connection pool configuration
 - [x] Create Postman collection for testing
 - [ ] Write API tests (unit + integration)
-- [ ] Add rate limiting (prevent brute force attacks)
-- [ ] Implement request throttling
+- [x] Add rate limiting (prevent brute force attacks)
+- [x] Implement request throttling
 - [x] Create deployment configurations (Railway, Vercel)
 - [x] Add production scripts to package.json
 - [x] Create deployment documentation (guides, checklists)
@@ -851,11 +869,11 @@ const prisma = new PrismaClient({ adapter });
 - [ ] Configure HTTPS in production
 - [ ] Deploy frontend to Vercel
 
-**Integration**:
+**Integration** (Phase 3.1 - COMPLETED):
 - [x] Create API client with token management
 - [x] Update Redux thunks to call real API
 - [x] Handle loading/error states properly
-- [x] Add retry logic for failed requests
+- [x] Add retry logic for failed requests (exponential backoff: 1s, 2s, 4s)
 - [x] Test with both mock and real API
 - [x] Update LoginPage for real authentication
 - [x] Update logout to clear JWT token
@@ -863,4 +881,52 @@ const prisma = new PrismaClient({ adapter });
 - [x] Add registration flow for new users
 - [x] Disable Demo button when using real API
 - [x] Add Toast notification component
-- [ ] Remove `_DATA.js` when complete
+- [x] Remove `_DATA.js` when complete
+
+**Error Resilience & Empty Database Handling** (Phase 3.2 - COMPLETED):
+- [x] Add empty database detection in apiClient
+- [x] Implement automatic fallback to mock data on API failure
+- [x] Create apiHealth Redux slice to track API status
+- [x] Add warning banner when using fallback data
+- [x] Display actionable error messages (seed command)
+- [x] Add retry mechanism for failed data loads
+- [x] Improve App.tsx loading state with error tracking
+- [x] Update seed.ts with initial users, polls, and votes data
+- [x] Remove verbose debug console logs (keep error/warning logs)
+- [x] Test empty database recovery workflow
+- [x] Verify fallback behavior when API server is down
+**Performance & Optimization** (Phase 3.3 - COMPLETED):
+- [x] Implement request retry logic with exponential backoff
+  - Retry on network errors and 5xx status codes
+  - Don't retry on 4xx client errors (fail fast)
+  - Don't retry mutations (POST/PUT/DELETE) to prevent duplicates
+  - Max 3 retries with exponential backoff (1s, 2s, 4s)
+- [x] Add backend rate limiting (@fastify/rate-limit)
+  - Global limit: 100 requests per 15 minutes
+  - Auth endpoints (login/register): 5 requests per 15 minutes (brute force protection)
+  - Mutation endpoints (create poll/vote): 30 requests per minute
+  - Read endpoints: Use global limit
+- [x] Add API response caching
+  - Cache GET requests with TTL
+  - Different cache durations per resource type (bakers: 1hr, users: 5min, polls: 2min, leaderboard: 1min)
+  - Manual cache invalidation on mutations
+  - Clear all cache on logout
+- [x] Optimize Redux selectors with memoization
+  - Create `src/selectors/polls.ts` with memoized selectors using `createSelector`
+  - Eliminate unnecessary rerenders in Dashboard and Poll components
+  - Use Reselect pattern for complex derived state
+- [x] Remove mock _DATA.js system (~650 lines removed)
+  - Deleted `src/utils/_DATA.js` (409 lines)
+  - Deleted `src/utils/api.ts` (34 lines)
+  - Deleted `src/tests/Data.test.js`
+  - Removed fallback logic from `src/actions/shared.ts`
+  - Removed dual API logic from `src/actions/polls.ts`
+  - Removed `USE_REAL_API` flag from `src/config.ts`
+  - Removed `apiHealth` slice from reducers
+  - Removed fallback warning banner from LandingPage
+  - Fixed leaderboard bug (LoginPage was overwriting user data with empty arrays)
+- [ ] Additional performance optimizations
+  - Add request deduplication
+  - Optimize database queries with indexes
+  - Add response compression middleware
+  - Consider Redis caching for leaderboard

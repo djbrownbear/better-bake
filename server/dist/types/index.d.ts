@@ -40,6 +40,11 @@ export interface Baker {
     name: string;
     series: string;
 }
+export interface CreateBakerInput {
+    id: string;
+    name: string;
+    series: string;
+}
 export interface PollWithVotes extends Poll {
     votes: Vote[];
     author: UserResponse;

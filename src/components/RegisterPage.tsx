@@ -48,12 +48,6 @@ const RegisterPage: React.FC = () => {
         return;
       }
 
-      if (!config.USE_REAL_API) {
-        setError('Registration is only available with the real API. Please enable VITE_USE_REAL_API=true in your .env file.');
-        setIsLoading(false);
-        return;
-      }
-
       // Register with real API
       const response = await apiClient.register(email, password, name);
       
@@ -71,30 +65,6 @@ const RegisterPage: React.FC = () => {
       setIsLoading(false);
     }
   };
-
-  if (!config.USE_REAL_API) {
-    return (
-      <div className="min-h-screen bg-linear-to-br from-primary-100 via-primary-50 to-white flex items-center justify-center p-4">
-        <div className="w-full max-w-md bg-white rounded-lg shadow-xl p-8">
-          <div className="text-center mb-8">
-            <span className="text-3xl font-bold text-primary">Better Bake</span>
-            <h1 className="text-2xl font-semibold mt-2">Registration Unavailable</h1>
-          </div>
-          <p className="text-center text-gray-600 mb-6">
-            Registration is only available when using the real backend API.
-          </p>
-          <div className="text-center">
-            <Link 
-              to="/login"
-              className="text-primary-600 hover:text-primary-700 font-semibold"
-            >
-              ← Back to Login
-            </Link>
-          </div>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen bg-linear-to-br from-primary-100 via-primary-50 to-white flex items-center justify-center p-4">
