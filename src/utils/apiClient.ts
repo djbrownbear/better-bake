@@ -251,6 +251,8 @@ class ApiClient {
       // Populate user's questions array
       if (users[poll.author]) {
         users[poll.author].questions.push(poll.id);
+      } else {
+        console.warn('[getInitialData] poll author not found in users:', poll.author);
       }
 
       // Populate user's answers
@@ -258,6 +260,8 @@ class ApiClient {
         if (users[userId]) {
           const answer = poll.optionOne.votes.includes(userId) ? 'optionOne' : 'optionTwo';
           users[userId].answers[poll.id] = answer;
+        } else {
+          console.warn('[getInitialData] vote userId not found in users:', userId);
         }
       });
     });
@@ -267,6 +271,27 @@ class ApiClient {
     bakers.forEach(baker => {
       bakersRecord[baker.id] = baker;
     });
+
+    // Detect empty data - likely indicates unseeded database
+    const isEmpty = Object.keys(users).length === 0 && 
+                    Object.keys(polls).length === 0 && 
+                    Object.keys(bakersRecord).length === 0;
+    
+    if (isEmpty) {
+      console.error('Database appears to be empty. Run "npm run prisma:seed" in the server directory.');
+      throw new Error('Database is empty. Please contact the administrator to seed the database.');
+    }
+
+    // Warn if only partially populated
+    if (Object.keys(users).length === 0) {
+      console.warn('No users found in database');
+    }
+    if (Object.keys(polls).length === 0) {
+      console.warn('No polls found in database');
+    }
+    if (Object.keys(bakersRecord).length === 0) {
+      console.warn('No bakers found in database');
+    }
 
     return {
       users,
