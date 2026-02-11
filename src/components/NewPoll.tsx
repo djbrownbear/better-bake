@@ -46,7 +46,13 @@ const NewPoll: React.FC = () => {
         optionOneText, 
         optionTwoText, 
         optionOneImage: optionOneBaker,
-        optionTwoImage: optionTwoBaker 
+        optionTwoImage: optionTwoBaker,
+        optionOneSeason,
+        optionOneEpisode,
+        optionTwoSeason,
+        optionTwoEpisode,
+        optionOneBaker,
+        optionTwoBaker,
       }));
       
       // Reset form
