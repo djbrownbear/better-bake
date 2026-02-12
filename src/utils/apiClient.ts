@@ -109,10 +109,10 @@ class ApiClient {
     // Fetch fresh data
     const data = await fetchFn();
     
-    // Store in cache
+    // Store in cache with timestamp after fetch completes
     this.cache.set(cacheKey, {
       data,
-      timestamp: now,
+      timestamp: Date.now(), // Capture timestamp after fetch to avoid premature expiry
     });
 
     return data;
