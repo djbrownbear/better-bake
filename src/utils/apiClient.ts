@@ -41,8 +41,22 @@ interface LoginResponse {
   user: ApiUser;
 }
 
+interface CacheEntry<T> {
+  data: T;
+  timestamp: number;
+}
+
 class ApiClient {
   private token: string | null = null;
+  private cache = new Map<string, CacheEntry<any>>();
+  
+  // Cache TTL in milliseconds for different resource types
+  private cacheDuration = {
+    bakers: 60 * 60 * 1000,      // 1 hour (rarely changes)
+    users: 5 * 60 * 1000,         // 5 minutes
+    polls: 2 * 60 * 1000,         // 2 minutes
+    leaderboard: 1 * 60 * 1000,   // 1 minute (frequently updated)
+  };
 
   constructor() {
     // Load token from localStorage on initialization
@@ -52,20 +66,96 @@ class ApiClient {
   setToken(token: string): void {
     this.token = token;
     localStorage.setItem('authToken', token);
+    // Clear cache when token changes to prevent serving cached data from previous user
+    this.clearCache();
   }
 
   clearToken(): void {
     this.token = null;
     localStorage.removeItem('authToken');
+    // Clear cache on logout
+    this.clearCache();
   }
 
   getToken(): string | null {
     return this.token;
   }
 
+  /**
+   * Get cached data or fetch from API
+   * @param cacheKey - Unique cache key for this request
+   * @param ttl - Time to live in milliseconds
+   * @param fetchFn - Function that fetches the data
+   * @returns Promise with cached or fresh data
+   */
+  private async getCachedOrFetch<T>(
+    cacheKey: string,
+    ttl: number,
+    fetchFn: () => Promise<T>
+  ): Promise<T> {
+    const cached = this.cache.get(cacheKey);
+    const now = Date.now();
+
+    // Return cached data if still valid
+    if (cached && now - cached.timestamp < ttl) {
+      return cached.data;
+    }
+
+    // Delete expired entry to prevent unbounded cache growth
+    if (cached) {
+      this.cache.delete(cacheKey);
+    }
+
+    // Fetch fresh data
+    const data = await fetchFn();
+    
+    // Store in cache
+    this.cache.set(cacheKey, {
+      data,
+      timestamp: now,
+    });
+
+    return data;
+  }
+
+  /**
+   * Clear specific cache key or pattern
+   */
+  private clearCacheKey(key: string): void {
+    this.cache.delete(key);
+  }
+
+  /**
+   * Clear cache keys matching a pattern
+   */
+  private clearCachePattern(pattern: string): void {
+    const keysToDelete: string[] = [];
+    this.cache.forEach((_, key) => {
+      if (key.includes(pattern)) {
+        keysToDelete.push(key);
+      }
+    });
+    keysToDelete.forEach(key => this.cache.delete(key));
+  }
+
+  /**
+   * Clear all cache
+   */
+  clearCache(): void {
+    this.cache.clear();
+  }
+
+  /**
+   * Make HTTP request with exponential backoff retry logic
+   * @param endpoint - API endpoint
+   * @param options - Fetch options
+   * @param retryCount - Current retry attempt (internal use)
+   * @returns Promise with response data
+   */
   private async request<T>(
     endpoint: string,
-    options?: RequestInit
+    options?: RequestInit,
+    retryCount: number = 0
   ): Promise<T> {
     const headers: HeadersInit = {
       'Content-Type': 'application/json',
@@ -73,17 +163,43 @@ class ApiClient {
       ...options?.headers,
     };
 
-    const response = await fetch(`${API_BASE_URL}${endpoint}`, {
-      ...options,
-      headers,
-    });
+    const maxRetries = 3;
+    const isMutation = options?.method && ['POST', 'PUT', 'PATCH', 'DELETE'].includes(options.method);
 
-    if (!response.ok) {
-      const error = await response.json().catch(() => ({ error: 'Request failed' }));
-      throw new Error(error.error || `HTTP ${response.status}`);
+    try {
+      const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+        ...options,
+        headers,
+      });
+
+      // Handle non-ok responses
+      if (!response.ok) {
+        const error = await response.json().catch(() => ({ error: 'Request failed' }));
+        const errorMessage = error.error || `HTTP ${response.status}`;
+
+        // Retry on 5xx errors (server errors) if not a mutation
+        if (response.status >= 500 && !isMutation && retryCount < maxRetries) {
+          const delay = Math.pow(2, retryCount) * 1000; // Exponential backoff: 1s, 2s, 4s
+          console.warn(`Request failed with ${response.status}, retrying in ${delay}ms... (attempt ${retryCount + 1}/${maxRetries})`);
+          await new Promise(resolve => setTimeout(resolve, delay));
+          return this.request<T>(endpoint, options, retryCount + 1);
+        }
+
+        // Don't retry on 4xx errors (client errors) - fail fast
+        throw new Error(errorMessage);
+      }
+
+      return response.json();
+    } catch (error) {
+      // Retry on network errors if not a mutation
+      if (!isMutation && retryCount < maxRetries && error instanceof TypeError) {
+        const delay = Math.pow(2, retryCount) * 1000;
+        console.warn(`Network error, retrying in ${delay}ms... (attempt ${retryCount + 1}/${maxRetries})`);
+        await new Promise(resolve => setTimeout(resolve, delay));
+        return this.request<T>(endpoint, options, retryCount + 1);
+      }
+      throw error;
     }
-
-    return response.json();
   }
 
   // Authentication endpoints
@@ -111,11 +227,19 @@ class ApiClient {
 
   // Poll endpoints
   async getAllPolls(): Promise<ApiPoll[]> {
-    return this.request<ApiPoll[]>('/polls');
+    return this.getCachedOrFetch(
+      'polls:all',
+      this.cacheDuration.polls,
+      () => this.request<ApiPoll[]>('/polls')
+    );
   }
 
   async getPollById(pollId: string): Promise<ApiPoll> {
-    return this.request<ApiPoll>(`/polls/${pollId}`);
+    return this.getCachedOrFetch(
+      `polls:${pollId}`,
+      this.cacheDuration.polls,
+      () => this.request<ApiPoll>(`/polls/${pollId}`)
+    );
   }
 
   async createPoll(pollData: {
@@ -128,34 +252,64 @@ class ApiClient {
     optionTwoSeason: string;
     optionTwoEpisode: string;
   }): Promise<ApiPoll> {
-    return this.request<ApiPoll>('/polls', {
+    const result = await this.request<ApiPoll>('/polls', {
       method: 'POST',
       body: JSON.stringify(pollData),
     });
+    
+    // Invalidate polls cache after creating a new poll
+    this.clearCachePattern('polls:');
+    this.clearCachePattern('users:');
+    this.clearCacheKey('leaderboard');
+    
+    return result;
   }
 
   async voteOnPoll(pollId: string, option: 'optionOne' | 'optionTwo'): Promise<ApiPoll> {
-    return this.request<ApiPoll>(`/polls/${pollId}/vote`, {
+    const result = await this.request<ApiPoll>(`/polls/${pollId}/vote`, {
       method: 'POST',
       body: JSON.stringify({ option }),
     });
+    
+    // Invalidate related caches after voting
+    this.clearCachePattern('polls:');
+    this.clearCachePattern('users:');
+    this.clearCacheKey('leaderboard');
+    
+    return result;
   }
 
   async getAnsweredPolls(): Promise<ApiPoll[]> {
-    return this.request<ApiPoll[]>('/polls/answered');
+    return this.getCachedOrFetch(
+      'polls:answered',
+      this.cacheDuration.polls,
+      () => this.request<ApiPoll[]>('/polls/answered')
+    );
   }
 
   async getUnansweredPolls(): Promise<ApiPoll[]> {
-    return this.request<ApiPoll[]>('/polls/unanswered');
+    return this.getCachedOrFetch(
+      'polls:unanswered',
+      this.cacheDuration.polls,
+      () => this.request<ApiPoll[]>('/polls/unanswered')
+    );
   }
 
   // User endpoints
   async getAllUsers(): Promise<ApiUser[]> {
-    return this.request<ApiUser[]>('/users');
+    return this.getCachedOrFetch(
+      'users:all',
+      this.cacheDuration.users,
+      () => this.request<ApiUser[]>('/users')
+    );
   }
 
   async getUserById(userId: string): Promise<ApiUser> {
-    return this.request<ApiUser>(`/users/${userId}`);
+    return this.getCachedOrFetch(
+      `users:${userId}`,
+      this.cacheDuration.users,
+      () => this.request<ApiUser>(`/users/${userId}`)
+    );
   }
 
   async getLeaderboard(): Promise<Array<{
@@ -166,23 +320,40 @@ class ApiClient {
     pollsAnswered: number;
     score: number;
   }>> {
-    return this.request('/users/leaderboard');
+    return this.getCachedOrFetch(
+      'leaderboard',
+      this.cacheDuration.leaderboard,
+      () => this.request('/users/leaderboard')
+    );
   }
 
   // Baker endpoints
   async getAllBakers(): Promise<Baker[]> {
-    return this.request<Baker[]>('/bakers');
+    return this.getCachedOrFetch(
+      'bakers:all',
+      this.cacheDuration.bakers,
+      () => this.request<Baker[]>('/bakers')
+    );
   }
 
   async getBakerById(bakerId: string): Promise<Baker> {
-    return this.request<Baker>(`/bakers/${bakerId}`);
+    return this.getCachedOrFetch(
+      `bakers:${bakerId}`,
+      this.cacheDuration.bakers,
+      () => this.request<Baker>(`/bakers/${bakerId}`)
+    );
   }
 
   async createBaker(baker: { id: string; name: string; series: string }): Promise<Baker> {
-    return this.request<Baker>('/bakers', {
+    const result = await this.request<Baker>('/bakers', {
       method: 'POST',
       body: JSON.stringify(baker),
     });
+    
+    // Invalidate bakers cache
+    this.clearCachePattern('bakers:');
+    
+    return result;
   }
 
   // Data transformation helpers - convert API format to frontend format

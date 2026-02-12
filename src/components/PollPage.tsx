@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { handleAddAnswer } from "../actions/polls";
-import { formatPoll, formatPercent } from "../utils/helpers";
+import { formatPercent } from "../utils/helpers";
 import PollHeader from "./PollHeader";
 import { useParams, Navigate } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from "../store/hooks";
+import { makeSelectPollPageData } from "../selectors/polls";
 
 interface PollPageProps {
   id: string;
@@ -14,49 +15,11 @@ const PollPage: React.FC<PollPageProps> = ({ id }) => {
   const [isVoting, setIsVoting] = useState(false);
   const [showVoteSuccess, setShowVoteSuccess] = useState(false);
   
-  const { poll, bakerOne, bakerTwo, authedUser } = useAppSelector(state => {
-    const pollData = state.polls[id];
-    
-    if (!pollData) {
-      return {
-        authedUser: state.authedUser,
-        poll: null,
-        bakerOne: '',
-        bakerTwo: '',
-      };
-    }
-    
-    const bOneSeason = pollData.optionOne.season;
-    const bTwoSeason = pollData.optionTwo.season;
-    const bOneEpisode = pollData.optionOne.episode;
-    const bTwoEpisode = pollData.optionTwo.episode;
-    
-    // Handle both mock data (nested structure) and real API (simple structure)
-    let bakerOne = '';
-    let bakerTwo = '';
-    
-    // Check if bakers have the complex nested structure (mock data)
-    if (bOneSeason && state.bakers[bOneSeason]?.baker) {
-      bakerOne = state.bakers[bOneSeason].baker[pollData.optionOne.baker]?.episodes?.[bOneEpisode]?.bakeURL || pollData.optionOne.imgURL || '';
-    } else {
-      // Real API or fallback to imgURL
-      bakerOne = pollData.optionOne.imgURL || '';
-    }
-    
-    if (bTwoSeason && state.bakers[bTwoSeason]?.baker) {
-      bakerTwo = state.bakers[bTwoSeason].baker[pollData.optionTwo.baker]?.episodes?.[bTwoEpisode]?.bakeURL || pollData.optionTwo.imgURL || '';
-    } else {
-      // Real API or fallback to imgURL
-      bakerTwo = pollData.optionTwo.imgURL || '';
-    }
-
-    return {
-      authedUser: state.authedUser,
-      poll: formatPoll(pollData, state.users[pollData.author], state.authedUser || ''),
-      bakerOne,
-      bakerTwo,
-    };
-  });
+  // Create memoized selector for this specific poll
+  const selectPollPageData = useMemo(() => makeSelectPollPageData(id), [id]);
+  const { poll, bakerOne: bakerOneFromStore, bakerTwo: bakerTwoFromStore, authedUser } = useAppSelector(selectPollPageData);
+  const bakerOne = bakerOneFromStore || undefined;
+  const bakerTwo = bakerTwoFromStore || undefined;
 
   if (!poll || !authedUser) {
     return <Navigate to="/error"/>;

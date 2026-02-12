@@ -1,20 +1,22 @@
 # Better Bake - AI Coding Agent Instructions
 
 ## Project Overview
-"Better Bake" is a React + Redux polling app for voting on "Who Baked It Better" questions. Users login, view/answer polls, create polls, and see leaderboard rankings. The app uses a fake in-memory database (`_DATA.js`) and is deployed to GitHub Pages.
+"Better Bake" is a React + Redux polling app for voting on "Who Baked It Better" questions. Users login, view/answer polls, create polls, and see leaderboard rankings. The app uses a Fastify backend with PostgreSQL database (via Prisma ORM). The frontend is deployed to Vercel and the backend to Railway.
 
 ## Architecture
 
 ### State Management - Redux Pattern
-- **Store setup**: `src/index.js` creates store with `createStore(reducer, middleware)`
-- **Middleware**: Custom logger (`middleware/logger.js`) logs every action and state change
-- **Reducers**: Combined in `reducers/index.js` - `authedUser`, `users`, `polls`, `bakers`, `loadingBar`
-- **Actions pattern**: All async actions follow the "thunk" pattern, return functions with `(dispatch, getState)`
+- **Store setup**: `src/index.tsx` creates store with Redux Toolkit's `configureStore`
+- **Middleware**: Custom logger (`middleware/logger.ts`) logs every action and state change
+- **Reducers**: Combined in `reducers/index.ts` - `authedUser`, `users`, `polls`, `bakers`, `loadingBar`
+- **Actions pattern**: All async actions use Redux Toolkit's `createAsyncThunk`
 
 ### Key Data Flow
-1. **Initialization**: `handleInitialData()` in `actions/shared.js` orchestrates loading users, polls, and bakers
-2. **Data source**: `utils/_DATA.js` is the fake backend - all CRUD operations go through `utils/api.js`
+1. **Initialization**: `handleInitialData()` in `actions/shared.ts` orchestrates loading users, polls, and bakers
+2. **Data source**: Real API (`utils/apiClient.ts`) connects to Fastify backend
 3. **Optimistic updates**: Actions dispatch to multiple reducers (e.g., `handleAddPoll` updates both `polls` and `users` state)
+4. **Request Resilience**: Exponential backoff retry logic (1s, 2s, 4s) for network failures and 5xx errors
+5. **Caching**: Client-side caching with resource-specific TTLs to reduce API calls
 
 ### Routing & Authentication
 - **Router**: Uses `HashRouter` (not `BrowserRouter`) for GitHub Pages compatibility
@@ -24,13 +26,12 @@
 ## Component Conventions
 
 ### State Access Pattern
-Components connect to Redux using `connect()` HOC, not hooks:
-```javascript
-const mapStateToProps = ({ authedUser, polls, users }) => ({
-  authedUser,
-  polls: Object.values(polls).sort((a,b) => b.timestamp - a.timestamp)
-});
-export default connect(mapStateToProps)(Dashboard);
+Components use Redux hooks (`useAppSelector`, `useAppDispatch`) from typed hooks:
+```typescript
+const authedUser = useAppSelector(state => state.authedUser);
+const polls = useAppSelector(state => 
+  Object.values(state.polls).sort((a, b) => b.timestamp - a.timestamp)
+);
 ```
 
 ### Poll Filtering Logic
@@ -83,14 +84,18 @@ Separate reducer/state for baker metadata (Great British Bake Off contestants), 
 1. **Never mutate state** - Redux requires immutability; use spread operators in reducers
 2. **Action creators are synchronous** - async logic lives in "handle" functions (e.g., `handleAddPoll` calls `addPoll`)
 3. **Error handling**: Invalid poll IDs navigate to `/error` (Custom404 component)
-4. **Poll creation**: `NewPoll.js` passes 4 params to `handleAddPoll`: `(optionOneText, optionTwoText, optionOneImage, optionTwoImage)`
-5. **Authentication**: Passwords stored in plain text (not production-ready, educational project)
+4. **Poll creation**: `NewPoll.tsx` passes 8 params to `handleAddPoll`: `{ optionOneText, optionOneBaker, optionOneSeason, optionOneEpisode, optionTwoText, optionTwoBaker, optionTwoSeason, optionTwoEpisode }`
+5. **Authentication**: JWT-based authentication with bcrypt password hashing
+6. **Error handling**: Invalid poll IDs navigate to `/error` (Custom404 component)
 
 ## File Organization
-- `actions/` - One file per reducer, plus `shared.js` for initialization
-- `components/` - Each page/feature is a component (no sub-directories)
-- `utils/_DATA.js` - Mock database, **never import directly in components** (always use `api.js`)
-- `utils/helpers.js` - Utility functions for data transformation
+- `actions/` - Redux async thunks using `createAsyncThunk`
+- `components/` - React components (TypeScript TSX files)
+- `reducers/` - Redux Toolkit slices
+- `selectors/` - Memoized selectors using Reselect
+- `utils/apiClient.ts` - API client with caching and retry logic
+- `utils/helpers.ts` - Utility functions for data transformation
+- `server/` - Fastify backend with Prisma ORM
 
 ---
 
@@ -169,7 +174,7 @@ export interface RootState {
 ```
 
 #### Step 1.3: Migration Order
-1. **Start with utilities**: Convert `utils/_DATA.js` → `_DATA.ts`, `api.js` → `api.ts`, `helpers.js` → `helpers.ts`
+1. **Start with utilities**: Convert `utils/helpers.js` → `helpers.ts`, `utils/apiClient.js` → `apiClient.ts`
 2. **Reducers next**: Add return types, action types
 3. **Actions**: Type thunk actions with `ThunkAction` from `redux-thunk`
 4. **Components last**: Convert `.js` → `.tsx`, add prop interfaces
@@ -605,26 +610,12 @@ export const loginUser = createAsyncThunk(
 
 #### Step 3.7: Migration Strategy
 
-**Parallel running approach**:
-1. **Build backend** with same data structure as `_DATA.js`
-2. **Create data migration script** to seed DB from existing mock data
-3. **Run both** mock and real API during development (feature flag)
-4. **Gradually switch** endpoints from mock to real API
-5. **Remove** `_DATA.js` once all endpoints migrated
-
-**Environment-based switching**:
-```typescript
-// src/config.ts
-export const USE_MOCK_API = process.env.REACT_APP_USE_MOCK === 'true';
-
-// In store setup
-import { getInitialData as getMockData } from './utils/api';
-import { apiClient } from './api/client';
-
-const dataLoader = USE_MOCK_API 
-  ? getMockData 
-  : () => apiClient.getInitialData();
-```
+**Backend-first approach**:
+1. **Build backend** with PostgreSQL database and Prisma ORM
+2. **Create seed script** to populate initial data (users, polls, bakers)
+3. **Implement all API endpoints** before connecting frontend
+4. **Test API** with Postman or similar tool
+5. **Connect frontend** after backend is stable and tested
 
 ### Phase 4: Deployment Modernization
 
@@ -680,29 +671,37 @@ npm run prisma:migrate:deploy && npm run prisma:seed
 - Clean separation: Build → Migrate → Deploy phases
 
 **Prisma 7 Compatibility:**
-Seed script requires adapter-based initialization:
+Seed script requires adapter-based initialization and includes complete initial data:
 ```typescript
 import 'dotenv/config';
 import { PrismaClient } from '@prisma/client';
 import { PrismaPg } from '@prisma/adapter-pg';
+import pg from 'pg';
+import bcrypt from 'bcrypt';
 
-const adapter = new PrismaPg({
-  connectionString: process.env.DATABASE_URL!,
+const pool = new pg.Pool({
+  connectionString: process.env.DATABASE_URL,
 });
 
+const adapter = new PrismaPg(pool);
 const prisma = new PrismaClient({ adapter });
 ```
+
+**Seed Data Included:**
+- 30 GBBO bakers (series 1-10 finalists)
+- 4 initial users (aaronb, anitab, lennyc, maddiem) with hashed passwords
+- 6 initial polls with voting history
+- Proper vote relationships for leaderboard functionality
 
 ### Migration Checklist
 
 **TypeScript** (Phase 1 - COMPLETED):
 - [x] Install TypeScript and type definitions
 - [x] Create `src/types/index.ts` with domain models
-- [x] Convert `_DATA.js` (still .js, typed via imports)
 - [x] Convert reducers to typed reducers (authedUser, users, polls, bakers)
 - [x] Convert actions to typed thunk actions (all action files)
-- [x] Convert utility files (`helpers.ts`, `api.ts`)
-- [x] Convert middleware to TypeScript (`logger.ts`, `index.ts`)
+- [x] Convert utility files (`helpers.ts`, `apiClient.ts`)
+- [x] Convert middleware to TypeScript (`logger.ts`)
 - [x] Add RootState type export from reducers
 - [x] Convert all components to TypeScript
 - [x] Verify app compiles with zero TypeScript errors
@@ -841,8 +840,8 @@ const prisma = new PrismaClient({ adapter });
 - [x] Fix database connection pool configuration
 - [x] Create Postman collection for testing
 - [ ] Write API tests (unit + integration)
-- [ ] Add rate limiting (prevent brute force attacks)
-- [ ] Implement request throttling
+- [x] Add rate limiting (prevent brute force attacks)
+- [x] Implement request throttling
 - [x] Create deployment configurations (Railway, Vercel)
 - [x] Add production scripts to package.json
 - [x] Create deployment documentation (guides, checklists)
@@ -851,11 +850,11 @@ const prisma = new PrismaClient({ adapter });
 - [ ] Configure HTTPS in production
 - [ ] Deploy frontend to Vercel
 
-**Integration**:
+**Integration** (Phase 3.1 - COMPLETED):
 - [x] Create API client with token management
 - [x] Update Redux thunks to call real API
 - [x] Handle loading/error states properly
-- [x] Add retry logic for failed requests
+- [x] Add retry logic for failed requests (exponential backoff: 1s, 2s, 4s)
 - [x] Test with both mock and real API
 - [x] Update LoginPage for real authentication
 - [x] Update logout to clear JWT token
@@ -863,4 +862,59 @@ const prisma = new PrismaClient({ adapter });
 - [x] Add registration flow for new users
 - [x] Disable Demo button when using real API
 - [x] Add Toast notification component
-- [ ] Remove `_DATA.js` when complete
+**Integration** (Phase 3.1 - COMPLETED):
+- [x] Create API client with token management
+- [x] Update Redux thunks to call real API
+- [x] Handle loading/error states properly
+- [x] Add retry logic for failed requests (exponential backoff: 1s, 2s, 4s)
+- [x] Test with both mock and real API
+- [x] Update LoginPage for real authentication
+- [x] Update logout to clear JWT token
+- [x] Fix data structure compatibility (baker images)
+- [x] Add registration flow for new users
+- [x] Disable Demo button when using real API
+- [x] Add Toast notification component
+
+**Empty Database Handling** (Phase 3.2 - COMPLETED):
+- [x] Add empty database detection in apiClient
+- [x] Display actionable error messages (seed command)
+- [x] Update seed.ts with initial users, polls, and votes data
+- [x] Remove verbose debug console logs (keep error/warning logs)
+- [x] Test empty database recovery workflow
+
+**Performance & Optimization** (Phase 3.3 - COMPLETED):
+- [x] Implement request retry logic with exponential backoff
+  - Retry on network errors and 5xx status codes
+  - Don't retry on 4xx client errors (fail fast)
+  - Don't retry mutations (POST/PUT/DELETE) to prevent duplicates
+  - Max 3 retries with exponential backoff (1s, 2s, 4s)
+- [x] Add backend rate limiting (@fastify/rate-limit)
+  - Global limit: 100 requests per 15 minutes
+  - Auth endpoints (login/register): 5 requests per 15 minutes (brute force protection)
+  - Mutation endpoints (create poll/vote): 30 requests per minute
+  - Read endpoints: Use global limit
+  - Enable trustProxy for proper IP detection behind reverse proxies
+- [x] Add API response caching
+  - Cache GET requests with TTL
+  - Different cache durations per resource type (bakers: 1hr, users: 5min, polls: 2min, leaderboard: 1min)
+  - Manual cache invalidation on mutations
+  - Clear cache on logout and token change
+  - Automatic eviction of expired cache entries
+- [x] Optimize Redux selectors with memoization
+  - Create `src/selectors/polls.ts` with memoized selectors using `createSelector`
+  - Eliminate unnecessary rerenders in Dashboard and Poll components
+  - Use Reselect pattern for complex derived state
+- [x] Remove mock _DATA.js system (~650 lines removed)
+  - Deleted `src/utils/_DATA.js` (409 lines)
+  - Deleted `src/utils/api.ts` (34 lines)
+  - Deleted `src/tests/Data.test.js`
+  - Removed fallback logic from `src/actions/shared.ts`
+  - Removed dual API logic from `src/actions/polls.ts`
+  - Fixed leaderboard bug (LoginPage was overwriting user data with empty arrays)
+- [x] Fix baker selector to work with API-driven baker data structure
+- [x] Update poll creation to pass season/episode parameters correctly
+- [ ] Additional performance optimizations
+  - Add request deduplication
+  - Optimize database queries with indexes
+  - Add response compression middleware
+  - Consider Redis caching for leaderboard

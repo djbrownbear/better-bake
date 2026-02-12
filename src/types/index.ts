@@ -30,8 +30,7 @@ export interface Baker {
   id: string;
   name: string;
   series: string;
-  baker?: any; // Complex nested structure from _DATA.js
-  [key: string]: any; // Allow dynamic properties for episodes
+  imgURL?: string; // Baker profile/bake image URL
 }
 
 export interface RootState {

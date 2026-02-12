@@ -16,7 +16,7 @@ export async function pollsRoutes(fastify: FastifyInstance): Promise<void> {
   // GET /api/polls/:id - Get single poll
   fastify.get<{ Params: { id: string } }>('/:id', getPoll);
 
-  // POST /api/polls - Create new poll (protected)
+  // POST /api/polls - Create new poll (protected) - Moderate rate limit
   fastify.post<{
     Body: {
       optionOneText: string;
@@ -28,13 +28,29 @@ export async function pollsRoutes(fastify: FastifyInstance): Promise<void> {
       optionTwoSeason: string;
       optionTwoEpisode: string;
     };
-  }>('/', { preHandler: [authenticateToken] }, create);
+  }>('/', { 
+    preHandler: [authenticateToken],
+    config: {
+      rateLimit: {
+        max: 30,
+        timeWindow: '1 minute',
+      },
+    },
+  }, create);
 
-  // POST /api/polls/:id/vote - Vote on poll (protected)
+  // POST /api/polls/:id/vote - Vote on poll (protected) - Moderate rate limit
   fastify.post<{
     Params: { id: string };
     Body: { option: 'optionOne' | 'optionTwo' };
-  }>('/:id/vote', { preHandler: [authenticateToken] }, vote);
+  }>('/:id/vote', { 
+    preHandler: [authenticateToken],
+    config: {
+      rateLimit: {
+        max: 30,
+        timeWindow: '1 minute',
+      },
+    },
+  }, vote);
 
   // GET /api/polls/answered - Get user's answered polls (protected)
   fastify.get('/answered', { preHandler: [authenticateToken] }, getAnsweredPolls);

@@ -4,91 +4,65 @@ import { handleAddPoll } from "../actions/polls";
 import { useNavigate } from "react-router-dom";
 import PollHeader from "./PollHeader";
 import { useAppSelector, useAppDispatch } from "../store/hooks";
-
-interface BakeOption {
-  text: string;
-  bakeURL: string;
-}
+import { selectNewPollData } from "../selectors/polls";
 
 const NewPoll: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const authedUser = useAppSelector(state => state.authedUser);
-  const { name, avatar, allOptions } = useAppSelector(state => {
-    const user = state.users[state.authedUser || ''];
-    const name = user?.name || '';
-    const avatar = user?.avatarURL || '';
-
-    // modified based on function from the following source:
-    // https://stackoverflow.com/questions/54857222/find-all-values-by-specific-key-in-a-deep-nested-object
-    function findAllByProp(obj: any, keyToFind: string): BakeOption[] {
-      return Object.entries(obj)
-        .reduce((acc: BakeOption[], [key, value]) => (key === keyToFind)
-          ? acc.concat(obj as BakeOption)
-          : (typeof value === 'object' && value !== null)
-          ? acc.concat(findAllByProp(value, keyToFind))
-          : acc
-        , [])
-    }
-
-    const allOptions = findAllByProp(state.bakers,'bakeURL');
-
-    return { name, avatar, allOptions };
-  });
-  const [optionOneNew, setOptionOneNew] = useState(""); 
-  const [optionTwoNew, setOptionTwoNew] = useState(""); 
-  const [optionOneImage, setOptionOneImage] = useState("");
-  const [optionTwoImage, setOptionTwoImage] = useState("");
+  const { name, avatar, allBakers } = useAppSelector(selectNewPollData);
+  
+  // Form state
+  const [optionOneText, setOptionOneText] = useState(""); 
+  const [optionOneBaker, setOptionOneBaker] = useState("");
+  const [optionOneSeason, setOptionOneSeason] = useState("");
+  const [optionOneEpisode, setOptionOneEpisode] = useState("");
+  
+  const [optionTwoText, setOptionTwoText] = useState(""); 
+  const [optionTwoBaker, setOptionTwoBaker] = useState("");
+  const [optionTwoSeason, setOptionTwoSeason] = useState("");
+  const [optionTwoEpisode, setOptionTwoEpisode] = useState("");
+  
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
 
+  // Initialize default baker and season values
   useEffect(() => {
-    if (allOptions.length >= 2) {
-      setOptionOneNew(allOptions[0].text);
-      setOptionTwoNew(allOptions[1].text);
-      setOptionOneImage(allOptions[0].bakeURL);
-      setOptionTwoImage(allOptions[1].bakeURL);
-      const el = document.querySelector('#optionTwoNew') as HTMLSelectElement;
-      if (el) el.value = allOptions[1].text;
+    if (allBakers.length > 0) {
+      setOptionOneBaker(allBakers[0].id);
+      setOptionTwoBaker(allBakers[Math.min(1, allBakers.length - 1)].id);
+      setOptionOneSeason("1");
+      setOptionOneEpisode("1");
+      setOptionTwoSeason("1");
+      setOptionTwoEpisode("1");
     }
-  }, [allOptions]);
-
-  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    let idx = e.target.options.selectedIndex;
-    let imgURL = e.target.options[idx].dataset.imgurl || '';
-
-    if (e.target.id === "optionOneNew") {
-      const optionOneNew = e.target.value;
-      setOptionOneNew(optionOneNew);
-      setOptionOneImage(imgURL);
-    } else if (e.target.id === "optionTwoNew") {
-      const optionTwoNew = e.target.value;
-      setOptionTwoNew(optionTwoNew);
-      setOptionTwoImage(imgURL);
-    }
-  };
+  }, [allBakers]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
 
     try {
-      await dispatch(handleAddPoll({ optionOneText: optionOneNew, optionTwoText: optionTwoNew, optionOneImage, optionTwoImage }));
-      setOptionOneNew("");
-      setOptionTwoNew("");
-      setOptionOneImage("");
-      setOptionTwoImage("");
+      await dispatch(handleAddPoll({ 
+        optionOneText, 
+        optionOneBaker,
+        optionOneSeason,
+        optionOneEpisode,
+        optionTwoText, 
+        optionTwoBaker,
+        optionTwoSeason,
+        optionTwoEpisode,
+      }));
+      
+      // Reset form
+      setOptionOneText("");
+      setOptionTwoText("");
       setShowSuccess(true);
 
       // Navigate after showing success message
       setTimeout(() => {
         setShowSuccess(false);
         setIsSubmitting(false);
-        if (!authedUser) {
-          navigate("/dashboard");
-        } else {
-          navigate("/dashboard");
-        }
+        navigate("/dashboard");
       }, 1500);
     } catch (error) {
       setIsSubmitting(false);
@@ -96,12 +70,20 @@ const NewPoll: React.FC = () => {
     }
   };
 
+  const isFormValid = optionOneText.trim() !== "" && 
+                      optionTwoText.trim() !== "" && 
+                      optionOneBaker !== "" && 
+                      optionTwoBaker !== "" &&
+                      optionOneSeason.trim() !== "" &&
+                      optionOneEpisode.trim() !== "" &&
+                      optionTwoSeason.trim() !== "" &&
+                      optionTwoEpisode.trim() !== "";
+
   return (
     <div className="min-h-screen bg-linear-to-b from-primary-50 via-white to-gray-50">
       {/* Page Header */}
       <div className="bg-linear-to-r from-primary-600 via-primary-500 to-primary-600 py-12 shadow-lg relative overflow-hidden">
-        {/* Decorative elements */}
-        <div className="absolute inset-0 bg-grid-white/10 [mask-image:linear-gradient(0deg,transparent,black)]"></div>
+        <div className="absolute inset-0 bg-grid-white/10 mask-[linear-gradient(0deg,transparent,black)]"></div>
         <div className="absolute top-0 right-0 w-96 h-96 bg-white/5 rounded-full blur-3xl"></div>
         <div className="absolute bottom-0 left-0 w-72 h-72 bg-primary-300/30 rounded-full blur-3xl"></div>
         
@@ -157,109 +139,186 @@ const NewPoll: React.FC = () => {
           {/* Poll Options Title */}
           <div className="text-center mb-8">
             <h2 className="text-2xl font-bold text-gray-900 mb-2">Choose Your Baker Matchup</h2>
-            <p className="text-gray-600">Select two bakes to pit against each other in an epic showdown</p>
+            <p className="text-gray-600">Create two options for users to vote on</p>
           </div>
         
           {/* Poll Options Grid */}
           <div className="grid md:grid-cols-2 gap-8 mb-8">
-            {/* Option One Card */}
-            <div className="bg-white rounded-2xl shadow-lg overflow-hidden border-2 border-gray-100 hover:border-primary-300 transition-all hover:shadow-xl">
-              <div className="bg-linear-to-br from-primary-100 to-primary-50 p-6 border-b border-primary-200">
-                <label htmlFor="optionOneNew" className="flex items-center justify-center gap-2 text-xl font-bold text-gray-900">
-                  <span className="text-2xl">🥇</span>
-                  Option One
-                </label>
-              </div>
-              
-              {/* Image Container */}
-              <div className="p-6">
-                <div className="relative aspect-square mb-6 bg-gray-50 rounded-xl overflow-hidden group">
-                  <img 
-                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" 
-                    src={optionOneImage} 
-                    alt={`${optionOneNew}`} 
-                  />
-                  <div className="absolute inset-0 bg-linear-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+              {/* Option One Card */}
+              <div className="bg-white rounded-2xl shadow-lg overflow-hidden border-2 border-gray-100">
+                <div className="bg-linear-to-br from-primary-100 to-primary-50 p-6 border-b border-primary-200">
+                  <h3 className="flex items-center justify-center gap-2 text-xl font-bold text-gray-900">
+                    <span className="text-2xl">🥇</span>
+                    Option One
+                  </h3>
                 </div>
                 
-                {/* Select Dropdown */}
-                <div className="relative">
-                  <select 
-                    name="optionOneNew" 
-                    id="optionOneNew" 
-                    className="w-full p-4 pr-10 text-base font-medium border-2 border-gray-300 rounded-xl bg-white focus:border-primary-500 focus:outline-none focus:ring-4 focus:ring-primary-500/20 disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 appearance-none cursor-pointer hover:border-primary-400 transition-all" 
-                    onChange={handleChange}
-                    disabled={isSubmitting}
-                    aria-label="Select first poll option"
-                  >
-                    {allOptions && 
-                      allOptions.map((curOption, idx) => (<option key={idx} data-imgurl={curOption.bakeURL} value={curOption.text}>{curOption.text}</option>))
-                    }
-                  </select>
-                  {/* Custom dropdown arrow */}
-                  <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-gray-700">
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                    </svg>
+                <div className="p-6 space-y-4">
+                  {/* Description */}
+                  <div>
+                    <label htmlFor="optionOneText" className="block text-sm font-semibold text-gray-700 mb-2">
+                      Bake Description *
+                    </label>
+                    <input
+                      type="text"
+                      id="optionOneText"
+                      value={optionOneText}
+                      onChange={(e) => setOptionOneText(e.target.value)}
+                      placeholder="e.g., Chocolate Cake with Raspberry Filling"
+                      className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500/20"
+                      disabled={isSubmitting}
+                      required
+                    />
                   </div>
-                </div>
-              </div>
-            </div>
 
-            {/* Option Two Card */}
-            <div className="bg-white rounded-2xl shadow-lg overflow-hidden border-2 border-gray-100 hover:border-primary-300 transition-all hover:shadow-xl">
-              <div className="bg-linear-to-br from-primary-100 to-primary-50 p-6 border-b border-primary-200">
-                <label htmlFor="optionTwoNew" className="flex items-center justify-center gap-2 text-xl font-bold text-gray-900">
-                  <span className="text-2xl">🥈</span>
-                  Option Two
-                </label>
+                  {/* Baker Selection */}
+                  <div>
+                    <label htmlFor="optionOneBaker" className="block text-sm font-semibold text-gray-700 mb-2">
+                      Baker *
+                    </label>
+                    <select
+                      id="optionOneBaker"
+                      value={optionOneBaker}
+                      onChange={(e) => setOptionOneBaker(e.target.value)}
+                      className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500/20"
+                      disabled={isSubmitting}
+                      required
+                    >
+                      <option value="">Select a baker</option>
+                      {allBakers.map((baker) => (
+                        <option key={baker.id} value={baker.id}>
+                          {baker.name} (Series {baker.series})
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  {/* Season & Episode */}
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label htmlFor="optionOneSeason" className="block text-sm font-semibold text-gray-700 mb-2">
+                        Season
+                      </label>
+                      <input
+                        type="text"
+                        id="optionOneSeason"
+                        value={optionOneSeason}
+                        onChange={(e) => setOptionOneSeason(e.target.value)}
+                        placeholder="1"
+                        className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500/20"
+                        disabled={isSubmitting}
+                      />
+                    </div>
+                    <div>
+                      <label htmlFor="optionOneEpisode" className="block text-sm font-semibold text-gray-700 mb-2">
+                        Episode
+                      </label>
+                      <input
+                        type="text"
+                        id="optionOneEpisode"
+                        value={optionOneEpisode}
+                        onChange={(e) => setOptionOneEpisode(e.target.value)}
+                        placeholder="1"
+                        className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500/20"
+                        disabled={isSubmitting}
+                      />
+                    </div>
+                  </div>
+                </div>
               </div>
-              
-              {/* Image Container */}
-              <div className="p-6">
-                <div className="relative aspect-square mb-6 bg-gray-50 rounded-xl overflow-hidden group">
-                  <img 
-                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" 
-                    src={optionTwoImage} 
-                    alt={`${optionTwoNew}`} 
-                  />
-                  <div className="absolute inset-0 bg-linear-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+
+              {/* Option Two Card */}
+              <div className="bg-white rounded-2xl shadow-lg overflow-hidden border-2 border-gray-100">
+                <div className="bg-linear-to-br from-primary-100 to-primary-50 p-6 border-b border-primary-200">
+                  <h3 className="flex items-center justify-center gap-2 text-xl font-bold text-gray-900">
+                    <span className="text-2xl">🥈</span>
+                    Option Two
+                  </h3>
                 </div>
                 
-                {/* Select Dropdown */}
-                <div className="relative">
-                  <select 
-                    name="optionTwoNew" 
-                    id="optionTwoNew" 
-                    className="w-full p-4 pr-10 text-base font-medium border-2 border-gray-300 rounded-xl bg-white focus:border-primary-500 focus:outline-none focus:ring-4 focus:ring-primary-500/20 disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 appearance-none cursor-pointer hover:border-primary-400 transition-all" 
-                    onChange={handleChange}
-                    disabled={isSubmitting}
-                    aria-label="Select second poll option"
-                  >
-                    {allOptions && 
-                      allOptions.map((curOption, idx) => (<option key={idx} data-imgurl={curOption.bakeURL} value={curOption.text}>{curOption.text}</option>))
-                    }
-                  </select>
-                  {/* Custom dropdown arrow */}
-                  <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-gray-700">
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                    </svg>
+                <div className="p-6 space-y-4">
+                  {/* Description */}
+                  <div>
+                    <label htmlFor="optionTwoText" className="block text-sm font-semibold text-gray-700 mb-2">
+                      Bake Description *
+                    </label>
+                    <input
+                      type="text"
+                      id="optionTwoText"
+                      value={optionTwoText}
+                      onChange={(e) => setOptionTwoText(e.target.value)}
+                      placeholder="e.g., Victoria Sponge with Buttercream"
+                      className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500/20"
+                      disabled={isSubmitting}
+                      required
+                    />
+                  </div>
+
+                  {/* Baker Selection */}
+                  <div>
+                    <label htmlFor="optionTwoBaker" className="block text-sm font-semibold text-gray-700 mb-2">
+                      Baker *
+                    </label>
+                    <select
+                      id="optionTwoBaker"
+                      value={optionTwoBaker}
+                      onChange={(e) => setOptionTwoBaker(e.target.value)}
+                      className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500/20"
+                      disabled={isSubmitting}
+                      required
+                    >
+                      <option value="">Select a baker</option>
+                      {allBakers.map((baker) => (
+                        <option key={baker.id} value={baker.id}>
+                          {baker.name} (Series {baker.series})
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  {/* Season & Episode */}
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label htmlFor="optionTwoSeason" className="block text-sm font-semibold text-gray-700 mb-2">
+                        Season
+                      </label>
+                      <input
+                        type="text"
+                        id="optionTwoSeason"
+                        value={optionTwoSeason}
+                        onChange={(e) => setOptionTwoSeason(e.target.value)}
+                        placeholder="1"
+                        className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500/20"
+                        disabled={isSubmitting}
+                      />
+                    </div>
+                    <div>
+                      <label htmlFor="optionTwoEpisode" className="block text-sm font-semibold text-gray-700 mb-2">
+                        Episode
+                      </label>
+                      <input
+                        type="text"
+                        id="optionTwoEpisode"
+                        value={optionTwoEpisode}
+                        onChange={(e) => setOptionTwoEpisode(e.target.value)}
+                        placeholder="1"
+                        className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500/20"
+                        disabled={isSubmitting}
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
 
           {/* Submit Button Section */}
           <div className="flex flex-col items-center gap-4 mt-8">
             <button 
               className="relative group w-full max-w-md py-4 px-8 border-none bg-linear-to-r from-primary-600 via-primary-500 to-primary-600 hover:from-primary hover:via-primary-600 hover:to-primary disabled:from-gray-300 disabled:via-gray-300 disabled:to-gray-300 disabled:cursor-not-allowed text-white font-bold text-lg rounded-xl shadow-lg hover:shadow-xl transition-all cursor-pointer focus:outline-none focus:ring-4 focus:ring-primary-500 focus:ring-offset-2 active:scale-95 disabled:active:scale-100 overflow-hidden" 
               type="submit" 
-              disabled={optionOneNew === "" || optionTwoNew === "" || isSubmitting}
+              disabled={!isFormValid || isSubmitting}
               aria-label="Create poll"
             >
-              {/* Animated background on hover */}
               <div className="absolute inset-0 bg-linear-to-r from-primary to-primary-900 opacity-0 group-hover:opacity-100 transition-opacity"></div>
               
               <span className="relative z-10 flex items-center justify-center gap-3">

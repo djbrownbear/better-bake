@@ -1,7 +1,8 @@
-import React from 'react';
-import { formatPoll, formatDate } from "../utils/helpers";
+import React, { useMemo } from 'react';
+import { formatDate } from "../utils/helpers";
 import { useNavigate } from "react-router-dom";
 import { useAppSelector } from "../store/hooks";
+import { makeSelectFormattedPoll, makeSelectPollAvatar } from "../selectors/polls";
 
 interface PollProps {
   id: string;
@@ -9,16 +10,13 @@ interface PollProps {
 
 const Poll: React.FC<PollProps> = ({ id }) => {
   const navigate = useNavigate();
-  const poll = useAppSelector(state => {
-    const pollData = state.polls[id];
-    if (!pollData) return null;
-    return formatPoll(pollData, state.users[pollData.author], state.authedUser || '');
-  });
-  const pollAvatar = useAppSelector(state => {
-    const pollData = state.polls[id];
-    if (!pollData) return '';
-    return state.users[pollData.author].avatarURL;
-  });
+  
+  // Create memoized selectors for this specific poll
+  const selectFormattedPoll = useMemo(() => makeSelectFormattedPoll(id), [id]);
+  const selectPollAvatar = useMemo(() => makeSelectPollAvatar(id), [id]);
+  
+  const poll = useAppSelector(selectFormattedPoll);
+  const pollAvatar = useAppSelector(selectPollAvatar);
 
   const toPoll = (e: React.MouseEvent<HTMLButtonElement>, id: string) => {
     e.preventDefault();

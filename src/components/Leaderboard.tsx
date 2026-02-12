@@ -1,17 +1,10 @@
 import React from 'react';
 import { User } from "../types";
 import { useAppSelector } from "../store/hooks";
+import { selectSortedUsers } from "../selectors/polls";
 
 const Leaderboard: React.FC = () => {
-  const usersList = useAppSelector(state => {
-    const countAskedAnswered = (x: User) => {
-      const asked = x.questions.length;
-      const answered = Object.keys(x.answers).length;
-      return asked + answered;
-    }
-
-    return Object.values(state.users).sort((a, b) => countAskedAnswered(b) - countAskedAnswered(a));
-  });
+  const usersList = useAppSelector(selectSortedUsers);
   const defaultAvatar = "https://img.icons8.com/external-others-inmotus-design/67/000000/external-Avatar-round-icons-others-inmotus-design-5.png";
 
   const getTotalScore = (user: User) => user.questions.length + Object.keys(user.answers).length;
